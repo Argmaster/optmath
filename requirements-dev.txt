@@ -1,0 +1,12 @@
+-r requirements.txt
+autoflake>=1.4
+black>=21.12b0
+cython==3.0.0a10
+flake8>=4.0.1
+isort>=5.10.1
+mdformat>=0.7.13
+pre-commit>=2.16.0
+pytest>=6.2.5
+setuptools>=59.6.0
+tox>=3.24
+wheel>=0.37.1

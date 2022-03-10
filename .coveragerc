@@ -1,0 +1,13 @@
+[run]
+branch = true
+source =
+    optmath
+    tests
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+omit =
+    *migrations*
+    tests\conftest.p
