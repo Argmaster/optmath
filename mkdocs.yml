@@ -1,0 +1,18 @@
+site_name: Optmath docs
+theme:
+  name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+nav:
+  - Home: index.md
+  - Development:
+    - Basic Tox: "develop/basic_tox.md"
+    - C extensions: "develop/c_extension.md"
+  - Changelog: changelog.md

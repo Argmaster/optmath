@@ -8,14 +8,14 @@
             "internal/include/CThing.h"
         ],
         "include_dirs": [
-            "internal/include/"
+            "./internal/include/"
         ],
         "language": "c++",
         "libraries": [
-            "liboptmath"
+            "optmath"
         ],
         "library_dirs": [
-            "/build/internal/"
+            "./build/internal/"
         ],
         "name": "optmath.internal.interface",
         "sources": [
