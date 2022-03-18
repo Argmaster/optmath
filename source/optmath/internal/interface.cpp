@@ -3,10 +3,7 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [
-            "internal/include/CRectangle.h",
-            "internal/include/CThing.h"
-        ],
+        "depends": [],
         "include_dirs": [
             "./internal/include/"
         ],

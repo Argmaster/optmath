@@ -106,8 +106,8 @@ MODULES = cythonize(
     Extension(
         "optmath.internal.interface",
         sources=["source/optmath/internal/interface.pyx"],
-        include_dirs=["./internal/include/"],
-        library_dirs=["./build/internal/"],
+        include_dirs=["./source/internal/include/"],
+        library_dirs=["./build/source/internal/"],
         libraries=["optmath"],
         language="c++",
     )

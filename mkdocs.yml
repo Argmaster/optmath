@@ -14,5 +14,20 @@ nav:
   - Home: index.md
   - Development:
     - Basic Tox: "develop/basic_tox.md"
-    - C extensions: "develop/c_extension.md"
+    - Common tools: "develop/common.md"
+    - Python code: "develop/python.md"
+    - C/C++ extensions: "develop/c_extension.md"
   - Changelog: changelog.md
+markdown_extensions:
+  - toc:
+      permalink: "#"
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+plugins:
+  - search
+  - macros:
+      include_dir:
+        .

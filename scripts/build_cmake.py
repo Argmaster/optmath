@@ -37,7 +37,7 @@ def refresh_build_dir():
 
 
 def run_cmake():
-    process = sbp.Popen(["cmake", "..", "-G", "Ninja"])
+    process = sbp.Popen(["cmake", "..", "-G", "Ninja", "--clean-first"])
     process.wait()
     assert process.returncode == 0, process.returncode
 

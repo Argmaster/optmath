@@ -1,6 +1,5 @@
 #include "CThing.h"
 
-
 namespace shapes {
 
 // Default constructor
