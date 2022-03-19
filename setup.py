@@ -1,3 +1,4 @@
+# noqa: D100
 import re
 from glob import glob
 from os.path import basename, splitext
@@ -15,6 +16,7 @@ VERSION_REGEX = re.compile(r'''__version__.*?=.*?"(\d+\.\d+\.\d+.*?)"''')
 
 
 def fetch_long_description():
+    """Acquire long description."""
     return (
         f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'README.md')}\n"
         f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'CHANGELOG.md')}"
@@ -22,11 +24,13 @@ def fetch_long_description():
 
 
 def fetch_utf8_content(file_path: str) -> str:
+    """Acquire utf-8 encoded content from file."""
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
 
 def fetch_requirements(file_path: str) -> List[str]:
+    """Fetch list of required modules from `requirements.txt`."""
     requirements_list = []
     with open(file_path, "r", encoding="utf-8") as file:
         for requirement in file.readlines():
@@ -43,10 +47,12 @@ def fetch_requirements(file_path: str) -> List[str]:
 
 
 def fetch_package_python_modules(glob_pattern: str) -> List[str]:
+    """Fetch list of modules in this package."""
     return [splitext(basename(path))[0] for path in glob(str(glob_pattern))]
 
 
 def fetch_version(init_file: Path) -> str:
+    """Fetch package version from root `__init__.py` file."""
     with init_file.open("r", encoding="utf-8") as file:
         return VERSION_REGEX.search(file.read()).group(1)
 
@@ -94,27 +100,25 @@ KEYWORDS = [
     "python-3.10",
 ]
 EXTRAS_REQUIRE = {"dev": EXTRAS_REQUIRE_DEV}
-ENTRY_POINTS = {
-    # "console_scripts": [
-    #    "optmath.__main__:main"
-    # ]
-}
+ENTRY_POINTS = {"console_scripts": ["optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 
 
 MODULES = cythonize(
     Extension(
-        "optmath.internal.interface",
-        sources=["source/optmath/internal/interface.pyx"],
+        "optmath._internal.interface",
+        sources=["source/optmath/_internal/interface.pyx"],
         include_dirs=["./source/internal/include/"],
         library_dirs=["./build/source/internal/"],
         libraries=["optmath"],
         language="c++",
     )
 )
+PACKAGE_DATA = {"optmath._internal.interface": ["*.so"]}
 
 
 def run_setup_script():
+    """Run setup(...) with all constants set in this module."""
     setup(
         name=NAME,
         version=VERSION,
@@ -138,7 +142,7 @@ def run_setup_script():
         extras_require=EXTRAS_REQUIRE,
         entry_points=ENTRY_POINTS,
         ext_modules=MODULES,
-        package_data={"optmath.internal.interface": ["*.so"]},
+        package_data=PACKAGE_DATA,
     )
 
 

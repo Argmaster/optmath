@@ -1,3 +1,4 @@
+# noqa: D100
 import shutil
 import subprocess as sbp
 from os import chdir
@@ -14,14 +15,15 @@ NO_NINJA_FOUND = -0xFF
 
 
 def main():
-    check_ninja_available()
-    refresh_build_dir()
+    """Compile C/C++ extension using cmake and ninja."""
+    _check_ninja_available()
+    _refresh_build_dir()
     chdir(BUILD_DIR)
-    run_cmake()
-    run_ninja()
+    _run_cmake()
+    _run_ninja()
 
 
-def check_ninja_available():
+def _check_ninja_available():
     try:
         sbp.check_output(["ninja", "--version"])
     except FileNotFoundError:
@@ -31,18 +33,18 @@ def check_ninja_available():
         exit(NO_NINJA_FOUND)
 
 
-def refresh_build_dir():
+def _refresh_build_dir():
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     BUILD_DIR.mkdir(0o777, True, True)
 
 
-def run_cmake():
+def _run_cmake():
     process = sbp.Popen(["cmake", "..", "-G", "Ninja", "--clean-first"])
     process.wait()
     assert process.returncode == 0, process.returncode
 
 
-def run_ninja():
+def _run_ninja():
     process = sbp.Popen(["ninja"])
     process.wait()
     assert process.returncode == 0, process.returncode

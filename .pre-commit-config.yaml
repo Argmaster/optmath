@@ -1,4 +1,4 @@
-exclude: '^(\.tox|\.env|\.bumpversion\.cfg|dist|\.vscode)(/|$)'
+exclude: '^(\.tox|\.env|dist|\.vscode)(/|$)'
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
@@ -15,37 +15,54 @@ repos:
   - repo: https://github.com/ambv/black
     rev: 21.9b0
     hooks:
-    - id: black
+      - id: black
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 4.0.0
+    rev: 4.0.1
     hooks:
       - id: flake8
+        additional_dependencies:
+          [
+            flake8-alfred,
+            flake8-alphabetize,
+            flake8-broken-line,
+            flake8-bugbear,
+            flake8-builtins,
+            flake8-comprehensions,
+            flake8-eradicate,
+            flake8-functions-names,
+            flake8-printf-formatting,
+            flake8-pytest-style,
+            flake8-simplify,
+            flake8-functions,
+            flake8-cognitive-complexity,
+            flake8-expression-complexity,
+          ]
 
   - repo: https://github.com/myint/docformatter
     rev: v1.4
     hooks:
       - id: docformatter
-        args: [--in-place, --docstring-length, '75', '75']
+        args: [--in-place, --docstring-length, "75", "75"]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
-    - id: check-added-large-files
-      args: ['--maxkb=2000']
-    - id: check-yaml
-    - id: check-toml
-    - id: check-json
-    - id: mixed-line-ending
-      args: ['--fix=crlf']
-    - id: no-commit-to-branch
-      args: [--branch, master]
-    - id: requirements-txt-fixer
+      - id: check-added-large-files
+        args: ["--maxkb=2000"]
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: mixed-line-ending
+        args: ["--fix=crlf"]
+      - id: no-commit-to-branch
+        args: [--branch, master]
+      - id: requirements-txt-fixer
 
   - repo: https://github.com/executablebooks/mdformat
     rev: 0.7.13
     hooks:
-    - id: mdformat
-      additional_dependencies:
-      - mdformat-gfm
-      - mdformat-black
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-gfm
+          - mdformat-black

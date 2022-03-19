@@ -29,17 +29,16 @@ ______________________________________________________________________
 
 ## Our perspective
 
-Every complex Python project requires plenty of tools to develop properly, with
-tests, quality checks, documentation and all complex build steps. It is
-inevitable that all those things will be sooner or later automated with some
+Every complex Python project requires plenty of tools to develop properly
+including tests, quality checks, documentation and all complex build steps. It
+is inevitable that all those things will be sooner or later automated with some
 scripts.
 
-### And here comes tox
+**And here comes tox**
 
-`tox` can be used as a replacement for any kind of bash/batch/make etc.
-scripts, allowing to replace them with simple static ini file with possibility
-of extending them with dynamic Python code. Such approach has a long list of
-advantages:
+`tox` can be used as a replacement for any kind of `bash`/`batch`/`make`
+scripts. All the configuration is contained in a simple static ini file. Using
+`tox` has a long list of advantages:
 
 - built-in isolation of testing environments, via Python virtual environments
 - quick and intuitive command line interface
@@ -77,7 +76,10 @@ environments (crucial for development) are listed below:
 
 ______________________________________________________________________
 
-### `devenv` - development environment
+### `devenv`
+
+Development environment (important when using IDE line Visual Studio Code or
+PyCharm)
 
 ```shell
 tox -e devenv
@@ -96,14 +98,32 @@ environment and run all associated commands use:
 
 ______________________________________________________________________
 
-### `py37`, `py38`, `py39`, `py310`, `pypy37`, `pypy38` - test environments
+### `check`
 
-```shell
-tox -e py37
+Active code formatting and checking code quality
+
+If you are wondering why there is separate environment for formatting code,
+when there is already `devenv` environment, mentioned above, visit `tox.ini`
+file and `tox`'s documentation, for now believe me that this approach is more
+favorable for the command invocation time.
+
+______________________________________________________________________
+
+### `pyXX`
+
+Test environments, list of available ones:
+
+```
+py37
+py38
+py39
+py310
+pypy37
+pypy38
 ```
 
 ```shell
-tox -e pypy37
+tox -e py37
 ```
 
 etc.
@@ -127,7 +147,9 @@ pytest-cov==3.0.0
 
 ______________________________________________________________________
 
-### `cmake` - C/C++ automated build environment
+### `cmake`
+
+C/C++ extension build environment
 
 ```shell
 tox -e cmake
@@ -141,7 +163,30 @@ more about building C/C++ Extensions.
 
 ______________________________________________________________________
 
-### `build-all` and related environments
+### `docs`
+
+Responsible for building documentation, all generated files are saved to
+`site/` folder.
+
+```shell
+tox -e docs
+```
+
+______________________________________________________________________
+
+### `build-all`
+
+Building package out of source.
+
+```
+build-all
+build-py37
+build-py38
+build-py39
+build-py310
+build-pypy37
+build-pypy38
+```
 
 ```shell
 tox -e build-all
@@ -155,5 +200,20 @@ etc.
 
 Environments with **build** prefix are responsible for building release
 packages for corresponding python versions (`build-py37` builds for Python 3.7
-etc.). Those packages are stored in `dist/` directory. Only wheels are created
-because of project source and building system complexity.
+etc.) For each test environment (`py37` etc.) there is a corresponding build
+environment. Built packages (wheels) are stored in `dist/` directory.
+
+**IMPORTANT**: There is a slight difference between `build-all` and each
+`build-pyXX` environment: `build-all` invokes `cmake` env before all
+`build-pyXX` envs, but when running `build-pyXX` env manually, `cmake` env is
+not invoked, expecting C/C++ extensions libraries to be already compiled (avoid
+duplication of compilation process).
+
+Therefore, to run only single (eg.) `build-py37` properly you have to use:
+
+```shell
+tox -e cmake
+tox -e build-py37
+```
+
+______________________________________________________________________
