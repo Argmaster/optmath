@@ -58,3 +58,58 @@ around these tools:
 ______________________________________________________________________
 
 ## pre-commit
+
+A framework for managing and maintaining multi-language pre-commit hooks.
+
+Git hook scripts are useful for identifying simple issues before submission to
+code review. We run our hooks on every commit to automatically point out issues
+in code such as missing semicolons, trailing whitespace, and debug statements.
+By pointing these issues out before code review, this allows a code reviewer to
+focus on the architecture of a change while not wasting time with trivial style
+nitpicks.
+
+### List of hooks
+
+- [isort](https://github.com/timothycrosley/isort){:target="\_blank"}
+
+- [black](https://github.com/ambv/black){:target="\_blank"}
+
+- [flake8](https://github.com/PyCQA/flake8){:target="\_blank"}
+
+  - *flake8-alfred*
+  - *flake8-alphabetize*
+  - *flake8-broken-line*
+  - *flake8-bugbear*
+  - *flake8-builtins*
+  - *flake8-comprehensions*
+  - *flake8-docstrings*
+  - *flake8-eradicate*
+  - *flake8-functions*
+  - *flake8-functions-names*
+  - *flake8-printf-formatting*
+  - *flake8-pytest-style*
+  - *flake8-simplify*
+  - *pep8-naming*
+  - *flake8-cognitive-complexity*
+  - *flake8-expression-complexity*
+
+- [docformatter](https://github.com/myint/docformatter){:target="\_blank"}
+
+- [pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks){:target="\_blank"}
+
+  - *trailing-whitespace*
+  - *end-of-file-fixer*
+  - *debug-statements*
+  - *check-added-large-file*s
+  - *check-added-large-file*s
+  - *no-commit-to-branch*
+  - *requirements-txt-fixer*
+  - *trailing-whitespace*
+
+- [mdformat](https://github.com/executablebooks/mdformat){:target="\_blank"}
+
+  - *mdformat-gfm*
+  - *mdformat-black*
+  - *mdformat-beautysh*
+  - *mdformat-frontmatte*r
+  - *mdformat-footnote*

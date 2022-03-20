@@ -1,19 +1,12 @@
 exclude: '^(\.tox|\.env|dist|\.vscode)(/|$)'
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: debug-statements
-
   - repo: https://github.com/timothycrosley/isort
     rev: 5.9.3
     hooks:
       - id: isort
 
   - repo: https://github.com/ambv/black
-    rev: 21.9b0
+    rev: 22.1.0
     hooks:
       - id: black
 
@@ -50,6 +43,9 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: debug-statements
       - id: check-added-large-files
         args: ["--maxkb=2000"]
       # - id: check-yaml
@@ -58,8 +54,9 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=crlf"]
       - id: no-commit-to-branch
-        args: [--branch, master]
+        args: [--branch, master, --branch, master]
       - id: requirements-txt-fixer
+      - id: trailing-whitespace
 
   - repo: https://github.com/executablebooks/mdformat
     rev: 0.7.13
@@ -68,3 +65,6 @@ repos:
         additional_dependencies:
           - mdformat-gfm
           - mdformat-black
+          - mdformat-beautysh
+          - mdformat-frontmatter
+          - mdformat-footnote

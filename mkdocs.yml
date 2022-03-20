@@ -17,16 +17,17 @@ theme:
 nav:
   - Home: index.md
   - Development:
-    - Tox basics: "develop/tox_basics.md"
+    - Feature flow: "develop/feature.md"
+    - Tox usage: "develop/tox_basics.md"
     - Documentation: "develop/docs.md"
     - Formatting code: "develop/formatting.md"
     - Quality checks: "develop/quality_checks.md"
-    - Python code: "develop/python.md"
     - C/C++ extensions: "develop/c_extension.md"
   - Changelog: changelog.md
 markdown_extensions:
   - toc:
       permalink: "#"
+  - mdx_truly_sane_lists
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite

@@ -1,4 +1,10 @@
-# Common tools
+# Documentation
+
+## Handy links
+
+- [Markdownguide.org Basic Syntax](https://www.markdownguide.org/basic-syntax/){:target="\_blank"}
+- [Markdownguide.org Extended Syntax](https://www.markdownguide.org/extended-syntax/){:target="\_blank"}
+- [MkDocs-Material Reference](https://squidfunk.github.io/mkdocs-material/reference/){:target="\_blank"}
 
 ## MkDocs
 
@@ -120,9 +126,3 @@ Options:
 ```
 
 ______________________________________________________________________
-
-## Markdown handy links
-
-- [Markdownguide.org Basic Syntax/](https://www.markdownguide.org/basic-syntax/){:target="\_blank"}
-- [Markdownguide.org Extended Syntax](https://www.markdownguide.org/extended-syntax/){:target="\_blank"}
-- [MkDocs-Material Reference](https://squidfunk.github.io/mkdocs-material/reference/){:target="\_blank"}
