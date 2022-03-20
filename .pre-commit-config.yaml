@@ -29,12 +29,14 @@ repos:
             flake8-bugbear,
             flake8-builtins,
             flake8-comprehensions,
+            flake8-docstrings,
             flake8-eradicate,
+            flake8-functions,
             flake8-functions-names,
             flake8-printf-formatting,
             flake8-pytest-style,
             flake8-simplify,
-            flake8-functions,
+            pep8-naming,
             flake8-cognitive-complexity,
             flake8-expression-complexity,
           ]
@@ -50,9 +52,9 @@ repos:
     hooks:
       - id: check-added-large-files
         args: ["--maxkb=2000"]
-      - id: check-yaml
-      - id: check-toml
-      - id: check-json
+      # - id: check-yaml
+      # - id: check-toml
+      # - id: check-json
       - id: mixed-line-ending
         args: ["--fix=crlf"]
       - id: no-commit-to-branch

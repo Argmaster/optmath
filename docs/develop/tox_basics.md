@@ -1,4 +1,4 @@
-# Basic Tox
+# Tox basics
 
 ## What is tox?
 
@@ -37,10 +37,13 @@ scripts.
 **And here comes tox**
 
 `tox` can be used as a replacement for any kind of `bash`/`batch`/`make`
-scripts. All the configuration is contained in a simple static ini file. Using
-`tox` has a long list of advantages:
+scripts. Instead of dynamic and error prone scripts, tox uses static ini file
+for configuration. Whenever there is need for dynamic content, you can use
+multi-platform Python script and invoke it with `tox`.
 
-- built-in isolation of testing environments, via Python virtual environments
+Using `tox` has a long list of advantages:
+
+- built-in isolation of testing environments via Python virtual environments
 - quick and intuitive command line interface
 - built-in Python version awareness
 - flexibility of environment configuration and creation
@@ -49,8 +52,7 @@ scripts. All the configuration is contained in a simple static ini file. Using
 - utility scripts gain access to PyPI's huge set of extensions
 - ...
 
-With above said, it was obvious decision to choose `tox` for automation at the
-very beginning.
+With above said, it was obvious decision to choose `tox` for automation.
 
 ______________________________________________________________________
 
@@ -63,80 +65,78 @@ command:
 tox -e envname
 ```
 
-Where `envname` is replaced 1:1 with name of any environments listed in points
-below.
+Where `envname` is replaced 1:1 with name of any environments listed below.
 
 ______________________________________________________________________
 
-## Environments in this project
+## Environments list
 
 Simplicity of creating `tox` managed environments allows us to create highly
-specialized environments with very little boilerplate. All important
-environments (crucial for development) are listed below:
-
-______________________________________________________________________
+specialized environments with minimal boilerplate.
 
 ### `devenv`
 
-Development environment (important when using IDE line Visual Studio Code or
-PyCharm)
+Stands for development environment (important when using IDE like Visual Studio
+Code or PyCharm). When selecting interpreter for your IDE, `devenv` is a right
+one to pick.
 
 ```shell
 tox -e devenv
 ```
 
 This environment is meant to contain all tools important for continuos
-development, including linters, formatters, building tools, packaging tools and
+development including linters, formatters, building tools, packaging tools and
 everything else listed in `requirements-dev.txt`
 
 ```ini
 {% include 'requirements-dev.txt' %}
 ```
 
-Running this environment will also install pre-commit. To create this
-environment and run all associated commands use:
+Running this environment will also install pre-commit.
+
+To select Python from `devenv` as interpreter in Visual Studio Code, use
+`Ctrl + Shift + P` and type `Python: Select Interpreter`, then hit `Enter`,
+select `Enter interpreter path`, pick `Find` and navigate to `python.exe` in
+`.tox/devenv/bin` (unix) or `.tox/devev/scripts` (windows).
 
 ______________________________________________________________________
 
 ### `check`
 
-Active code formatting and checking code quality
+Runs formatters and code quality checkers over your workspace.
 
-If you are wondering why there is separate environment for formatting code,
-when there is already `devenv` environment, mentioned above, visit `tox.ini`
-file and `tox`'s documentation, for now believe me that this approach is more
-favorable for the command invocation time.
+```shell
+tox -e check
+```
 
 ______________________________________________________________________
 
 ### `pyXX`
 
-Test environments, list of available ones:
+Executes full
+[test suite](https://en.wikipedia.org/wiki/Test_suite#:~:text=In%20software%20development%2C%20a%20test,some%20specified%20set%20of%20behaviours.){:target="\_blank"}
+with corresponding Python interpreter version, denoted by XX numbers. All
+available ones are:
 
-```
-py37
-py38
-py39
-py310
-pypy37
-pypy38
-```
+- py37
+- py38
+- py39
+- py310
+- pypy37
+- pypy38
 
 ```shell
 tox -e py37
 ```
 
-etc.
-
-Those environments are specialized in running test suite with appropriate set
-of external libraries installed. List of dependencies for release package is
-contained in `requirements.txt` file:
+List of dependencies for release package is contained in `requirements.txt`
+file:
 
 ```ini
 {% include 'requirements.txt' %}
 ```
 
-minimal set of libraries required for packaging is installed to
+minimal set of libraries required for packaging is installed too
 
 ```ini
 setuptools>=59.6.0
@@ -149,24 +149,25 @@ ______________________________________________________________________
 
 ### `cmake`
 
-C/C++ extension build environment
+Builds C/C++ extension library with cmake and ninja.
 
 ```shell
 tox -e cmake
 ```
 
-This environment automates process of building C/C++ extension associated with
-this package. It is expected that All C/C++ code will be compiled into static
-library to be later linked with Cython generated C/C++ interface. Visit
-<a href="../c_extension/#cc-extensions">C/C++ Extensions</a> section to learn
-more about building C/C++ Extensions.
+This environment automates process of building C/C++ extension library
+associated with this package. It is expected that all C/C++ code will be
+compiled into static library to be later linked with Cython generated C/C++
+interface. Visit
+[C/C++ Extensions](../c_extension/#cc-extensions){:target="\_blank"} section to
+learn more about how C/C++ Extensions work.
 
 ______________________________________________________________________
 
 ### `docs`
 
-Responsible for building documentation, all generated files are saved to
-`site/` folder.
+Builds documentation with mkdocs, all generated files are saved to `site/`
+folder.
 
 ```shell
 tox -e docs
@@ -176,17 +177,17 @@ ______________________________________________________________________
 
 ### `build-all`
 
-Building package out of source.
+Builds package distribution
+[wheels](https://realpython.com/python-wheels/#what-is-a-python-wheel){:target="\_blank"}
+for corresponding Python version.
 
-```
-build-all
-build-py37
-build-py38
-build-py39
-build-py310
-build-pypy37
-build-pypy38
-```
+- build-all
+- build-py37
+- build-py38
+- build-py39
+- build-py310
+- build-pypy37
+- build-pypy38
 
 ```shell
 tox -e build-all
@@ -196,18 +197,16 @@ tox -e build-all
 tox -e build-py37
 ```
 
-etc.
-
 Environments with **build** prefix are responsible for building release
 packages for corresponding python versions (`build-py37` builds for Python 3.7
 etc.) For each test environment (`py37` etc.) there is a corresponding build
 environment. Built packages (wheels) are stored in `dist/` directory.
 
-**IMPORTANT**: There is a slight difference between `build-all` and each
+**IMPORTANT**: There is a slight difference between `build-all` and single
 `build-pyXX` environment: `build-all` invokes `cmake` env before all
 `build-pyXX` envs, but when running `build-pyXX` env manually, `cmake` env is
-not invoked, expecting C/C++ extensions libraries to be already compiled (avoid
-duplication of compilation process).
+not invoked, expecting C/C++ extensions libraries to be already compiled (to
+avoid duplication of compilation process).
 
 Therefore, to run only single (eg.) `build-py37` properly you have to use:
 
