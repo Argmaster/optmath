@@ -101,11 +101,21 @@ tox -e py37
 
 !!! tip "[Tox pyXX environments](/develop/tox_basics/#pyxx){:target="\_blank"}"
 
+!!! tip "Running single test file"
+
+    ```
+    pytest tests/test_folder/test_feature.py -rP
+    ```
+    You can select single test too
+    ```
+    pytest tests/test_folder/test_feature.py -rP -k test_name
+    ```
+
 !!! danger "Important"
 
     If the tests fail, you have to repeat steps 1 and 2. Omission of the
     corrections will result in your changes being rejected by the CI
-    tests executed for the pull request
+    tests executed for the pull request.
 
 ### 3. Add all changes to staging area with
 
@@ -119,7 +129,7 @@ git add *
     you can add many unwanted files. If these unwanted files regularly appear
     in the codebase, add them to the `.gitignore` file.
 
-### Check staging area
+### 4. Check staging area
 
 ```
 git status
@@ -133,7 +143,7 @@ git status
     git restore --staged <file>
     ```
 
-### 4. Commit changes to git history with
+### 5. Commit changes to git history with
 
 !!! tip
 
@@ -158,9 +168,9 @@ git commit
 
 ### 6. Push changes to remote branch
 
-    ```
-    git push -u origin feature/feature_name
-    ```
+```
+git push -u origin feature/feature_name
+```
 
 !!! tip
 

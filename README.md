@@ -117,9 +117,7 @@ pytest {test_file_path} -rP
 
 for example
 
-```bash
-pytest tests\test_ELMO\test_metadata\test_os.py -rP
-```
+
 
 #### Common pytest command line args explanation
 
