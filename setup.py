@@ -100,7 +100,7 @@ KEYWORDS = [
     "python-3.10",
 ]
 EXTRAS_REQUIRE = {"dev": EXTRAS_REQUIRE_DEV}
-ENTRY_POINTS = {"console_scripts": ["optmath.__main__:main"]}
+ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 
 
