@@ -27,7 +27,7 @@ nav:
 markdown_extensions:
   - toc:
       permalink: "#"
-  - mdx_truly_sane_lists
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -38,6 +38,9 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
   - attr_list
+  - admonition
+  - md_in_html
+  - mdx_truly_sane_lists
 plugins:
   - search
   - macros:

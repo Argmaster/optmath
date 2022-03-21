@@ -5,27 +5,27 @@
 [`tox`](https://tox.wiki/en/latest/index.html) is a generic virtualenv
 management and test command line tool you can use for:
 
-- checking that your package installs correctly with different Python versions
-  and interpreters
+-   checking that your package installs correctly with different Python versions
+    and interpreters
 
-- running your tests in each of the environments, configuring your test tool of
-  choice
+-   running your tests in each of the environments, configuring your test tool of
+    choice
 
-- acting as a frontend to Continuous Integration servers, greatly reducing
-  boilerplate and merging CI and shell-based testing.
+-   acting as a frontend to Continuous Integration servers, greatly reducing
+    boilerplate and merging CI and shell-based testing.
 
 ## Handy Links
 
-- [To read more about tox, visit it's documentation.](https://tox.wiki/en/latest/index.html)
-- [`tox` global settings](https://tox.wiki/en/latest/config.html#tox-global-settings)
-- [`tox` environments configuration](https://tox.wiki/en/latest/config.html#tox-environments)
-- [`tox` substitutions](https://tox.wiki/en/latest/config.html#substitutions)
-- [Generating environments, conditional settings](https://tox.wiki/en/latest/config.html#generating-environments-conditional-settings)
-- [Environmental variables](https://tox.wiki/en/latest/config.html#environment-variables)
-- [Full tox cli documentation](https://tox.wiki/en/latest/config.html#cli)
-- [`tox` examples](https://tox.wiki/en/latest/examples.html)
+-   [To read more about tox, visit it's documentation.](https://tox.wiki/en/latest/index.html)
+-   [`tox` global settings](https://tox.wiki/en/latest/config.html#tox-global-settings)
+-   [`tox` environments configuration](https://tox.wiki/en/latest/config.html#tox-environments)
+-   [`tox` substitutions](https://tox.wiki/en/latest/config.html#substitutions)
+-   [Generating environments, conditional settings](https://tox.wiki/en/latest/config.html#generating-environments-conditional-settings)
+-   [Environmental variables](https://tox.wiki/en/latest/config.html#environment-variables)
+-   [Full tox cli documentation](https://tox.wiki/en/latest/config.html#cli)
+-   [`tox` examples](https://tox.wiki/en/latest/examples.html)
 
-______________________________________________________________________
+---
 
 ## Our perspective
 
@@ -43,18 +43,18 @@ multi-platform Python script and invoke it with `tox`.
 
 Using `tox` has a long list of advantages:
 
-- built-in isolation of testing environments via Python virtual environments
-- quick and intuitive command line interface
-- built-in Python version awareness
-- flexibility of environment configuration and creation
-- great integration with any set of Python tools
-- utility scripts are guaranteed to be multi-platform
-- utility scripts gain access to PyPI's huge set of extensions
-- ...
+-   built-in isolation of testing environments via Python virtual environments
+-   quick and intuitive command line interface
+-   built-in Python version awareness
+-   flexibility of environment configuration and creation
+-   great integration with any set of Python tools
+-   utility scripts are guaranteed to be multi-platform
+-   utility scripts gain access to PyPI's huge set of extensions
+-   ...
 
 With above said, it was obvious decision to choose `tox` for automation.
 
-______________________________________________________________________
+---
 
 ## Basic usage
 
@@ -67,7 +67,7 @@ tox -e envname
 
 Where `envname` is replaced 1:1 with name of any environments listed below.
 
-______________________________________________________________________
+---
 
 ## Environments list
 
@@ -99,7 +99,7 @@ To select Python from `devenv` as interpreter in Visual Studio Code, use
 select `Enter interpreter path`, pick `Find` and navigate to `python.exe` in
 `.tox/devenv/bin` (unix) or `.tox/devev/scripts` (windows).
 
-______________________________________________________________________
+---
 
 ### `check`
 
@@ -109,7 +109,7 @@ Runs formatters and code quality checkers over your workspace.
 tox -e check
 ```
 
-______________________________________________________________________
+---
 
 ### `pyXX`
 
@@ -118,12 +118,12 @@ Executes full
 with corresponding Python interpreter version, denoted by XX numbers. All
 available ones are:
 
-- py37
-- py38
-- py39
-- py310
-- pypy37
-- pypy38
+-   py37
+-   py38
+-   py39
+-   py310
+-   pypy37
+-   pypy38
 
 ```shell
 tox -e py37
@@ -145,7 +145,7 @@ pytest==6.2.4c_extension/#cc-extensions
 pytest-cov==3.0.0
 ```
 
-______________________________________________________________________
+---
 
 ### `cmake`
 
@@ -162,7 +162,7 @@ interface. Visit
 [C/C++ Extensions](../c_extension/#cc-extensions){:target="\_blank"} section to
 learn more about how C/C++ Extensions work.
 
-______________________________________________________________________
+---
 
 ### `docs`
 
@@ -173,7 +173,7 @@ folder.
 tox -e docs
 ```
 
-______________________________________________________________________
+---
 
 ### `build-all`
 
@@ -181,13 +181,13 @@ Builds package distribution
 [wheels](https://realpython.com/python-wheels/#what-is-a-python-wheel){:target="\_blank"}
 for corresponding Python version.
 
-- build-all
-- build-py37
-- build-py38
-- build-py39
-- build-py310
-- build-pypy37
-- build-pypy38
+-   build-all
+-   build-py37
+-   build-py38
+-   build-py39
+-   build-py310
+-   build-pypy37
+-   build-pypy38
 
 ```shell
 tox -e build-all
@@ -215,4 +215,4 @@ tox -e cmake
 tox -e build-py37
 ```
 
-______________________________________________________________________
+---

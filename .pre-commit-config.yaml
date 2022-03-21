@@ -57,14 +57,3 @@ repos:
         args: [--branch, master, --branch, master]
       - id: requirements-txt-fixer
       - id: trailing-whitespace
-
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.13
-    hooks:
-      - id: mdformat
-        additional_dependencies:
-          - mdformat-gfm
-          - mdformat-black
-          - mdformat-beautysh
-          - mdformat-frontmatter
-          - mdformat-footnote
