@@ -26,16 +26,6 @@ graph LR
 git clone https://github.com/Argmaster/optmath.git
 ```
 
-## Pull changes from origin
-
-!!! info "You can skip this step if you just cloned the repository"
-
-!!! Tip "[What is the difference between 'git pull' and 'git fetch'?](https://stackoverflow.com/questions/292357/what-is-the-difference-between-git-pull-and-git-fetch){:target="\_blank"}"
-
-```
-git pull
-```
-
 ## Checking out main branch
 
 Make sure we are on `main` branch.
@@ -44,11 +34,21 @@ Make sure we are on `main` branch.
     git checkout main
     ```
 
+## Pull changes from origin
+
+!!! info "You can skip this step if you just cloned the repository"
+
+!!! Tip "[What is the difference between 'git pull' and 'git fetch'?](https://stackoverflow.com/questions/292357/what-is-the-difference-between-git-pull-and-git-fetch){:target="\_blank"}"
+
+```
+git pull --ff
+```
+
 ## Create feature branch
 
-Create new branch for our feature called `feature_name`. `feature/` prefix
-is not required but is recommended to distinguish features from fixes and
-other types of branches in git history.
+Create new branch for our feature called (replace with whatever you want)
+`feature_name`. `feature/` prefix is not required but is recommended to
+distinguish features from fixes and other types of branches in git history.
 
 [Learn about branches](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging){:target="\_blank"}
 

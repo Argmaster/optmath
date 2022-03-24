@@ -1,5 +1,4 @@
-# noqa: D100
-from optmath._internal import PyRectangle
+from optmath._internal.interface import PyRectangle
 
 
 class TestPyRectangle:

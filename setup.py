@@ -1,4 +1,3 @@
-# noqa: D100
 import re
 from glob import glob
 from os.path import basename, splitext
@@ -103,13 +102,14 @@ EXTRAS_REQUIRE = {"dev": EXTRAS_REQUIRE_DEV}
 ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 
+INTERNAL_LIB_DIR = Path("./build/source/internal/")
 
 MODULES = cythonize(
     Extension(
         "optmath._internal.interface",
         sources=["source/optmath/_internal/interface.pyx"],
         include_dirs=["./source/internal/include/"],
-        library_dirs=["./build/source/internal/"],
+        library_dirs=[str(INTERNAL_LIB_DIR)],
         libraries=["optmath"],
         language="c++",
     )
@@ -147,4 +147,10 @@ def run_setup_script():
 
 
 if __name__ == "__main__":
+    if not INTERNAL_LIB_DIR.exists():
+        ERROR_MESSAGE = (
+            "\n\n\n>>>>>>>>>\nFailed to find precompiled binaries for internal C/C++ extensions.\n"
+            'Build interface for internal C/C++ extensions first. Use "tox -e cmake"\n>>>>>>>>>\n\n\n'
+        )
+        raise RuntimeError(ERROR_MESSAGE)
     run_setup_script()

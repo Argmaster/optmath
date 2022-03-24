@@ -1,5 +1,10 @@
 # Tox basics
 
+> A virtual environment is a Python environment such that the Python interpreter,
+> libraries and scripts installed into it are isolated from those installed in other
+> virtual environments, and (by default) any libraries installed in a “system” Python,
+> i.e., one which is installed as part of your operating system.
+
 ## What is tox?
 
 [`tox`](https://tox.wiki/en/latest/index.html) is a generic virtualenv
@@ -86,18 +91,26 @@ tox -e devenv
 
 This environment is meant to contain all tools important for continuos
 development including linters, formatters, building tools, packaging tools and
-everything else listed in `requirements-dev.txt`
+everything else listed in `requirements-dev.txt` It is really heavy and
+expensive to create because of complexity of installation. Every call
+of `tox -e devenv` will completely recreate the environment.
 
-```ini
-{% include 'requirements-dev.txt' %}
-```
+!!! Danger "Running tox -e devenv completely reinstalls environment - it's time consuming."
 
-Running this environment will also install pre-commit.
+It is designed in such way many due to the fact that during development
+there is no need to recreate it until something brakes, and then it's
+handy to simplify reinstallation how much possible.
+
+!!! Success "Running this environment will install pre-commit."
 
 To select Python from `devenv` as interpreter in Visual Studio Code, use
 `Ctrl + Shift + P` and type `Python: Select Interpreter`, then hit `Enter`,
 select `Enter interpreter path`, pick `Find` and navigate to `python.exe` in
 `.tox/devenv/bin` (unix) or `.tox/devev/scripts` (windows).
+
+This environment is rather bullet proof in comparison to other non-utility
+environments (mainly test runners). It should just install on demand, and
+every failure should be considered and fixed permanently.
 
 ---
 
@@ -109,9 +122,24 @@ Runs formatters and code quality checkers over your workspace.
 tox -e check
 ```
 
+This environment is lightweight compared to devenv because it installs
+dependencies once and completely skips installing a package from this
+repository as it does not need it. The operations performed by this
+environment are performed in place.
+
+!!! Success "This environment is lightweight, running tox -e check often is fine."
+
+ Similarly to devenv it is bullet proof
+in comparison to other non-utility environments (mainly test runners). It
+should just install on demand, and every failure should be considered and
+fixed permanently.
+
 ---
 
 ### `pyXX`
+
+
+!!! Warning "pyXX - test runner envs - they require special care and you are responsible for their well being."
 
 Executes full
 [test suite](https://en.wikipedia.org/wiki/Test_suite#:~:text=In%20software%20development%2C%20a%20test,some%20specified%20set%20of%20behaviours.){:target="\_blank"}
@@ -128,6 +156,8 @@ available ones are:
 ```shell
 tox -e py37
 ```
+
+!!! Warning "Running `tox -e py37` should be preceded with `tox -e cmake` to build lastest version of C/C++ internals."
 
 List of dependencies for release package is contained in `requirements.txt`
 file:
@@ -202,17 +232,26 @@ packages for corresponding python versions (`build-py37` builds for Python 3.7
 etc.) For each test environment (`py37` etc.) there is a corresponding build
 environment. Built packages (wheels) are stored in `dist/` directory.
 
-**IMPORTANT**: There is a slight difference between `build-all` and single
-`build-pyXX` environment: `build-all` invokes `cmake` env before all
-`build-pyXX` envs, but when running `build-pyXX` env manually, `cmake` env is
-not invoked, expecting C/C++ extensions libraries to be already compiled (to
-avoid duplication of compilation process).
-
-Therefore, to run only single (eg.) `build-py37` properly you have to use:
-
-```shell
-tox -e cmake
-tox -e build-py37
-```
-
 ---
+
+## Name tags list
+
+```
+devenv
+cmake
+docs
+check
+py37
+py38
+py39
+py310
+pypy37
+pypy38
+build-all
+build-py37
+build-py38
+build-py39
+build-py310
+build-pypy37
+build-pypy38
+```
