@@ -18,9 +18,7 @@ graph LR
 
 ## Clone repository
 
-!!! info "you can skip this step if you already have a clone"
-
-!!! Tip "[How to clone git repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository){:target="\_blank"}"
+!!! info "You can skip this step if you already have a clone"
 
 ```
 git clone https://github.com/Argmaster/optmath.git
@@ -30,15 +28,13 @@ git clone https://github.com/Argmaster/optmath.git
 
 Make sure we are on `main` branch.
 
-    ```
-    git checkout main
-    ```
+```
+git checkout main
+```
 
 ## Pull changes from origin
 
 !!! info "You can skip this step if you just cloned the repository"
-
-!!! Tip "[What is the difference between 'git pull' and 'git fetch'?](https://stackoverflow.com/questions/292357/what-is-the-difference-between-git-pull-and-git-fetch){:target="\_blank"}"
 
 ```
 git pull --ff
@@ -69,73 +65,53 @@ On branch feature/feature_name
 nothing to commit, working tree clean
 ```
 
-## Test-commit-push cycle
+## Commit-test-push cycle
 
 Your work on a feature should be divided into many steps during
 which you will add new units to the system. Each unit should
 have a set of tests to verify its operation.
 
-### 1. Formatting & Quality checks
+1. ### Formatting & Quality checks
 
-Run code quality checks with tox to quickly fix most obvious issues in your code.
-
-```
-tox -e check
-```
-
-### 2. Run test suite for Python interpreter versions you have locally
-
-!!! tip "[More about tox](/develop/tox_basics/){:target="\_blank"}"
-
-First build C/C++ extensions with
-
-```
-tox -e cmake
-```
-
-Then run test suites on available interpreters with
-
-```
-tox -e py37
-```
-
-!!! tip "[Tox pyXX environments](/develop/tox_basics/#pyxx){:target="\_blank"}"
-
-!!! tip "Running single test file"
+    Run code quality checks with tox to quickly fix most obvious issues in your code.
 
     ```
-    pytest tests/test_folder/test_feature.py -rP
-    ```
-    You can select single test too
-    ```
-    pytest tests/test_folder/test_feature.py -rP -k test_name
+    tox -e check
     ```
 
-!!! danger "Important"
+2. ### Run test suite for Python interpreter versions you have locally
+
+    First build C/C++ extensions with
+
+    ```
+    tox -e cmake
+    ```
+
+    Then run [test suites](/develop/tox_basics/#pyxx){:target="\_blank"} on available interpreters with
+
+    ```
+    tox -e py37
+    ```
 
     If the tests fail, you have to repeat steps 1 and 2. Omission of the
     corrections will result in your changes being rejected by the CI
     tests executed for the pull request.
 
-### 3. Add all changes to staging area with
+3. ### Add all changes to staging area with
 
-```
-git add *
-```
-
-!!! tip
+    ```
+    git add *
+    ```
 
     You can list file paths instead of using the asterisk symbol if you know
     you can add many unwanted files. If these unwanted files regularly appear
     in the codebase, add them to the `.gitignore` file.
 
-### 4. Check staging area
+4. ### Check staging area
 
-```
-git status
-```
-
-!!! tip
+    ```
+    git status
+    ```
 
     If any files staged for commit shouldn't be there, unstage them with
 
@@ -143,36 +119,33 @@ git status
     git restore --staged <file>
     ```
 
-### 5. Commit changes to git history with
+5. ### Commit changes
 
-!!! tip
+    Now use commit command to send changes to git history
 
-    You can use
+    ```
+    git commit
+    ```
+
+    This command will open text editor for you, waiting for
+    commit description. You can use
 
     ```
     git commit -m "commit message"
     ```
 
-    to add commit title and omit long description
-
-!!! tip
-
+    to add commit title and omit long description.
     The commit title should not be longer than 50 characters.
 
     - [How to write a Git Commit Message](https://cbea.ms/git-commit/){:target="\_blank"}
+
     - [Good Commit Messages: A Practical Git Guide](https://www.freecodecamp.org/news/writing-good-commit-messages-a-practical-guide/){:target="\_blank"}
 
-```
-git commit
-```
+6. ### Push changes to remote branch
 
-### 6. Push changes to remote branch
-
-```
-git push -u origin feature/feature_name
-```
-
-!!! tip
+    ```
+    git push -u origin feature/feature_name
+    ```
 
     For each subsequent push from this branch, you can omit `-u origin feature/feature_name`
 
@@ -183,4 +156,23 @@ git push -u origin feature/feature_name
 ## Create pull request
 
 Visit [pull requests](https://github.com/Argmaster/optmath/pulls){:target="\_blank"}
-and create PR for you feature.
+and create [PR](https://docs.github.com/en/get-started/quickstart/github-glossary#pull-request){:target="\_blank"}
+for you feature. Read in [GitHub docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request){:target="\_blank"} about pull requests.
+
+## Request review & wait for CI checks
+
+Now you can request a pull request review, as it's described [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/requesting-a-pull-request-review){:target="\_blank"}.
+Before your changes can be merged into another branch, at least one person should see them,
+and share their thoughts about them with you. If you are prompted to make corrections, do so immediately
+and do not apply your changes without fixes. Go back to [Commit-test-push](#commit-test-push-cycle).
+
+You changes should also pass all tests ran by CI system ([Github Actions](https://docs.github.com/en/actions){:target="\_blank"}).
+If the tests fail, corrections will also be required before continuing.
+
+## Merge PR
+
+After receiving a positive response from the reviewer and passing the tests, the pull request can be merged.
+
+[About merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts){:target="\_blank"}
+
+[About pull request merges](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges).

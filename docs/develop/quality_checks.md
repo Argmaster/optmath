@@ -1,5 +1,16 @@
 # Code quality checks
 
+!!! tip "Running single test file"
+
+    To run single test file with pytest
+    ```
+    pytest tests/test_folder/test_feature.py -rP
+    ```
+    You can select single test too
+    ```
+    pytest tests/test_folder/test_feature.py -rP -k test_name
+    ```
+
 ## flake8
 
 [Flake8](https://pypi.org/project/flake8/){:target="\_blank"} is a wrapper
@@ -76,32 +87,35 @@ nitpicks.
 
 -   [flake8](https://github.com/PyCQA/flake8){:target="\_blank"}
 
-    -   _flake8-alfred_
-    -   _flake8-alphabetize_
-    -   _flake8-broken-line_
-    -   _flake8-bugbear_
-    -   _flake8-builtins_
-    -   _flake8-comprehensions_
-    -   _flake8-docstrings_
-    -   _flake8-eradicate_
-    -   _flake8-functions_
-    -   _flake8-functions-names_
-    -   _flake8-printf-formatting_
-    -   _flake8-pytest-style_
-    -   _flake8-simplify_
-    -   _pep8-naming_
-    -   _flake8-cognitive-complexity_
-    -   _flake8-expression-complexity_
+    ```
+    - flake8-alfred
+    - flake8-alphabetize
+    - flake8-broken-line
+    - flake8-bugbear
+    - flake8-builtins
+    - flake8-comprehensions
+    - flake8-docstrings
+    - flake8-eradicate
+    - flake8-functions
+    - flake8-functions-names
+    - flake8-printf-formatting
+    - flake8-pytest-style
+    - flake8-simplify
+    - pep8-naming
+    - flake8-cognitive-complexity
+    - flake8-expression-complexity
+    ```
 
 -   [docformatter](https://github.com/myint/docformatter){:target="\_blank"}
 
 -   [pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks){:target="\_blank"}
 
-    -   _trailing-whitespace_
-    -   _end-of-file-fixer_
-    -   _debug-statements_
-    -   *check-added-large-file*s
-    -   *check-added-large-file*s
-    -   _no-commit-to-branch_
-    -   _requirements-txt-fixer_
-    -   _trailing-whitespace_
+    ```
+    -   trailing-whitespace
+    -   end-of-file-fixer
+    -   debug-statements
+    -   check-added-large-file
+    -   no-commit-to-branch
+    -   requirements-txt-fixer
+    -   trailing-whitespace
+    ```

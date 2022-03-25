@@ -69,7 +69,7 @@ is a C/C++ code formatter. You can view it's configuration in `.clang-format`
 file. Manual usage valid for this project:
 
 ```shell
-clang-format source/internal/**/*.cpp source/internal/**/*.h -i
+python3 -m scripts.clang_format_all
 ```
 
 ---
