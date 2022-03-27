@@ -4,7 +4,7 @@ import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from types import SimpleNamespace
-from typing import Callable, Union
+from typing import Any, Callable, Union
 
 import optmath
 from packaging.version import Version
@@ -47,7 +47,8 @@ def statefull(**self_kwargs):
 
 
 def ignore_excess_kwargs(cls: type):
-    """Make dataclass ignore excess keyword arguments.
+    """Make dataclass ignore excess keyword arguments. It will trim positional
+    arguments too, but won't take into account the keyword arguments count.
 
     Use this decorator AFTER @dataclass.
     ```
@@ -74,13 +75,16 @@ def ignore_excess_kwargs(cls: type):
     __old_init__ = cls.__init__
 
     def wrapper_init(self, *args, **kwargs):
+        max_args = len(cls.__dataclass_fields__)
+        selected_kwargs = {
+            k: kwargs.pop(k)
+            for k in cls.__dataclass_fields__.keys() & kwargs.keys()
+        }
+        trimmed_args = args[: max_args - len(selected_kwargs)]
         __old_init__(
             self,
-            *args,
-            **{
-                k: kwargs.pop(k)
-                for k in cls.__dataclass_fields__.keys() & kwargs.keys()
-            },
+            *trimmed_args,
+            **selected_kwargs,
         )
 
     cls.__init__ = wrapper_init
@@ -94,12 +98,22 @@ class DeprecatedError(Exception):
 
 
 @dataclass
+class Bomb:
+    functionality: str
+
+    def __call__(self, *_: Any, **__: Any) -> Any:
+        raise DeprecatedError(
+            f"{self.functionality} is deprecated and no longer can be used."
+        )
+
+
+@dataclass
 class deprecated:  # noqa: N801
     """Mark callable deprecated.
 
     Causes deprecation message to appear when object is called.
-    To work properly, deprecated have to be invoked when used as
-    descriptor, even if no parameters are given: @Deprecated()
+    To work properly, deprecated have to be called while used as
+    descriptor, even if no parameters are given: @deprecated()
 
     Parameters
     ----------
@@ -128,7 +142,7 @@ class deprecated:  # noqa: N801
     message: Union[str, Callable, None] = None
     warning_type: object = FutureWarning
     date_bomb: datetime = None
-    version_bomb: Version = None
+    version_bomb: str = None
 
     def __call__(self, function: Callable) -> Callable:
         """Decorate function by replacing with wrapper."""
@@ -139,13 +153,7 @@ class deprecated:  # noqa: N801
             and Version(optmath.__version__) > Version(self.version_bomb)
         )
         if should_bomb_trigger:
-
-            def bomb_function(*_, **__):
-                raise DeprecatedError(
-                    "This functionality is deprecated and no longer can be used."
-                )
-
-            return bomb_function
+            return Bomb(f"{function.__module__}.{function.__qualname__}")
 
         else:
             message = (
