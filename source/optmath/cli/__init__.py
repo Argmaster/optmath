@@ -2,7 +2,6 @@
 
 
 import importlib.util
-import logging
 from pathlib import Path
 from typing import List
 
@@ -14,16 +13,14 @@ DIR = Path(__file__).parent
 
 
 def cli(args: List[str]):
-    """optmath CLI interface API endpoint."""
+    """Optmath CLI interface API endpoint."""
     return optmath(args)
 
 
 @click.group(invoke_without_command=True)
-@click.option(
-    "-V",
-    "--version",
-    is_flag=True,
-    default=False,
+@click.version_option(
+    version=__version__,
+    package_name="optmath",
 )
 @click.option(
     "-d",
@@ -39,13 +36,9 @@ def cli(args: List[str]):
     is_flag=True,
     help="Enable verbose logging, do not implies debug mode.",
 )
-def optmath(version: bool, debug: bool, verbose: bool):
-    """optmath entry point description."""
-    if version:
-        print(f"optmath version {__version__}")
-        exit(0)
-    else:
-        configure_logger(debug, verbose)
+def optmath(debug: bool, verbose: bool):
+    """Optmath entry point description."""
+    configure_logger(debug, verbose)
 
 
 # automatically add all commands defined in CLI dir
