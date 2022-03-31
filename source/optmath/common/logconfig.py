@@ -2,6 +2,7 @@ import datetime
 import logging
 from contextlib import suppress
 from pathlib import Path
+from typing import Any
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -36,7 +37,7 @@ def configure_logger(is_debug: bool = False, is_verbose: bool = False):
     )
 
     class MarkupStripFormatter(logging.Formatter):
-        def format(self, *args, **kwargs):  # noqa: A003
+        def format(self, *args: Any, **kwargs: Any):  # noqa: A003
             s = super().format(*args, **kwargs)
             # render strings with rich
             seg_list = Text.from_markup(s).render(Console())

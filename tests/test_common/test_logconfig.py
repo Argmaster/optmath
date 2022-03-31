@@ -1,8 +1,9 @@
 import logging
+from typing import Any
 from unittest.mock import Mock
 
 
-def test_logconfig_debug(caplog):
+def test_logconfig_debug(caplog: Any):
     import optmath.common.logconfig as logconfig
 
     logconfig.configure_logger(True, False)
@@ -14,7 +15,7 @@ def test_logconfig_debug(caplog):
     assert "info" in caplog.text
 
 
-def test_logconfig_verbose(caplog):
+def test_logconfig_verbose(caplog: Any):
     import optmath.common.logconfig as logconfig
 
     logconfig.configure_logger(False, True)
@@ -26,7 +27,7 @@ def test_logconfig_verbose(caplog):
     assert "info" in caplog.text
 
 
-def test_logconfig_warning(caplog):
+def test_logconfig_warning(caplog: Any):
     import optmath.common.logconfig as logconfig
 
     logconfig.configure_logger(False, False)
@@ -39,7 +40,7 @@ def test_logconfig_warning(caplog):
 
 
 def test_logconfig_disable_warnings():
-    urllib3 = Mock()
+    urllib3: Any = Mock()
     import sys
 
     sys.modules["urllib3"] = urllib3

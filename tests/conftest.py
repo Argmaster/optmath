@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any, List
 
 import pytest
 
@@ -15,15 +16,15 @@ class OfflineOnlinePair(MarkerFlagPairBase):
     mark_reason: str = "Online tests were explicitly disabled."
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: Any):
     MarkerFlagPairMeta.addoptions(parser)
 
 
-def pytest_configure(config):
+def pytest_configure(config: Any):
     MarkerFlagPairMeta.addinivalue_line(config)
 
 
-def pytest_collection_modifyitems(config, items):
+def pytest_collection_modifyitems(config: Any, items: List[Any]):
     MarkerFlagPairMeta.collection_modifyitems(config, items)
 
 
@@ -38,10 +39,10 @@ def repo_dir() -> Path:
 
 
 @pytest.fixture(scope="session")
-def source_dir(repo_dir) -> Path:
+def source_dir(repo_dir: Path) -> Path:
     return repo_dir / "source"
 
 
 @pytest.fixture(scope="session")
-def package_dir(source_dir) -> Path:
+def package_dir(source_dir: Path) -> Path:
     return source_dir / "optmath"

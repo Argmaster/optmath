@@ -4,13 +4,13 @@ import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from types import SimpleNamespace
-from typing import Any, Callable, Union
+from typing import Any, Dict, Optional, Type
 
 import optmath
 from packaging.version import Version
 
 
-def statefull(**self_kwargs):
+def statefull(**self_kwargs: Any):
     """Make function statefull.
 
     Statefull function will receive same namespace object
@@ -28,8 +28,8 @@ def statefull(**self_kwargs):
     even when no args & kwargs are bound: @statefull()
     """
 
-    def descriptor(function):
-        def wrapper(*args, **kwargs):
+    def descriptor(function: Any):
+        def wrapper(*args: Any, **kwargs: Any):
             return self.__function__(
                 self,
                 *args,
@@ -46,7 +46,7 @@ def statefull(**self_kwargs):
     return descriptor
 
 
-def ignore_excess_kwargs(cls: type):
+def ignore_excess_kwargs(cls: Any):
     """Make dataclass ignore excess keyword arguments. It will trim positional
     arguments too, but won't take into account the keyword arguments count.
 
@@ -74,11 +74,11 @@ def ignore_excess_kwargs(cls: type):
 
     __old_init__ = cls.__init__
 
-    def wrapper_init(self, *args, **kwargs):
-        max_args = len(cls.__dataclass_fields__)
+    def wrapper_init(self: Any, *args: Any, **kwargs: Any):
+        fields: Dict[str, type] = cls.__dataclass_fields__
+        max_args = len(fields)
         selected_kwargs = {
-            k: kwargs.pop(k)
-            for k in cls.__dataclass_fields__.keys() & kwargs.keys()
+            k: kwargs.pop(k) for k in fields.keys() & kwargs.keys()
         }
         trimmed_args = args[: max_args - len(selected_kwargs)]
         __old_init__(
@@ -139,12 +139,12 @@ class deprecated:  # noqa: N801
         raised when message_or_function is neither str or callable.
     """
 
-    message: Union[str, Callable, None] = None
-    warning_type: object = FutureWarning
-    date_bomb: datetime = None
-    version_bomb: str = None
+    message: Optional[str] = None
+    warning_type: Type[Warning] = FutureWarning
+    date_bomb: Optional[datetime] = None
+    version_bomb: Optional[str] = None
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, function: ...) -> ...:
         """Decorate function by replacing with wrapper."""
         should_bomb_trigger = (
             self.date_bomb is not None and datetime.now() > self.date_bomb
@@ -162,8 +162,12 @@ class deprecated:  # noqa: N801
                 "change your code so it won't break after update."
             )
 
-            def function_wrapper(*args, **kwargs):
-                warnings.warn(message, self.warning_type, stacklevel=2)
+            def function_wrapper(*args: Any, **kwargs: Any):
+                warnings.warn(
+                    self.warning_type(message),
+                    category=self.warning_type,
+                    stacklevel=2,
+                )
                 return function(*args, **kwargs)
 
             return function_wrapper

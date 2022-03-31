@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from types import SimpleNamespace
 
 import pytest
 from optmath.common.decorators import (
@@ -13,23 +14,14 @@ from optmath.common.decorators import (
 class TestStatefull:
     def test_no_kwargs(self):
         @statefull()
-        def no_kwargs(self):
+        def no_kwargs(self: SimpleNamespace):
             return 0x33
 
         assert no_kwargs() == 0x33
 
-    def test_no_kwargs_call_with_params(self):
-        @statefull()
-        def no_kwargs_with_params(self, a, b):
-            assert a == 0x55
-            assert b == 0x56
-            return 0x33
-
-        assert no_kwargs_with_params(0x55, b=0x56) == 0x33
-
     def test_kwargs(self):
         @statefull(a=0x12)
-        def kwargs(self):
+        def kwargs(self: SimpleNamespace):
             assert self.a == 0x12
             return 0x66
 
@@ -37,7 +29,7 @@ class TestStatefull:
 
     def test_kwargs_call_with_params(self):
         @statefull(a=0x12)
-        def kwargs_with_params(self, a, b):
+        def kwargs_with_params(self: SimpleNamespace, a: int, b: int):
             assert a == 0x55
             assert b == 0x56
             assert self.a == 0x12
@@ -46,38 +38,35 @@ class TestStatefull:
         assert kwargs_with_params(0x55, b=0x56) == 0x66
 
 
+@ignore_excess_kwargs
+@dataclass
+class A:
+    a: int
+    b: int
+
+
 class TestIgnoreExcessKwargs:
-    @pytest.fixture()
-    def set_up_cls(self):
-        @ignore_excess_kwargs
-        @dataclass
-        class A:
-            a: int
-            b: int
+    def test_no_excess(self):
 
-        return A
-
-    def test_no_excess(self, set_up_cls):
-
-        instance = set_up_cls(0x33, 0x44)
+        instance = A(0x33, 0x44)
         assert instance.a == 0x33
         assert instance.b == 0x44
 
-    def test_with_excess_args(self, set_up_cls):
+    def test_with_excess_args(self):
 
-        instance = set_up_cls(0x33, 0x44, 0x22)
+        instance = A(0x33, 0x44, 0x22)
         assert instance.a == 0x33
         assert instance.b == 0x44
 
-    def test_with_excess_kwargs(self, set_up_cls):
+    def test_with_excess_kwargs(self):
 
-        instance = set_up_cls(0x33, 0x44, c=0x22)
+        instance = A(0x33, 0x44, c=0x22)
         assert instance.a == 0x33
         assert instance.b == 0x44
 
-    def test_with_excess_mixed(self, set_up_cls):
+    def test_with_excess_mixed(self):
 
-        instance = set_up_cls(0x33, 0x44, 0x11, c=0x22)
+        instance = A(0x33, 0x44, 0x11, c=0x22)
         assert instance.a == 0x33
         assert instance.b == 0x44
 

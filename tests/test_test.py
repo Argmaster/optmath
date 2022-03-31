@@ -5,7 +5,9 @@ import pytest
 from tests.marker_flag_pair import MarkerFlagPairBase
 
 
-def test_dir_fixtures(test_dir, repo_dir, source_dir, package_dir):
+def test_dir_fixtures(
+    test_dir: Path, repo_dir: Path, source_dir: Path, package_dir: Path
+):
     assert test_dir == Path(__file__).parent
     assert repo_dir == test_dir.parent
     assert source_dir == repo_dir / "source"

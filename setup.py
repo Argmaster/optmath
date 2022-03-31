@@ -2,7 +2,7 @@ import re
 from glob import glob
 from os.path import basename, splitext
 from pathlib import Path
-from typing import List
+from typing import Any, List, Union
 
 from Cython.Build import cythonize
 from setuptools import Extension, find_packages, setup
@@ -22,15 +22,15 @@ def fetch_long_description():
     )
 
 
-def fetch_utf8_content(file_path: str) -> str:
+def fetch_utf8_content(file_path: Union[str, Path]) -> str:
     """Acquire utf-8 encoded content from file."""
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
 
-def fetch_requirements(file_path: str) -> List[str]:
+def fetch_requirements(file_path: Union[str, Path]) -> List[str]:
     """Fetch list of required modules from `requirements.txt`."""
-    requirements_list = []
+    requirements_list: List[str] = []
     with open(file_path, "r", encoding="utf-8") as file:
         for requirement in file.readlines():
             requirement = requirement.strip()
@@ -45,7 +45,7 @@ def fetch_requirements(file_path: str) -> List[str]:
         return requirements_list
 
 
-def fetch_package_python_modules(glob_pattern: str) -> List[str]:
+def fetch_package_python_modules(glob_pattern: Union[str, Path]) -> List[str]:
     """Fetch list of modules in this package."""
     return [splitext(basename(path))[0] for path in glob(str(glob_pattern))]
 
@@ -53,7 +53,9 @@ def fetch_package_python_modules(glob_pattern: str) -> List[str]:
 def fetch_version(init_file: Path) -> str:
     """Fetch package version from root `__init__.py` file."""
     with init_file.open("r", encoding="utf-8") as file:
-        return VERSION_REGEX.search(file.read()).group(1)
+        version_math = VERSION_REGEX.search(file.read())
+        assert version_math is not None
+        return version_math.group(1)
 
 
 NAME = PACKAGE_NAME
@@ -104,7 +106,7 @@ PYTHON_REQUIREMENTS = ">=3.7"
 
 INTERNAL_LIB_DIR = Path("./build/source/internal/")
 
-MODULES = cythonize(
+MODULES: Any = cythonize(
     Extension(
         "optmath._internal.interface",
         sources=["source/optmath/_internal/interface.pyx"],

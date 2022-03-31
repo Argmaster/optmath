@@ -1,20 +1,27 @@
+from typing import Any, Dict, List, Tuple, Type
+
 import pytest
 
 
 class MarkerFlagPairMeta(type):
 
-    subclasses = []
+    subclasses: List[Type["MarkerFlagPairBase"]] = []
 
-    def __new__(cls, name, bases, attrs):
-        subclass = super(MarkerFlagPairMeta, cls).__new__(
-            cls, name, bases, attrs
-        )
+    def __new__(
+        cls: Any,
+        name: str,
+        bases: Tuple[type, ...],
+        attrs: Dict[str, Any],
+    ):
+        subclass: Type["MarkerFlagPairBase"] = super(
+            MarkerFlagPairMeta, cls
+        ).__new__(cls, name, bases, attrs)
         if name != "MarkerFlagPairBase":
             cls.subclasses.append(subclass)
         return subclass
 
     @classmethod
-    def addoptions(cls, parser):
+    def addoptions(cls, parser: Any):
         for subclass in cls.subclasses:
             parser.addoption(
                 subclass.get_flag(),
@@ -24,7 +31,7 @@ class MarkerFlagPairMeta(type):
             )
 
     @classmethod
-    def addinivalue_line(cls, config):
+    def addinivalue_line(cls, config: Any):
         for subclass in cls.subclasses:
             config.addinivalue_line(
                 "markers",
@@ -32,13 +39,17 @@ class MarkerFlagPairMeta(type):
             )
 
     @classmethod
-    def collection_modifyitems(cls, config, items):  # pragma: no cover
+    def collection_modifyitems(
+        cls, config: Any, items: List[Any]
+    ):  # pragma: no cover
         for subclass in cls.subclasses:
             if config.getoption(subclass.get_flag()):
                 cls._skip_item(items, subclass)
 
     @classmethod
-    def _skip_item(cls, items, subclass):  # pragma: no cover
+    def _skip_item(
+        cls, items: List[Any], subclass: Type["MarkerFlagPairBase"]
+    ):  # pragma: no cover
         skip = pytest.mark.skip(reason=subclass.mark_reason)
         for item in items:
             if subclass.mark in item.keywords:
@@ -52,9 +63,9 @@ class MarkerFlagPairBase(metaclass=MarkerFlagPairMeta):
     mark_doc: str
     mark_reason: str
 
-    def __new__(cls: "MarkerFlagPairBase") -> "MarkerFlagPairBase":
+    def __new__(cls):
         raise RuntimeError(
-            f"{cls.__qualname__} is not ment to be instantiated."
+            f"{cls.__qualname__} is not meant to be instantiated."
         )
 
     @classmethod

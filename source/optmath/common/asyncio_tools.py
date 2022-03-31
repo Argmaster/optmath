@@ -4,7 +4,7 @@ import asyncio
 from typing import Any, Coroutine
 
 
-def await_async(task: Coroutine) -> Any:
+def await_async(task: Coroutine[Any, Any, Any]) -> Any:
     """Await async task in sync function.
 
     Parameters

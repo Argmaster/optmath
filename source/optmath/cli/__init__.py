@@ -2,7 +2,6 @@
 
 
 import importlib.util
-import logging
 from pathlib import Path
 from typing import List
 
@@ -18,12 +17,12 @@ def cli(args: List[str]):
     return optmath(args)
 
 
-@click.group(invoke_without_command=True)
-@click.option(
-    "-V",
+@click.group
+@click.version_option(
+    __version__,
     "--version",
-    is_flag=True,
-    default=False,
+    "-V",
+    package_name="optmath",
 )
 @click.option(
     "-d",
@@ -39,23 +38,22 @@ def cli(args: List[str]):
     is_flag=True,
     help="Enable verbose logging, do not implies debug mode.",
 )
-def optmath(version: bool, debug: bool, verbose: bool):
+def optmath(debug: bool, verbose: bool):
     """optmath entry point description."""
-    if version:
-        print(f"optmath version {__version__}")
-        exit(0)
-    else:
-        configure_logger(debug, verbose)
+    configure_logger(debug, verbose)
 
 
-# automatically add all commands defined in CLI dir
-for file in DIR.glob("*.py"):
-    if not file.name.startswith("_"):
-        module_name = file.name.lstrip().rstrip(".py")
-        module_spec = importlib.util.spec_from_file_location(
-            module_name, str(file)
-        )
-        module = importlib.util.module_from_spec(module_spec)
-        module_spec.loader.exec_module(module)
+def auto_load_commands_from_cli_folder():
+    # automatically add all commands defined in CLI dir
+    for file in DIR.glob("*.py"):
+        if not file.name.startswith("_"):
+            module_name = file.name.lstrip().rstrip(".py")
+            module_spec = importlib.util.spec_from_file_location(
+                module_name, str(file)
+            )
+            assert module_spec is not None
+            module = importlib.util.module_from_spec(module_spec)
+            assert module_spec.loader is not None
+            module_spec.loader.exec_module(module)
 
-        optmath.add_command(getattr(module, module_name))
+            optmath.add_command(getattr(module, module_name))
