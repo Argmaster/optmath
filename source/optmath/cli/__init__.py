@@ -13,7 +13,7 @@ DIR = Path(__file__).parent
 
 
 def cli(args: List[str]):
-    """optmath CLI interface API endpoint."""
+    """Optmath CLI interface API endpoint."""
     return optmath(args)
 
 
