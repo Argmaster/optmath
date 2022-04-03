@@ -1,0 +1,26 @@
+from typing import List
+
+import numpy as np
+from numpy.typing import NDArray
+
+from ..cluster import Cluster
+from .selector import DistanceSelectorBase
+
+
+class CompleteLinkage(DistanceSelectorBase):
+    def initial(self, first: Cluster, second: Cluster) -> float:
+        return max(self.distance(f, s) for f in first for s in second)
+
+    def new_distance_vector(
+        self,
+        to_reduce: List[int],
+        distance_matrix: NDArray[np.float64],
+        _: Cluster,
+        __: List[Cluster],
+    ):
+        old_size = len(distance_matrix)
+        return [
+            max(distance_matrix[to_reduce, i])
+            for i in range(old_size)
+            if i not in to_reduce
+        ]

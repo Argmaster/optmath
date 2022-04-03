@@ -3,6 +3,6 @@ per-file-ignores =
     # imported but unused: creating interface
     __init__.py: F401
 max-line-length = 79
-extend-ignore = E203,E501,E741,B001,AZ100
+extend-ignore = E203,E501,E741,B001,N802
 exclude = .tox,.eggs,build,dist,typings,.temp
 docstring-convention = numpy

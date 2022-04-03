@@ -26,8 +26,9 @@ def clang_format_all():
     )
     for file_path in all_c_like_files:
         file_path = str(file_path.resolve(True))
-        processes.append(sbp.Popen(["clang-format", file_path, "-i"]))
-        print(file_path)
+        if "cmake" not in file_path.lower():
+            processes.append(sbp.Popen(["clang-format", file_path, "-i"]))
+            print(file_path)
     for process in processes:
         process.wait()
         result += process.returncode
