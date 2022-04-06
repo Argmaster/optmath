@@ -26,7 +26,6 @@ class HCAStep:
                 new_data.append(row)
 
         new_distance_matrix = self.distance_matrix
-
         if reduced_data:
             new_cluster = Cluster(
                 max(c.ID for c in self.data) + 1, tuple(reduced_data), height
@@ -44,6 +43,16 @@ class HCAStep:
             self.distance_selector,
             new_distance_matrix,
         )
+
+    def _indexes_to_reduce(self):
+        min_value = np.inf
+        index_pair = []
+        for i, row in enumerate(self.distance_matrix):
+            for j in range(i):
+                if row[j] < min_value:
+                    index_pair = (i, j)
+                    min_value = row[j]
+        return index_pair, min_value
 
     def _new_distance_matrix(self, to_reduce, new_distance_vector):
         # remove reduced rows and columns
@@ -64,17 +73,6 @@ class HCAStep:
             )
 
         return new_distance_matrix
-
-    def _indexes_to_reduce(self):
-        min_value = np.inf
-        index_pair = []
-        for i, row in enumerate(self.distance_matrix):
-            for j in range(i):
-                if row[j] < min_value:
-                    index_pair = (i, j)
-                    min_value = row[j]
-
-        return index_pair, min_value
 
     def __str__(self) -> str:
         return f"Step({', '.join(str(c) for c in self.data)})"
