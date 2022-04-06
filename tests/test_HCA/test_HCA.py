@@ -63,3 +63,12 @@ def test_HCA_dendrogram():
     plt.savefig(buffer_scipy, format="png")
 
     assert buffer_custom.read() == buffer_scipy.read()
+
+
+def test_HCA_dendrogram_show():
+    algorithm = HCA(clusters, CompleteLinkage(Euclidean()))
+    cluster = algorithm.result()
+
+    z = cluster.Z()
+    hierarchy.dendrogram(z, leaf_rotation=90.0, leaf_font_size=8.0)
+    plt.show()
