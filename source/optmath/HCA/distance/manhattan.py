@@ -6,4 +6,4 @@ from .distance import DistanceBase
 
 class Manhattan(DistanceBase):
     def __call__(self, first: RecordBase, second: RecordBase) -> float:
-        return np.sum(first.numeric() - second.numeric())
+        return np.sum(np.abs(first.numeric() - second.numeric()))

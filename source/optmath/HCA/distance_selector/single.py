@@ -8,9 +8,6 @@ from .selector import DistanceSelectorBase
 
 
 class SingleLinkage(DistanceSelectorBase):
-    def initial(self, first: Cluster, second: Cluster) -> float:
-        return max(self.distance(f, s) for f in first for s in second)
-
     def new_distance_vector(
         self,
         to_reduce: List[int],

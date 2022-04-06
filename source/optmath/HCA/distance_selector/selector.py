@@ -13,9 +13,8 @@ from ..distance import DistanceBase
 class DistanceSelectorBase(ABC):
     distance: DistanceBase
 
-    @abstractmethod
     def initial(self, first: Cluster, second: Cluster) -> float:
-        ...
+        return self.distance(first[0], second[0])
 
     @abstractmethod
     def new_distance_vector(

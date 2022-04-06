@@ -19,6 +19,9 @@ class Cluster:
     def new(cls, data: Tuple[Any]) -> List["Cluster"]:
         return [Cluster(record.ID, (record,)) for record in data]
 
+    def __getitem__(self, index: int):
+        return self.ob_list[index]
+
     def __iter__(self):
         return iter(self.ob_list)
 

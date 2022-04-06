@@ -31,3 +31,7 @@ class RecordBase:
 
     def __len__(self):
         return 1
+
+
+def autoscale(data: NDArray[np.float64]) -> NDArray[np.float64]:
+    return [(row - row.mean()) / row.std() for row in data]

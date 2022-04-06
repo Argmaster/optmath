@@ -66,15 +66,15 @@ class HCAStep:
         return new_distance_matrix
 
     def _indexes_to_reduce(self):
-        min_value = np.min(
-            self.distance_matrix[np.nonzero(self.distance_matrix)]
-        )
+        min_value = np.inf
+        index_pair = []
         for i, row in enumerate(self.distance_matrix):
             for j in range(i):
-                if row[j] == min_value:
-                    return [i, j], min_value
+                if row[j] < min_value:
+                    index_pair = (i, j)
+                    min_value = row[j]
 
-        return [], min_value
+        return index_pair, min_value
 
     def __str__(self) -> str:
         return f"Step({', '.join(str(c) for c in self.data)})"
