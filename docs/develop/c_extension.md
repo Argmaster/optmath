@@ -8,6 +8,30 @@ For Cython explanation check out cython docs
 Building is described on
 [this](https://cython.readthedocs.io/en/latest/){:target="\_blank"} page.
 
+# GoogleTest
+
+-   [Documentation for GoogleTest](https://google.github.io/googletest/)
+-   [Documentation for Git submodule](https://git-scm.com/docs/git-submodule)
+
+To add GoogleTest to git repository (already done) use
+
+```
+git submodule add https://github.com/google/googletest external/googletest
+```
+
+To initialize git submodules use
+
+```
+git submodule update --init --recursive
+```
+
+To checkout specific version of GoogleTest use
+
+```
+cd external/googletest
+git checkout release-1.11.0
+```
+
 # Building
 
 In this project, building binary extensions to python is designed as a two
