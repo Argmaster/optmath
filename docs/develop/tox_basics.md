@@ -129,7 +129,7 @@ environment are performed in place.
 
 !!! Success "This environment is lightweight, running tox -e check often is fine."
 
- Similarly to devenv it is bullet proof
+Similarly to devenv it is bullet proof
 in comparison to other non-utility environments (mainly test runners). It
 should just install on demand, and every failure should be considered and
 fixed permanently.
@@ -137,7 +137,6 @@ fixed permanently.
 ---
 
 ### `pyXX`
-
 
 !!! Warning "pyXX - test runner envs - they require special care and you are responsible for their well being."
 
@@ -192,6 +191,26 @@ interface. Visit
 [C/C++ Extensions](../c_extension/#cc-extensions){:target="\_blank"} section to
 learn more about how C/C++ Extensions work.
 
+It can accept additional arguments:
+
+-   **--clean/--no-clean** forces a 'clean' build - removes all previously
+    compiled binaries and compiles everything again. Default is clean.
+
+-   **--skip/--no-skip** makes call to this environment a noop. Default is no-skip.
+
+-   **--release/--debug** selects build configuration for cmake. Default is release.
+
+---
+
+### `googletest`
+
+Builds C/C++ extension library with `tox -e cmake` then runs C++ test suite with CTest.
+Environment name comes from library used for test suite - Google Test
+
+```shell
+tox -e googletest
+```
+
 ---
 
 ### `docs`
@@ -239,6 +258,7 @@ environment. Built packages (wheels) are stored in `dist/` directory.
 ```
 devenv
 cmake
+googletest
 docs
 check
 py37
