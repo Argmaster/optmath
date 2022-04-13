@@ -20,11 +20,11 @@ class Cluster:
         return [Cluster(record.ID, (record,)) for record in data]
 
     @property
-    def left(self):
+    def left(self) -> "Cluster":
         return self.ob_list[0]
 
     @property
-    def right(self):
+    def right(self) -> "Cluster":
         return self.ob_list[1]
 
     def __getitem__(self, index: int):
@@ -66,4 +66,4 @@ class Cluster:
         return self.left._is_leaf() and self.right._is_leaf()
 
     def _z_matrix_row(self) -> ZMatrixRowT:
-        return (self.ob_list[0].ID, self.ob_list[1].ID, self.height, len(self))
+        return (self.left.ID, self.right.ID, self.height, len(self))
