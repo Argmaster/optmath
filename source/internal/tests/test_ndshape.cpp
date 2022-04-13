@@ -13,7 +13,7 @@ namespace optmath {
         ASSERT_EQ(test_shape.size(), 3);
     }
 
-    TEST_F(NDShapeTest, BufferSize) {
+    TEST_F(NDShapeTest, BufferSize3Dims) {
         auto test_shape = optmath::NDShape{2, 1, 4};
         ASSERT_EQ(test_shape.buffer_size(), 8);
     }
@@ -31,17 +31,4 @@ namespace optmath {
         ASSERT_EQ(test_shape[1], 32);
     }
 
-    TEST_F(NDShapeTest, EqualityCheck) {
-        ASSERT_EQ(optmath::NDShape({32, 32}), optmath::NDShape({32, 32}));
-        ASSERT_FALSE(optmath::NDShape({32, 32}) ==
-                     optmath::NDShape({32, 32, 32}));
-        ASSERT_FALSE(optmath::NDShape({32, 32}) == optmath::NDShape({3, 32}));
-        ASSERT_FALSE(optmath::NDShape({32, 32}) == optmath::NDShape({32, 3}));
-    }
-    TEST_F(NDShapeTest, InequalityCheck) {
-        ASSERT_FALSE(optmath::NDShape({32, 32}) != optmath::NDShape({32, 32}));
-        ASSERT_NE(optmath::NDShape({32, 32}), optmath::NDShape({32, 32, 32}));
-        ASSERT_NE(optmath::NDShape({32, 32}), optmath::NDShape({3, 32}));
-        ASSERT_NE(optmath::NDShape({32, 32}), optmath::NDShape({32, 3}));
-    }
 }  // namespace optmath
