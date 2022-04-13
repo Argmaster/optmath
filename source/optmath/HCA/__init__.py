@@ -1,5 +1,5 @@
 from .cluster import Cluster
-from .distance import Euclidean
+from .distance import Chebyshev, Euclidean, Manhattan
 from .distance_selector import (
     CompleteLinkage,
     DistanceSelectorBase,
@@ -11,6 +11,8 @@ from .record import RecordBase
 
 __all__ = [
     "Euclidean",
+    "Manhattan",
+    "Chebyshev",
     "HCA",
     "DistanceSelectorBase",
     "CompleteLinkage",
