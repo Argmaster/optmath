@@ -5,7 +5,6 @@ project(optmath_root VERSION "1.0.0" LANGUAGES CXX)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_BUILD_TYPE "Release")
 
 # google test library setup
 add_subdirectory(

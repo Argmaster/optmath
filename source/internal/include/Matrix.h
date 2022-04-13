@@ -4,20 +4,21 @@
 #include <memory>
 #include <type_traits>
 #include <vector>
-#include "Shape.h"
+
+#include "NDShape.h"
 
 namespace optmath {
 
     template <typename primitive>
     class Matrix {
-        const Shape shape;
+        const NDShape shape;
         std::shared_ptr<primitive[]> buffer;
 
         static_assert(std::is_arithmetic<primitive>::value,
                       "primitive must be a floating point type");
 
        public:
-        Matrix(const Shape& shape_) : shape(shape_) {}
+        Matrix(const NDShape& shape_) : shape(shape_) {}
 
         // information-only function
 
