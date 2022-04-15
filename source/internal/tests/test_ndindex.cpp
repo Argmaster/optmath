@@ -16,6 +16,54 @@ namespace optmath {
         ASSERT_EQ(test_index.size(), 3);
     }
 
+    TEST_F(NDIndexTest, CopyConstruction) {
+        auto test_index = optmath::NDIndex({2, 1, 4});
+        { auto test_index_copy{test_index}; }
+        ASSERT_EQ(test_index[0], 2LL);
+        ASSERT_EQ(test_index[1], 1LL);
+        ASSERT_EQ(test_index[2], 4LL);
+    }
+
+    TEST_F(NDIndexTest, CopyAssignment) {
+        auto test_index = optmath::NDIndex({2, 1, 4});
+        {
+            optmath::NDIndex test_index_copy{3, 3};
+            ASSERT_EQ(test_index_copy[0], 3);
+            ASSERT_EQ(test_index_copy[1], 3LL);
+            test_index_copy = test_index;
+            ASSERT_EQ(test_index_copy[0], 2LL);
+            ASSERT_EQ(test_index_copy[1], 1LL);
+            ASSERT_EQ(test_index_copy[2], 4LL);
+        }
+        ASSERT_EQ(test_index[0], 2LL);
+        ASSERT_EQ(test_index[1], 1LL);
+        ASSERT_EQ(test_index[2], 4LL);
+    }
+
+    TEST_F(NDIndexTest, MoveConstruction) {
+        auto test_index = optmath::NDIndex({2, 1, 4});
+        { auto test_index_copy{std::move(test_index)}; }
+        ASSERT_EQ(test_index[0], 2LL);
+        ASSERT_EQ(test_index[1], 1LL);
+        ASSERT_EQ(test_index[2], 4LL);
+    }
+
+    TEST_F(NDIndexTest, MoveAssignment) {
+        auto test_index = optmath::NDIndex({2, 1, 4});
+        {
+            optmath::NDIndex test_index_copy{3, 3};
+            ASSERT_EQ(test_index_copy[0], 3);
+            ASSERT_EQ(test_index_copy[1], 3LL);
+            test_index_copy = std::move(test_index);
+            ASSERT_EQ(test_index_copy[0], 2LL);
+            ASSERT_EQ(test_index_copy[1], 1LL);
+            ASSERT_EQ(test_index_copy[2], 4LL);
+        }
+        ASSERT_EQ(test_index[0], 2LL);
+        ASSERT_EQ(test_index[1], 1LL);
+        ASSERT_EQ(test_index[2], 4LL);
+    }
+
     TEST_F(NDIndexTest, EqualityCheck) {
         ASSERT_EQ(optmath::NDIndex({32, 32}), optmath::NDIndex({32, 32}));
         ASSERT_FALSE(optmath::NDIndex({32, 32}) ==
@@ -65,4 +113,5 @@ namespace optmath {
             i++;
         }
     }
+
 }  // namespace optmath

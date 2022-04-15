@@ -31,4 +31,12 @@ namespace optmath {
         ASSERT_EQ(test_shape[1], 32);
     }
 
+    TEST_F(NDShapeTest, InBufferPosition) {
+        auto test_shape = optmath::NDShape{4, 5, 3};
+        ASSERT_EQ(test_shape.in_buffer_position({1, 0, 1}), 21);
+
+        auto test_shape_2 = optmath::NDShape{38, 11};
+        ASSERT_DEATH(test_shape_2.in_buffer_position({1, 0, 1}), "");
+    }
+
 }  // namespace optmath
