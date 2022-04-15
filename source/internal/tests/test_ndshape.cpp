@@ -12,6 +12,7 @@ namespace optmath {
         ASSERT_EQ(test_shape[2], 4);
         ASSERT_EQ(test_shape.size(), 3);
     }
+    // TODO Add tests for move and copy
 
     TEST_F(NDShapeTest, BufferSize3Dims) {
         auto test_shape = optmath::NDShape{2, 1, 4};

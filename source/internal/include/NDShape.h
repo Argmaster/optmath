@@ -22,6 +22,7 @@ namespace optmath {
                 std::execution::par, this->cbegin(), this->cend(), 1,
                 [](int64_t first, int64_t second) { return first * second; });
         }
+        // TODO implement those
         // copy
         // NDShape(const NDShape&) = delete;
         // NDShape& operator=(const NDShape&) = delete;
