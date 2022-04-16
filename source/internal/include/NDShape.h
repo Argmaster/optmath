@@ -14,24 +14,21 @@ namespace optmath {
         std::size_t nd_buffer_size;
 
        public:
-        NDShape(const std::initializer_list<int64_t>& shape_)
+        // inherit all constructors
+        using NDIndex::NDIndex;
+        // construct from NDShape({a, b, ...})
+        NDShape(const std::initializer_list<int64_t> &shape_)
             : NDIndex(shape_) {
-            // calculates and caches minimal buffer size required for this
-            // shape
+            // calculates and caches minimal buffer size required for
+            // nd buffer with this shape
             nd_buffer_size = std::reduce(
                 std::execution::par, this->cbegin(), this->cend(), 1,
                 [](int64_t first, int64_t second) { return first * second; });
         }
-        // copy
-        // NDShape(const NDShape&) = delete;
-        // NDShape& operator=(const NDShape&) = delete;
-        // move
-        // NDShape(NDShape&&) = delete;
-        // NDShape& operator=(NDShape&&) = delete;
         // total size of buffer required to contain tensor of this shape
         std::size_t buffer_size() const { return nd_buffer_size; }
         // Calculates in buffer index of element pointed by NDIndex object.
-        std::size_t in_buffer_position(const NDIndex& index) {
+        std::size_t in_buffer_position(const NDIndex &index) {
             // size inequality is UB
             assert(index.size() == this->size());
 

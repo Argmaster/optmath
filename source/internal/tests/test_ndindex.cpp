@@ -15,7 +15,6 @@ namespace optmath {
         ASSERT_EQ(test_index[2], 4);
         ASSERT_EQ(test_index.size(), 3);
     }
-
     TEST_F(NDIndexTest, CopyConstruction) {
         auto test_index = optmath::NDIndex({2, 1, 4});
         { auto test_index_copy{test_index}; }
