@@ -11,9 +11,30 @@ namespace optmath {
         ASSERT_EQ(buff.shape(), NDShape({32, 32}));
     }
 
+    TEST_F(NDBufferTest, CopyConstruction) {
+        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff1 = buff0;
+        ASSERT_EQ(buff1.buffer_reference_count(), 2);
+        ASSERT_EQ(buff0.shape(), NDShape({32, 32}));
+        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
+    }
+
+    TEST_F(NDBufferTest, CopyAssignment) {
+        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff1 = NDBuffer<int>({5, 5});
+        ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
+        buff0 = buff1;
+        ASSERT_EQ(buff1.buffer_reference_count(), 2);
+        ASSERT_EQ(buff0.shape(), NDShape({5, 5}));
+        ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
+    }
+
     TEST_F(NDBufferTest, MoveConstruction) {
-        auto buff(std::move(NDBuffer<int>({32, 32})));
-        ASSERT_EQ(buff.shape(), NDShape({32, 32}));
+        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff1(std::move(buff0));
+        ASSERT_EQ(buff1.buffer_reference_count(), 1);
+        ASSERT_EQ(buff0.shape(), NDShape({}));
+        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
     }
 
     TEST_F(NDBufferTest, MoveAssignment) {

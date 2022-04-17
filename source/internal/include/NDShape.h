@@ -75,6 +75,9 @@ namespace optmath {
             }
             return position;
         }
+        // C++ std::out << NDShape(); compatibility
+        friend std::ostream &operator<<(std::ostream &out,
+                                        const NDShape &other);
     };
 
 }  // namespace optmath

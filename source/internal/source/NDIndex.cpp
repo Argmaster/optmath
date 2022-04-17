@@ -25,4 +25,12 @@ namespace optmath {
         return !(lhs == rhs);
     }
 
+    std::ostream &operator<<(std::ostream &out, const NDIndex &other) {
+        for (auto &&i : other) {
+            out << '[' << i << ']';
+        }
+
+        return out;
+    }
+
 }  // namespace optmath

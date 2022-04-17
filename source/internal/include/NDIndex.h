@@ -67,6 +67,9 @@ namespace optmath {
         friend bool operator==(const NDIndex &lhs, const NDIndex &rhs);
         // Check inequality of size or any dimensions of nd_index
         friend bool operator!=(const NDIndex &lhs, const NDIndex &rhs);
+        // C++ std::out << NDIndex(); compatibility
+        friend std::ostream &operator<<(std::ostream &out,
+                                        const NDIndex &other);
     };
 
 }  // namespace optmath
