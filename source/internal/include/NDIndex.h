@@ -14,21 +14,21 @@ namespace optmath {
        public:
         NDIndex(const std::initializer_list<int64_t> &shape_)
             : nd_value(shape_) {}
-        // copy
+        // Copy underlying std::vector
         NDIndex(const NDIndex &other) : nd_value(other.nd_value) {}
+        // Copy underlying std::vector
         NDIndex &operator=(const NDIndex &other) {
             if (this != &other) {
                 this->nd_value = other.nd_value;
             }
             return *this;
         };
-        // move
-        // intentionally move creates a copy of shape
-        NDIndex(NDIndex &&other) : nd_value(other.nd_value){};
-        // intentionally move creates a copy of shape
+        // Move underlying std::vector
+        NDIndex(NDIndex &&other) : nd_value(std::move(other.nd_value)){};
+        // Move underlying std::vector
         NDIndex &operator=(NDIndex &&other) {
             if (this != &other) {
-                this->nd_value = other.nd_value;
+                this->nd_value = std::move(other.nd_value);
             }
             return *this;
         };
@@ -37,32 +37,28 @@ namespace optmath {
         // number of dimensions
         std::size_t size() const { return nd_value.size(); }
         // constant forward iterator
-        std::vector<int64_t>::const_iterator cbegin() const {
+        __shape_vector::const_iterator cbegin() const {
             return nd_value.cbegin();
         }
         // constant forward iterator
-        std::vector<int64_t>::const_iterator cend() const {
-            return nd_value.cend();
-        }
+        __shape_vector::const_iterator cend() const { return nd_value.cend(); }
         // forward iterator but forced to be const - no in place modifications
-        std::vector<int64_t>::const_iterator begin() const {
+        __shape_vector::const_iterator begin() const {
             return nd_value.cbegin();
         }
         // forward iterator but forced to be const - no in place modifications
-        std::vector<int64_t>::const_iterator end() const {
-            return nd_value.cend();
-        }
+        __shape_vector::const_iterator end() const { return nd_value.cend(); }
         // constant reverse iterator
-        std::vector<int64_t>::const_reverse_iterator crbegin() const {
+        __shape_vector::const_reverse_iterator crbegin() const {
             return nd_value.crbegin();
         }
         // constant reverse iterator
-        std::vector<int64_t>::const_reverse_iterator crend() const {
+        __shape_vector::const_reverse_iterator crend() const {
             return nd_value.crend();
         }
-        // only equality/inequality comparisons supported
-        // equality checks equality of all index values
+        // Check equality of size and all dimensions of nd_index
         friend bool operator==(const NDIndex &lhs, const NDIndex &rhs);
+        // Check inequality of size or any dimensions of nd_index
         friend bool operator!=(const NDIndex &lhs, const NDIndex &rhs);
     };
 

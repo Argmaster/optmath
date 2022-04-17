@@ -38,27 +38,20 @@ namespace optmath {
     }
 
     TEST_F(NDShapeTest, MoveConstruction) {
-        auto test_index = optmath::NDShape({2, 1, 4});
-        { auto test_index_copy{std::move(test_index)}; }
-        ASSERT_EQ(test_index[0], 2LL);
-        ASSERT_EQ(test_index[1], 1LL);
-        ASSERT_EQ(test_index[2], 4LL);
+        auto test_index_copy{std::move(optmath::NDShape({2, 1, 4}))};
+        ASSERT_EQ(test_index_copy[0], 2LL);
+        ASSERT_EQ(test_index_copy[1], 1LL);
+        ASSERT_EQ(test_index_copy[2], 4LL);
     }
 
     TEST_F(NDShapeTest, MoveAssignment) {
-        auto test_index = optmath::NDShape({2, 1, 4});
-        {
-            optmath::NDShape test_index_copy{3, 3};
-            ASSERT_EQ(test_index_copy[0], 3);
-            ASSERT_EQ(test_index_copy[1], 3LL);
-            test_index_copy = std::move(test_index);
-            ASSERT_EQ(test_index_copy[0], 2LL);
-            ASSERT_EQ(test_index_copy[1], 1LL);
-            ASSERT_EQ(test_index_copy[2], 4LL);
-        }
-        ASSERT_EQ(test_index[0], 2LL);
-        ASSERT_EQ(test_index[1], 1LL);
-        ASSERT_EQ(test_index[2], 4LL);
+        optmath::NDShape test_index_copy{3, 3};
+        ASSERT_EQ(test_index_copy[0], 3);
+        ASSERT_EQ(test_index_copy[1], 3LL);
+        test_index_copy = optmath::NDShape({2, 1, 4});
+        ASSERT_EQ(test_index_copy[0], 2LL);
+        ASSERT_EQ(test_index_copy[1], 1LL);
+        ASSERT_EQ(test_index_copy[2], 4LL);
     }
 
     TEST_F(NDShapeTest, BufferSize3Dims) {
