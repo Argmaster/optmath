@@ -13,7 +13,8 @@ namespace optmath {
         std::shared_ptr<T[]> nd_buffer;
 
        public:
-        NDBuffer(const NDShape& shape_) : nd_shape(shape_) {
+        NDBuffer(const NDShape& shape_)
+            : nd_shape(shape_) {
             nd_buffer = std::make_shared<T[]>(nd_shape.buffer_size());
         }
         // copy
@@ -21,12 +22,19 @@ namespace optmath {
         NDBuffer& operator=(const NDBuffer&) = delete;
         // move
         NDBuffer(NDBuffer&& other)
-            : nd_buffer(other.nd_buffer),
-              nd_shape(other.nd_shape){};
+            : nd_buffer(std::move(other.nd_buffer)),
+              nd_shape(std::move(other.nd_shape)) {
+            assert(other.nd_buffer == nullptr);
+            assert(other.nd_shape.size() == 0);
+            assert(other.nd_shape.buffer_size() == 0);
+        };
         NDBuffer& operator=(NDBuffer&& other) {
             if (this != &other) {
                 this->nd_buffer = std::move(other.nd_buffer);
                 this->nd_shape = std::move(other.nd_shape);
+                assert(other.nd_buffer == nullptr);
+                assert(other.nd_shape.size() == 0);
+                assert(other.nd_shape.buffer_size() == 0);
             }
             return *this;
         }

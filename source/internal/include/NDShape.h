@@ -14,8 +14,6 @@ namespace optmath {
         std::size_t nd_buffer_size;
 
        public:
-        // inherit all constructors
-        using NDIndex::NDIndex;
         // construct from NDShape({a, b, ...})
         NDShape(const std::initializer_list<int64_t> &shape_)
             : NDIndex(shape_) {
@@ -25,6 +23,33 @@ namespace optmath {
                 std::execution::par, this->cbegin(), this->cend(), 1,
                 [](int64_t first, int64_t second) { return first * second; });
         }
+        NDShape(const NDShape &other)
+            : NDIndex(other) {
+            nd_buffer_size = other.nd_buffer_size;
+        }
+        // Copy underlying std::vector
+        NDShape &operator=(const NDShape &other) {
+            if (this != &other) {
+                this->NDIndex::operator=(other);
+                this->nd_buffer_size = other.nd_buffer_size;
+            }
+            return *this;
+        };
+        // Move underlying std::vector
+        NDShape(NDShape &&other)
+            : NDIndex(std::move(other)) {
+            nd_buffer_size = other.nd_buffer_size;
+            other.nd_buffer_size = 0;
+        };
+        // Move underlying std::vector
+        NDShape &operator=(NDShape &&other) {
+            if (this != &other) {
+                this->NDIndex::operator=(other);
+                this->nd_buffer_size = other.nd_buffer_size;
+                other.nd_buffer_size = 0;
+            }
+            return *this;
+        };
         // total size of buffer required to contain tensor of this shape
         std::size_t buffer_size() const { return nd_buffer_size; }
         // Calculates in buffer index of element pointed by NDIndex object.

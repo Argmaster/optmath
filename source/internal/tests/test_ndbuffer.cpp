@@ -16,6 +16,13 @@ namespace optmath {
         ASSERT_EQ(buff.shape(), NDShape({32, 32}));
     }
 
+    TEST_F(NDBufferTest, MoveAssignment) {
+        auto buff = NDBuffer<int>({32, 32});
+        auto buff2 = std::move(buff);
+        ASSERT_EQ(buff.shape().size(), 0);
+        ASSERT_EQ(buff2.shape(), NDShape({32, 32}));
+    }
+
     TEST_F(NDBufferTest, FillWithOneValue) {
         auto buff = NDBuffer<int>({32, 32});
 

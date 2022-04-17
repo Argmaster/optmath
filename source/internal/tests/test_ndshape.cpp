@@ -15,7 +15,10 @@ namespace optmath {
 
     TEST_F(NDShapeTest, CopyConstruction) {
         auto test_index = optmath::NDShape({2, 1, 4});
-        { auto test_index_copy{test_index}; }
+        {
+            auto test_index_copy{test_index};
+            ASSERT_EQ(test_index_copy.buffer_size(), test_index.buffer_size());
+        }
         ASSERT_EQ(test_index[0], 2LL);
         ASSERT_EQ(test_index[1], 1LL);
         ASSERT_EQ(test_index[2], 4LL);
@@ -31,6 +34,7 @@ namespace optmath {
             ASSERT_EQ(test_index_copy[0], 2LL);
             ASSERT_EQ(test_index_copy[1], 1LL);
             ASSERT_EQ(test_index_copy[2], 4LL);
+            ASSERT_EQ(test_index_copy.buffer_size(), test_index.buffer_size());
         }
         ASSERT_EQ(test_index[0], 2LL);
         ASSERT_EQ(test_index[1], 1LL);
@@ -48,10 +52,13 @@ namespace optmath {
         optmath::NDShape test_index_copy{3, 3};
         ASSERT_EQ(test_index_copy[0], 3);
         ASSERT_EQ(test_index_copy[1], 3LL);
-        test_index_copy = optmath::NDShape({2, 1, 4});
+        auto second = optmath::NDShape({2, 1, 4});
+        auto old_size = second.buffer_size();
+        test_index_copy = std::move(second);
         ASSERT_EQ(test_index_copy[0], 2LL);
         ASSERT_EQ(test_index_copy[1], 1LL);
         ASSERT_EQ(test_index_copy[2], 4LL);
+        ASSERT_EQ(test_index_copy.buffer_size(), old_size);
     }
 
     TEST_F(NDShapeTest, BufferSize3Dims) {

@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -15,20 +16,26 @@ namespace optmath {
         NDIndex(const std::initializer_list<int64_t> &shape_)
             : nd_value(shape_) {}
         // Copy underlying std::vector
-        NDIndex(const NDIndex &other) : nd_value(other.nd_value) {}
+        NDIndex(const NDIndex &other)
+            : nd_value(other.nd_value) {}
         // Copy underlying std::vector
         NDIndex &operator=(const NDIndex &other) {
             if (this != &other) {
                 this->nd_value = other.nd_value;
+                assert(this->nd_value.size() == other.nd_value.size());
             }
             return *this;
         };
         // Move underlying std::vector
-        NDIndex(NDIndex &&other) : nd_value(std::move(other.nd_value)){};
+        NDIndex(NDIndex &&other)
+            : nd_value(std::move(other.nd_value)) {
+            assert(other.nd_value.size() == 0);
+        };
         // Move underlying std::vector
         NDIndex &operator=(NDIndex &&other) {
             if (this != &other) {
                 this->nd_value = std::move(other.nd_value);
+                assert(other.nd_value.size() == 0);
             }
             return *this;
         };
