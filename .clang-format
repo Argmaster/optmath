@@ -5,3 +5,4 @@ ColumnLimit: 79
 NamespaceIndentation: All
 PointerAlignment: Left
 ReferenceAlignment: Left
+PackConstructorInitializers: CurrentLine

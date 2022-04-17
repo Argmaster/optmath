@@ -9,6 +9,7 @@ build
 dist
 typing
 .temp
+external
 """
 
 [build-system]

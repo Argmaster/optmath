@@ -20,8 +20,17 @@ namespace optmath {
         NDBuffer(const NDBuffer&) = delete;
         NDBuffer& operator=(const NDBuffer&) = delete;
         // move
-        NDBuffer(NDBuffer&&) = delete;
-        NDBuffer& operator=(NDBuffer&&) = delete;
+        NDBuffer(NDBuffer&& other)
+            : nd_buffer(other.nd_buffer),
+              nd_shape(other.nd_shape){};
+        NDBuffer& operator=(NDBuffer&& other) {
+            if (this != &other) {
+                this->nd_buffer = std::move(other.nd_buffer);
+                this->nd_shape = std::move(other.nd_shape);
+            }
+            return *this;
+        }
+
         // Returns shape of current buffer
         const NDShape& shape() const { return nd_shape; }
         // Returns total in memory size of buffer.

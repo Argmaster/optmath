@@ -6,9 +6,13 @@ namespace optmath {
 
     class NDBufferTest : public ::testing::Test {};
 
-    TEST_F(NDBufferTest, NDShapedCreation) {
+    TEST_F(NDBufferTest, FromNDShapedCreation) {
         auto buff = NDBuffer<int>({32, 32});
+        ASSERT_EQ(buff.shape(), NDShape({32, 32}));
+    }
 
+    TEST_F(NDBufferTest, MoveConstruction) {
+        auto buff(std::move(NDBuffer<int>({32, 32})));
         ASSERT_EQ(buff.shape(), NDShape({32, 32}));
     }
 
@@ -38,10 +42,13 @@ namespace optmath {
         }
     }
 
-    TEST_F(NDBufferTest, BufferReferences) {
+    TEST_F(NDBufferTest, BufferReferencesOnRebind) {
         auto buff = NDBuffer<int>({32, 32});
         ASSERT_EQ(buff.buffer_reference_count(), 1);
-        // auto buff2 = buff;
+        auto buff2 = NDBuffer<int>({32, 32});
+        buff2.rebind(buff);
+        ASSERT_EQ(buff.buffer_reference_count(), 2);
+        ASSERT_EQ(buff2.buffer_reference_count(), 2);
     }
 
 }  // namespace optmath
