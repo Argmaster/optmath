@@ -14,6 +14,7 @@ namespace optmath {
     TEST_F(NDBufferTest, CopyConstruction) {
         auto buff0 = NDBuffer<int>({32, 32});
         auto buff1 = buff0;
+        ASSERT_EQ(buff0.buffer_reference_count(), 2);
         ASSERT_EQ(buff1.buffer_reference_count(), 2);
         ASSERT_EQ(buff0.shape(), NDShape({32, 32}));
         ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
@@ -24,6 +25,7 @@ namespace optmath {
         auto buff1 = NDBuffer<int>({5, 5});
         ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
         buff0 = buff1;
+        ASSERT_EQ(buff0.buffer_reference_count(), 2);
         ASSERT_EQ(buff1.buffer_reference_count(), 2);
         ASSERT_EQ(buff0.shape(), NDShape({5, 5}));
         ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
@@ -32,16 +34,19 @@ namespace optmath {
     TEST_F(NDBufferTest, MoveConstruction) {
         auto buff0 = NDBuffer<int>({32, 32});
         auto buff1(std::move(buff0));
+        ASSERT_EQ(buff0.buffer_reference_count(), 0);
         ASSERT_EQ(buff1.buffer_reference_count(), 1);
         ASSERT_EQ(buff0.shape(), NDShape({}));
         ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
     }
 
     TEST_F(NDBufferTest, MoveAssignment) {
-        auto buff = NDBuffer<int>({32, 32});
-        auto buff2 = std::move(buff);
-        ASSERT_EQ(buff.shape().size(), 0);
-        ASSERT_EQ(buff2.shape(), NDShape({32, 32}));
+        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff1 = std::move(buff0);
+        ASSERT_EQ(buff0.buffer_reference_count(), 0);
+        ASSERT_EQ(buff1.buffer_reference_count(), 1);
+        ASSERT_EQ(buff0.shape().size(), 0);
+        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
     }
 
     TEST_F(NDBufferTest, FillWithOneValue) {
@@ -79,4 +84,25 @@ namespace optmath {
         ASSERT_EQ(buff2.buffer_reference_count(), 2);
     }
 
-}  // namespace optmath
+    TEST_F(NDBufferTest, SetBufferContent) {
+        auto buff2D = NDBuffer<int>({3, 3});
+        buff2D.set<std::vector<int>>({
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9},
+        });
+
+        auto buff3D = NDBuffer<int>({2, 2, 2});
+        buff3D.set<std::vector<std::vector<int>>>({
+            {
+                {2, 2},
+                {2, 2},
+            },
+            {
+                {2, 2},
+                {2, 2},
+            },
+        });
+    }
+
+} // namespace optmath

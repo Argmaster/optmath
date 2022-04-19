@@ -72,7 +72,7 @@ namespace optmath {
     }
 
     TEST_F(NDIndexTest, IteratorValueTest) {
-        auto test_index = optmath::NDIndex({2, 1, 4});
+        auto                 test_index = optmath::NDIndex({2, 1, 4});
         std::vector<int64_t> sample({2, 1, 4});
 
         auto lhsb = test_index.cbegin();
@@ -83,7 +83,7 @@ namespace optmath {
         ASSERT_EQ(test_index.size(), sample.size());
 
         while (lhsb != lhse && rhsb != rhse) {
-            auto left = *lhsb;
+            auto left  = *lhsb;
             auto right = *rhsb;
 
             ASSERT_EQ(left, right);
@@ -94,16 +94,16 @@ namespace optmath {
     }
 
     TEST_F(NDIndexTest, ForEachCompatTest) {
-        auto test_index = optmath::NDIndex({2, 1, 4});
+        auto                 test_index = optmath::NDIndex({2, 1, 4});
         std::vector<int64_t> sample({2, 1, 4});
 
         ASSERT_EQ(test_index.size(), sample.size());
 
         auto i = 0;
-        for (auto &&item : test_index) {
+        for (auto&& item : test_index) {
             ASSERT_EQ(item, sample[i]);
             i++;
         }
     }
 
-}  // namespace optmath
+} // namespace optmath

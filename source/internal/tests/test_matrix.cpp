@@ -9,4 +9,4 @@ namespace optmath {
         auto mtx = optmath::MatrixF32({2, 2});
     }
 
-}  // namespace optmath
+} // namespace optmath

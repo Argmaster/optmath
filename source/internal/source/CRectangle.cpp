@@ -23,8 +23,8 @@ namespace shapes {
 
     // Get the size of the rectangle.
     // Put the size in the pointer args
-    void Rectangle::getSize(int *width, int *height) {
-        (*width) = x1 - x0;
+    void Rectangle::getSize(int* width, int* height) {
+        (*width)  = x1 - x0;
         (*height) = y1 - y0;
     }
 
@@ -35,4 +35,4 @@ namespace shapes {
         this->x1 += dx;
         this->y1 += dy;
     }
-}  // namespace shapes
+} // namespace shapes

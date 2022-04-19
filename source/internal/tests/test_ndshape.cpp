@@ -52,8 +52,8 @@ namespace optmath {
         optmath::NDShape test_index_copy{3, 3};
         ASSERT_EQ(test_index_copy[0], 3);
         ASSERT_EQ(test_index_copy[1], 3LL);
-        auto second = optmath::NDShape({2, 1, 4});
-        auto old_size = second.buffer_size();
+        auto second     = optmath::NDShape({2, 1, 4});
+        auto old_size   = second.buffer_size();
         test_index_copy = std::move(second);
         ASSERT_EQ(test_index_copy[0], 2LL);
         ASSERT_EQ(test_index_copy[1], 1LL);
@@ -87,4 +87,4 @@ namespace optmath {
         ASSERT_DEATH(test_shape_2.in_buffer_position({1, 0, 1}), "");
     }
 
-}  // namespace optmath
+} // namespace optmath

@@ -1,3 +1,3 @@
 #include "Matrix.h"
 
-namespace optmath {}  // namespace optmath
+namespace optmath {} // namespace optmath

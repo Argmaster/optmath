@@ -72,6 +72,7 @@ AUTHOR = "optmath team"
 AUTHOR_EMAIL = "argmaster.world@gmail.com"
 URL = "https://github.com/Argmaster/optmath"
 PACKAGES = find_packages(where="source")
+
 PACKAGE_DIR = {"": "source"}
 PACKAGE_PYTHON_MODULES = fetch_package_python_modules(SOURCE_DIR / "*.py")
 INCLUDE_PACKAGE_DATA = True
@@ -116,7 +117,7 @@ MODULES: Any = cythonize(
         language="c++",
     )
 )
-PACKAGE_DATA = {"optmath._internal.interface": ["*.so"]}
+PACKAGE_DATA = {}
 
 
 def run_setup_script():
