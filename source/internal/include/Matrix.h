@@ -9,7 +9,8 @@
 
 namespace optmath {
 
-    template <typename primitive> class Matrix {
+    template <typename primitive>
+    class Matrix {
         const NDShape                shape;
         std::shared_ptr<primitive[]> buffer;
 

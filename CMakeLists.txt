@@ -19,7 +19,7 @@ link_libraries(
 )
 include(GoogleTest)
 
-function(create_tests ROOT INCLUDE LIBRARIES)
+function(create_tests ROOT LIBRARIES)
     # Automatic test discovery function
 
     file(GLOB_RECURSE test_files "${ROOT}/tests/test_*.cpp")
@@ -30,8 +30,7 @@ function(create_tests ROOT INCLUDE LIBRARIES)
             ${file}
         )
         target_include_directories(${TEST_NAME}
-            PRIVATE
-            ${INCLUDE}
+            PRIVATE "${ROOT}/include" "${ROOT}/templates"
         )
         target_link_libraries(${TEST_NAME}
             PRIVATE

@@ -23,6 +23,7 @@ def clang_format_all():
     all_c_like_files = itertools.chain(
         INTERNAL_C_CPP.glob("**/*.c*"),
         INTERNAL_C_CPP.rglob("**/*.h*"),
+        INTERNAL_C_CPP.rglob("**/*.t*"),
     )
     for file_path in all_c_like_files:
         file_path = str(file_path.resolve(True))

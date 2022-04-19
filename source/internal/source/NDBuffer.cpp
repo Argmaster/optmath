@@ -2,30 +2,23 @@
 
 namespace optmath {
 
-    template class NDBuffer<int8_t>;
-    template class NDBuffer<int16_t>;
-    template class NDBuffer<int32_t>;
-    template class NDBuffer<int64_t>;
+#define INSTANTIATE_NDBUFFER(typename, alias)                                 \
+    template class NDBuffer<typename>;                                        \
+    using alias = NDBuffer<typename>;
 
-    template class NDBuffer<uint8_t>;
-    template class NDBuffer<uint16_t>;
-    template class NDBuffer<uint32_t>;
-    template class NDBuffer<uint64_t>;
+    INSTANTIATE_NDBUFFER(int8_t, NDBufferInt8)
+    INSTANTIATE_NDBUFFER(int16_t, NDBufferInt16);
+    INSTANTIATE_NDBUFFER(int32_t, NDBufferInt32);
+    INSTANTIATE_NDBUFFER(int64_t, NDBufferInt64);
 
-    template class NDBuffer<float>;
-    template class NDBuffer<double>;
+    INSTANTIATE_NDBUFFER(uint8_t, NDBufferUInt8)
+    INSTANTIATE_NDBUFFER(uint16_t, NDBufferUInt16);
+    INSTANTIATE_NDBUFFER(uint32_t, NDBufferUInt32);
+    INSTANTIATE_NDBUFFER(uint64_t, NDBufferUInt64);
 
-    using NDBufferInt8  = NDBuffer<int8_t>;
-    using NDBufferInt16 = NDBuffer<int16_t>;
-    using NDBufferInt32 = NDBuffer<int32_t>;
-    using NDBufferInt64 = NDBuffer<int64_t>;
+    INSTANTIATE_NDBUFFER(float, NDBufferFloat32);
+    INSTANTIATE_NDBUFFER(double, NDBufferFloat64);
 
-    using NDBufferUInt8  = NDBuffer<uint8_t>;
-    using NDBufferUInt16 = NDBuffer<uint16_t>;
-    using NDBufferUInt32 = NDBuffer<uint32_t>;
-    using NDBufferUInt64 = NDBuffer<uint64_t>;
-
-    using NDBufferFloat32 = NDBuffer<float>;
-    using NDBufferFloat64 = NDBuffer<double>;
+#undef INSTANTIATE_NDBUFFER
 
 } // namespace optmath

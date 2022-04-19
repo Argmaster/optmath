@@ -17,16 +17,17 @@ find_package(TBB REQUIRED)
 # find library sources
 file( GLOB_RECURSE OPTMATH_SOURCE "source/*.c*" )
 add_library( optmath STATIC ${OPTMATH_SOURCE} )
+
 target_include_directories(
     optmath
-    PRIVATE "include"
+    PRIVATE "include" "templates"
     )
-set( optmath_external TBB::tbb )
-target_link_libraries( optmath ${optmath_external} )
+set( OPTMATH_EXT_LIBS TBB::tbb )
+target_link_libraries( optmath ${OPTMATH_EXT_LIBS} )
 # ---------------------------------------------------------------------------- #
 #                        create test  suite for optmath                        #
 # ---------------------------------------------------------------------------- #
 
-set( optmath_test_libs optmath ${optmath_external} )
+set( OPTMATH_TEST_LIBS optmath ${OPTMATH_EXT_LIBS} )
 
-create_tests(${PROJECT} ${PROJECT_SOURCE_DIR} "include" ${optmath_test_libs})
+create_tests(${PROJECT} ${PROJECT_SOURCE_DIR} ${OPTMATH_TEST_LIBS})
