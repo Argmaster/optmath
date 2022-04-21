@@ -12,6 +12,7 @@ namespace optmath {
 
     NDBUFFER_TEMPLATE
     class NDBuffer {
+
       private:
         NDShape                              nd_shape;
         std::shared_ptr<NDBUFFER_VAL_TYPE[]> nd_buffer;
@@ -47,16 +48,6 @@ namespace optmath {
         void           fill(const NDBUFFER_VAL_TYPE& value);
 
         NDBUFFER_VAL_TYPE& operator[](const NDIndex& index);
-
-        template <typename __T = std::vector<T>>
-        void set(const std::vector<__T>& vec) {
-            for (auto&& i : vec) {
-                set(i);
-            }
-        }
-        void set(const std::vector<NDBUFFER_VAL_TYPE>& vec) {
-            for (auto&& i : vec) {}
-        }
     };
 
 #define EXTERN_NDBUFFER(typename) extern template class NDBuffer<typename>;

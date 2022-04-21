@@ -75,6 +75,21 @@ namespace optmath {
         }
     }
 
+    TEST_F(NDBufferTest, AccessInNDimensions) {
+        auto buff = NDBuffer<int>({5, 5, 6, 2});
+        buff.fill(0);
+        auto value = buff[{1, 3, 2, 0}];
+        ASSERT_EQ(value, 0);
+    }
+
+    TEST_F(NDBufferTest, WriteSingleValue) {
+        auto buff = NDBuffer<int>({5, 5, 6, 2});
+
+        auto value = buff[{1, 3, 2, 0}];
+        value      = 333;
+        ASSERT_EQ(value, 333);
+    }
+
     TEST_F(NDBufferTest, BufferReferencesOnRebind) {
         auto buff = NDBuffer<int>({32, 32});
         ASSERT_EQ(buff.buffer_reference_count(), 1);
@@ -82,27 +97,6 @@ namespace optmath {
         buff2.rebind(buff);
         ASSERT_EQ(buff.buffer_reference_count(), 2);
         ASSERT_EQ(buff2.buffer_reference_count(), 2);
-    }
-
-    TEST_F(NDBufferTest, SetBufferContent) {
-        auto buff2D = NDBuffer<int>({3, 3});
-        buff2D.set<std::vector<int>>({
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9},
-        });
-
-        auto buff3D = NDBuffer<int>({2, 2, 2});
-        buff3D.set<std::vector<std::vector<int>>>({
-            {
-                {2, 2},
-                {2, 2},
-            },
-            {
-                {2, 2},
-                {2, 2},
-            },
-        });
     }
 
 } // namespace optmath

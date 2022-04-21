@@ -7,6 +7,9 @@ import numpy
 import numpy.typing as npt
 import pandas as pd
 import pytest
+from PIL import Image
+from scipy.cluster import hierarchy
+
 from optmath.HCA import (
     HCA,
     Chebyshev,
@@ -20,8 +23,6 @@ from optmath.HCA import (
     Ward,
 )
 from optmath.HCA.record import autoscale
-from PIL import Image
-from scipy.cluster import hierarchy
 
 
 @dataclass(frozen=True)
@@ -164,14 +165,15 @@ TEST_HCA_DIR = Path(__file__).parent
 def test_HCA_complex_pumpkin_data():
     raw = pd.read_csv(TEST_HCA_DIR / "data" / "test_seeds.csv").to_numpy()
     raw = autoscale(raw)
-    clusters = Cluster.new(PumpkinSeed.new(autoscale(raw)))
-    algorithm = HCA(clusters, Ward(Euclidean()))
+    clusters = Cluster.new(PumpkinSeed.new(raw))
+    algorithm = HCA(clusters, SingleLinkage(Euclidean()))
     cluster = algorithm.result()
 
-    z = hierarchy.linkage(raw, method="ward", metric="euclidean")
+    z = hierarchy.linkage(raw, method="single", metric="euclidean")
     hierarchy.dendrogram(z, leaf_rotation=90.0, leaf_font_size=8.0)
     z = cluster.Z()
     hierarchy.dendrogram(z, leaf_rotation=90.0, leaf_font_size=8.0)
+    plt.show()
 
 
 def test_HCA_complex_pumpkin_data_complete_euclidean():
