@@ -9,12 +9,14 @@
 
 namespace optmath {
 
+    using shape_t = index_t;
+
     class NDShape : public NDIndex {
       private:
         std::size_t nd_buffer_size;
 
       public:
-        NDShape(const std::initializer_list<int64_t>& shape_);
+        NDShape(const std::initializer_list<shape_t>& shape_);
 
         NDShape(const NDShape& other);
         NDShape& operator=(const NDShape& other);

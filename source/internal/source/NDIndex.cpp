@@ -6,7 +6,7 @@ namespace optmath {
      *
      * @param shape_ shape initializer to store
      */
-    NDIndex::NDIndex(const std::initializer_list<int64_t>& shape_)
+    NDIndex::NDIndex(const std::initializer_list<index_t>& shape_)
         : nd_value(shape_) {}
     /**
      * @brief Copy underlying std::vector
@@ -56,9 +56,9 @@ namespace optmath {
      * @brief Acquire index in nth dimension.
      *
      * @param __i index of dimension
-     * @return int64_t& indexer
+     * @return index_t& indexer
      */
-    int64_t& NDIndex::operator[](std::size_t __i) {
+    index_t& NDIndex::operator[](std::size_t __i) {
         return nd_value[__i];
         ;
     }

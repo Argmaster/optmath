@@ -6,13 +6,13 @@ namespace optmath {
      *
      * @param shape_ initial shape
      */
-    NDShape::NDShape(const std::initializer_list<int64_t>& shape_)
+    NDShape::NDShape(const std::initializer_list<shape_t>& shape_)
         : NDIndex(shape_) {
         // calculates and caches minimal buffer size required for
         // nd buffer with this shape
         nd_buffer_size = std::reduce(
             std::execution::par, this->cbegin(), this->cend(), 1,
-            [](int64_t first, int64_t second) { return first * second; });
+            [](shape_t first, shape_t second) { return first * second; });
     }
     /**
      * @brief Construct a new NDShape object, copy value from existing one

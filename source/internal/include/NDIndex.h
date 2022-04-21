@@ -6,14 +6,15 @@
 
 namespace optmath {
 
-    using __shape_vector = std::vector<int64_t>;
+    using index_t = int64_t;
+    using __shape_vector = std::vector<index_t>;
 
     class NDIndex {
       private:
         __shape_vector nd_value;
 
       public:
-        NDIndex(const std::initializer_list<int64_t>& shape_);
+        NDIndex(const std::initializer_list<index_t>& shape_);
 
         NDIndex(const NDIndex& other);
         NDIndex& operator=(const NDIndex& other);
@@ -21,7 +22,7 @@ namespace optmath {
         NDIndex(NDIndex&& other);
         NDIndex& operator=(NDIndex&& other);
 
-        int64_t&    operator[](std::size_t __i);
+        index_t&    operator[](std::size_t __i);
         std::size_t size() const;
 
         __shape_vector::iterator               begin();

@@ -3,9 +3,9 @@
 #include "NDBuffer.h"
 
 #define NDBUFFER_METHOD(return_type)                                          \
-    NDBUFFER_TEMPLATE return_type NDBuffer<NDBUFFER_VAL_TYPE>::
+    NDBUFFER_TEMPLATE return_type NDBuffer<NDBUFFER_VAL_T>::
 
-#define NDBUFFER_T NDBuffer<NDBUFFER_VAL_TYPE>
+#define NDBUFFER_T NDBuffer<NDBUFFER_VAL_T>
 
 namespace optmath {
     /**
@@ -84,7 +84,7 @@ namespace optmath {
      *
      * @param value
      */
-    NDBUFFER_METHOD(void) fill(const NDBUFFER_VAL_TYPE& value) {
+    NDBUFFER_METHOD(void) fill(const NDBUFFER_VAL_T& value) {
         std::fill_n(nd_buffer.get(), nd_shape.buffer_size(), value);
     }
     /**
@@ -93,7 +93,7 @@ namespace optmath {
      * @param index n-dimensional index pointing to element
      * @return T& in buffer element reference
      */
-    NDBUFFER_METHOD(NDBUFFER_VAL_TYPE&) operator[](const NDIndex& index) {
+    NDBUFFER_METHOD(NDBUFFER_VAL_T&) operator[](const NDIndex& index) {
         assert(index.size() == nd_shape.size());
         return nd_buffer[nd_shape.in_buffer_position(index)];
     }
