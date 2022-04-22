@@ -56,12 +56,17 @@ namespace optmath {
         ASSERT_EQ(test_index_copy[2], 4LL);
     }
 
-    TEST_F(NDIndexTest, EqualityCheck) {
-        ASSERT_EQ(optmath::NDIndex({32, 32}), optmath::NDIndex({32, 32}));
-        ASSERT_FALSE(optmath::NDIndex({32, 32}) ==
-                     optmath::NDIndex({32, 32, 32}));
-        ASSERT_FALSE(optmath::NDIndex({32, 32}) == optmath::NDIndex({3, 32}));
-        ASSERT_FALSE(optmath::NDIndex({32, 32}) == optmath::NDIndex({32, 3}));
+    TEST_F(NDIndexTest, EqualityCheck1D) {
+        ASSERT_EQ(optmath::NDIndex({3}), optmath::NDIndex({3}));
+        ASSERT_EQ(optmath::NDIndex({4333}), optmath::NDIndex({4333}));
+        ASSERT_EQ(optmath::NDIndex({0}), optmath::NDIndex({0}));
+        ASSERT_NE(optmath::NDIndex({243335}), optmath::NDIndex({4355445}));
+        // ASSERT_EQ(optmath::NDIndex({32, 32}), optmath::NDIndex({32, 32}));
+        // ASSERT_FALSE(optmath::NDIndex({32, 32}) ==
+        //              optmath::NDIndex({32, 32, 32}));
+        // ASSERT_FALSE(optmath::NDIndex({32, 32}) == optmath::NDIndex({3,
+        // 32})); ASSERT_FALSE(optmath::NDIndex({32, 32}) ==
+        // optmath::NDIndex({32, 3}));
     }
 
     TEST_F(NDIndexTest, InequalityCheck) {

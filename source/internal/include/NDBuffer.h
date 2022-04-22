@@ -5,7 +5,7 @@
 
 #include "NDShape.h"
 
-#define NDBUFFER_VAL_T T
+#define NDBUFFER_VAL_T __ndbuffer_val_T
 #define NDBUFFER_TEMPLATE template <typename NDBUFFER_VAL_T>
 
 namespace optmath {
@@ -15,39 +15,38 @@ namespace optmath {
 
       private:
         NDShape                           nd_shape;
-        std::shared_ptr<NDBUFFER_VAL_T[]> nd_buffer;
+        std::unique_ptr<NDBUFFER_VAL_T[]> nd_buffer;
 
       public:
-        NDBuffer(const NDShape& shape_)
-            : nd_shape(shape_) {
-            nd_buffer =
-                std::make_shared<NDBUFFER_VAL_T[]>(nd_shape.buffer_size());
-        }
+        NDBuffer(const NDShape& shape_);
         // copy
-        NDBuffer(const NDBuffer& other)
-            : nd_buffer(other.nd_buffer),
-              nd_shape(other.nd_shape) {
-            assert(this->buffer_size() == other.buffer_size());
-        };
-        NDBuffer& operator=(const NDBuffer& other) {
-            if (this != &other) {
-                this->rebind(other);
-                assert(this->buffer_size() == other.buffer_size());
-            }
-            return *this;
-        };
+        NDBuffer(const NDBuffer& other);
+        NDBuffer& operator=(const NDBuffer& other);
 
         NDBuffer(NDBuffer&& other);
         NDBuffer& operator=(NDBuffer&& other);
 
         const NDShape& shape() const;
         std::size_t    buffer_size() const;
-        std::size_t    buffer_reference_count() const;
         void           reshape(const NDShape& new_shape);
-        void           rebind(const NDBuffer& other);
         void           fill(const NDBUFFER_VAL_T& value);
 
+        std::ostream& to_stream(std::ostream& stream) const;
+
+        NDBUFFER_VAL_T* begin();
+        NDBUFFER_VAL_T* end();
+
+        const NDBUFFER_VAL_T* cbegin() const;
+        const NDBUFFER_VAL_T* cend() const;
+
         NDBUFFER_VAL_T& operator[](const NDIndex& index);
+        bool            operator==(const NDBuffer& other);
+
+        friend std::ostream&
+        operator<<(std::ostream& out, const NDBuffer<NDBUFFER_VAL_T>& other) {
+            other.to_stream(out);
+            return out;
+        }
     };
 
 #define EXTERN_NDBUFFER(typename) extern template class NDBuffer<typename>;

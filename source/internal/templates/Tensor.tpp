@@ -15,25 +15,9 @@ namespace optmath {
      */
     TENSOR_METHOD()
     Tensor(const NDShape& shape_)
-        : value_buffer(shape_) {
+        : NDBuffer<TENSOR_VAL_T>(shape_) {
         assert(shape_.size() != 0);
-    }
-    /**
-     * @brief Access shape of tensor
-     *
-     * @return const NDShape&
-     */
-    TENSOR_METHOD(const NDShape&) shape() const {
-        return this->value_buffer.shape();
-    }
-    /**
-     * @brief Access single element in matrix.
-     *
-     * @param index_
-     * @return TENSOR_VAL_T&
-     */
-    TENSOR_METHOD(TENSOR_VAL_T&) operator[](const NDIndex& index_) {
-        return this->value_buffer[index_];
+        assert(this->begin() != nullptr);
     }
 
 } // namespace optmath

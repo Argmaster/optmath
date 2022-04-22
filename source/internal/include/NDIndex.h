@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <iostream>
@@ -6,7 +7,7 @@
 
 namespace optmath {
 
-    using index_t = int64_t;
+    using index_t        = int64_t;
     using __shape_vector = std::vector<index_t>;
 
     class NDIndex {

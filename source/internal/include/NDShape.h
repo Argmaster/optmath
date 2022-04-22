@@ -25,7 +25,7 @@ namespace optmath {
         NDShape& operator=(NDShape&& other);
 
         std::size_t          buffer_size() const;
-        std::size_t          in_buffer_position(const NDIndex& index);
+        std::size_t          in_buffer_position(const NDIndex& index) const;
         friend std::ostream& operator<<(std::ostream&  out,
                                         const NDShape& other);
     };

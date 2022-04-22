@@ -6,7 +6,7 @@ namespace optmath {
     template class NDBuffer<typename>;                                        \
     using alias = NDBuffer<typename>;
 
-    INSTANTIATE_NDBUFFER(int8_t, NDBufferInt8)
+    INSTANTIATE_NDBUFFER(int8_t, NDBufferInt8);
     INSTANTIATE_NDBUFFER(int16_t, NDBufferInt16);
     INSTANTIATE_NDBUFFER(int32_t, NDBufferInt32);
     INSTANTIATE_NDBUFFER(int64_t, NDBufferInt64);

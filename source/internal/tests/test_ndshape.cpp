@@ -61,14 +61,14 @@ namespace optmath {
         ASSERT_EQ(test_index_copy.buffer_size(), old_size);
     }
 
-    TEST_F(NDShapeTest, BufferSize3Dims) {
+    TEST_F(NDShapeTest, BufferSize3D) {
         auto test_shape = optmath::NDShape{2, 1, 4};
         ASSERT_EQ(test_shape.buffer_size(), 8);
     }
 
-    TEST_F(NDShapeTest, BufferSizeTypicalMatrix) {
-        auto test_shape = optmath::NDShape{32, 32};
-        ASSERT_EQ(test_shape.buffer_size(), 1024);
+    TEST_F(NDShapeTest, BufferSize4D) {
+        auto test_shape = optmath::NDShape{34, 12, 93, 43};
+        ASSERT_EQ(test_shape.buffer_size(), 1631592);
     }
 
     TEST_F(NDShapeTest, NoNDShapeAssignment) {
@@ -81,7 +81,7 @@ namespace optmath {
 
     TEST_F(NDShapeTest, InBufferPosition) {
         auto test_shape = optmath::NDShape{4, 5, 3};
-        ASSERT_EQ(test_shape.in_buffer_position({1, 0, 1}), 21);
+        ASSERT_EQ(test_shape.in_buffer_position({1, 0, 1}), 16);
 
         auto test_shape_2 = optmath::NDShape{38, 11};
         ASSERT_DEATH(test_shape_2.in_buffer_position({1, 0, 1}), "");

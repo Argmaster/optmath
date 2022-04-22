@@ -1,8 +1,8 @@
 #pragma once
 
 #include "NDBuffer.h"
-#include "NDShape.h"
 #include "NDIndex.h"
+#include "NDShape.h"
 
 #define TENSOR_VAL_T __val_T
 #define TENSOR_TEMPLATE template <typename TENSOR_VAL_T>
@@ -10,17 +10,12 @@
 namespace optmath {
 
     TENSOR_TEMPLATE
-    class Tensor {
-
-      private:
-        NDBuffer<TENSOR_VAL_T> value_buffer;
-
+    class Tensor : private NDBuffer<TENSOR_VAL_T> {
       public:
         Tensor(const NDShape& shape_);
 
-        const NDShape& shape() const;
-        TENSOR_VAL_T& operator[](const NDIndex&);
-
+        using NDBuffer<TENSOR_VAL_T>::shape;
+        using NDBuffer<TENSOR_VAL_T>::operator[];
     };
 
 #define EXTERN_TENSOR(typename) extern template class Tensor<typename>;

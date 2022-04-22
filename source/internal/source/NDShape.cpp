@@ -8,6 +8,8 @@ namespace optmath {
      */
     NDShape::NDShape(const std::initializer_list<shape_t>& shape_)
         : NDIndex(shape_) {
+        assert(std::all_of(shape_.begin(), shape_.end(),
+                           [](index_t i) { return i > 0; }));
         // calculates and caches minimal buffer size required for
         // nd buffer with this shape
         nd_buffer_size = std::reduce(
@@ -75,7 +77,7 @@ namespace optmath {
      * @param index Indexer object pointing to value in buffer.
      * @return std::size_t linear in buffer position.
      */
-    std::size_t NDShape::in_buffer_position(const NDIndex& index) {
+    std::size_t NDShape::in_buffer_position(const NDIndex& index) const {
         // size inequality is UB
         assert(index.size() == this->size());
 
@@ -84,17 +86,20 @@ namespace optmath {
         auto beginIndex = index.crbegin();
         auto endIndex   = index.crend();
 
-        std::size_t position   = 0ULL;
-        std::size_t multiplier = 1ULL;
+        index_t position   = 0ULL;
+        index_t multiplier = 1ULL;
 
         while (beginShape != endShape) {
-            position += *beginIndex * multiplier;
+            assert(beginIndex != endIndex);
+            position += (*beginIndex) * multiplier;
+
+            multiplier *= *beginShape;
 
             beginShape++;
             beginIndex++;
-
-            multiplier *= *beginShape;
         }
+        assert(position < this->buffer_size());
+        assert(position >= 0);
         return position;
     }
     /**

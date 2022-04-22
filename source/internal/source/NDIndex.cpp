@@ -7,7 +7,10 @@ namespace optmath {
      * @param shape_ shape initializer to store
      */
     NDIndex::NDIndex(const std::initializer_list<index_t>& shape_)
-        : nd_value(shape_) {}
+        : nd_value(shape_) {
+        assert(std::all_of(shape_.begin(), shape_.end(),
+                           [](index_t i) { return i >= 0; }));
+    }
     /**
      * @brief Copy underlying std::vector
      *
