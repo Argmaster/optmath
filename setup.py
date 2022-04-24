@@ -106,12 +106,17 @@ ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 
 INTERNAL_LIB_DIR = Path("./build/source/internal/")
+PYX_SOURCE_BASE_DIR = Path("source/optmath/_internal/")
+PYX_SOURCES = PYX_SOURCE_BASE_DIR.rglob("*.pyx")
 
 MODULES: Any = cythonize(
     Extension(
         "optmath._internal.interface",
-        sources=["source/optmath/_internal/interface.pyx"],
-        include_dirs=["./source/internal/include/"],
+        sources=PYX_SOURCES,
+        include_dirs=[
+            "source/internal/include/",
+            "source/internal/templates/",
+        ],
         library_dirs=[str(INTERNAL_LIB_DIR)],
         libraries=["optmath"],
         language="c++",

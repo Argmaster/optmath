@@ -23,7 +23,7 @@ namespace optmath {
         NDIndex(NDIndex&& other);
         NDIndex& operator=(NDIndex&& other);
 
-        index_t&    operator[](std::size_t __i);
+        index_t     operator[](std::size_t __i);
         std::size_t size() const;
 
         __shape_vector::iterator               begin();

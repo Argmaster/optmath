@@ -6,76 +6,135 @@ namespace optmath {
 
     class NDBufferTest : public ::testing::Test {};
 
-    TEST_F(NDBufferTest, FromNDShapedCreation1D) {
+    TEST_F(NDBufferTest, NoNullShapeCreation1D) {
+        ASSERT_DEATH(NDBuffer<int>({0}),
+                     "Assertion .*?std::all_of.*?shape_\\.begin.*?failed.");
+    }
+    TEST_F(NDBufferTest, NoNullShapeCreation2D) {
+        ASSERT_DEATH(NDBuffer<int>({0, 0}),
+                     "Assertion .*?std::all_of.*?shape_\\.begin.*?failed.");
+    }
+    TEST_F(NDBufferTest, CreationShape1D) {
         auto buff = NDBuffer<int>({5389});
         ASSERT_EQ(buff.shape(), NDShape({5389}));
     }
-    TEST_F(NDBufferTest, FromNDShapedCreation2D) {
+    TEST_F(NDBufferTest, CreationShape2D_I32) {
         auto buff = NDBuffer<int>({32, 399});
         ASSERT_EQ(buff.shape(), NDShape({32, 399}));
     }
-    TEST_F(NDBufferTest, FromNDShapedCreation3D) {
-        auto buff = NDBuffer<int>({88, 94, 14});
+    TEST_F(NDBufferTest, CreationShape3D_F32) {
+        auto buff = NDBuffer<float>({88, 94, 14});
         ASSERT_EQ(buff.shape(), NDShape({88, 94, 14}));
     }
-    TEST_F(NDBufferTest, FromNDShapedCreation4D) {
-        auto buff = NDBuffer<int>({88, 94, 14, 43});
+    TEST_F(NDBufferTest, CreationShape4D_F64) {
+        auto buff = NDBuffer<double>({88, 94, 14, 43});
         ASSERT_EQ(buff.shape(), NDShape({88, 94, 14, 43}));
     }
-
+    TEST_F(NDBufferTest, CreationShape5D_I64) {
+        auto buff = NDBuffer<long long>({5, 8, 14, 6, 4});
+        ASSERT_EQ(buff.shape(), NDShape({5, 8, 14, 6, 4}));
+    }
     TEST_F(NDBufferTest, CopyConstruction) {
-        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff0 = NDBuffer<int>({91, 324, 44});
+
+        ASSERT_EQ(buff0.shape(), NDShape({91, 324, 44}));
+
+        auto j = 0;
+        for (auto& i : buff0) {
+            i = j;
+            j++;
+        }
+
         auto buff1 = buff0;
 
-        ASSERT_EQ(buff0.shape(), NDShape({32, 32}));
-        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
-    }
+        ASSERT_EQ(buff0.shape(), NDShape({91, 324, 44}));
+        ASSERT_EQ(buff1.shape(), NDShape({91, 324, 44}));
 
+        j = 0;
+        for (auto& i : buff1) {
+            ASSERT_EQ(j, i);
+            j++;
+        }
+    }
     TEST_F(NDBufferTest, CopyAssignment) {
-        auto buff0 = NDBuffer<int>({32, 32});
-        auto buff1 = NDBuffer<int>({5, 5});
+        auto buff0 = NDBuffer<int>({32, 432});
+        auto buff1 = NDBuffer<int>({5, 8});
 
-        ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
+        ASSERT_EQ(buff1.shape(), NDShape({5, 8}));
 
-        buff0 = buff1;
+        auto j = 0;
+        for (auto& i : buff0) {
+            i = j;
+            j++;
+        }
 
-        ASSERT_EQ(buff0.shape(), NDShape({5, 5}));
-        ASSERT_EQ(buff1.shape(), NDShape({5, 5}));
+        buff1 = buff0;
+
+        ASSERT_EQ(buff0.shape(), NDShape({32, 432}));
+        ASSERT_EQ(buff1.shape(), NDShape({32, 432}));
+
+        j = 0;
+        for (auto& i : buff1) {
+            ASSERT_EQ(j, i);
+            j++;
+        }
     }
-
     TEST_F(NDBufferTest, MoveConstruction) {
-        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff0 = NDBuffer<int>({32, 22});
+
+        auto j = 0;
+        for (auto& i : buff0) {
+            i = j;
+            j++;
+        }
+
         auto buff1(std::move(buff0));
 
         ASSERT_EQ(buff0.shape(), NDShape({}));
-        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
-    }
+        ASSERT_EQ(buff1.shape(), NDShape({32, 22}));
 
+        j = 0;
+        for (auto& i : buff1) {
+            ASSERT_EQ(j, i);
+            j++;
+        }
+    }
     TEST_F(NDBufferTest, MoveAssignment) {
-        auto buff0 = NDBuffer<int>({32, 32});
+        auto buff0 = NDBuffer<int>({32, 756, 43});
+
+        auto j = 0;
+        for (auto& i : buff0) {
+            i = j;
+            j++;
+        }
+
         auto buff1 = std::move(buff0);
 
         ASSERT_EQ(buff0.shape().size(), 0);
-        ASSERT_EQ(buff1.shape(), NDShape({32, 32}));
-    }
+        ASSERT_EQ(buff1.shape(), NDShape({32, 756, 43}));
 
+        j = 0;
+        for (auto& i : buff1) {
+            ASSERT_EQ(j, i);
+            j++;
+        }
+    }
     TEST_F(NDBufferTest, FillWithOneValue) {
 
-        auto sh1 = 32;
+        auto sh1 = 43;
         auto sh2 = 156;
 
-        auto buff = NDBuffer<int>({sh1, sh2});
+        auto buff = NDBuffer<float>({sh1, sh2});
 
-        buff.fill(546);
+        buff.fill(546.0);
 
         for (long long i = 0; i < sh1; i++) {
             for (long long j = 0; j < sh2; j++) {
                 auto item_1 = buff[{i, j}];
-                ASSERT_EQ(item_1, 546);
+                ASSERT_EQ(item_1, 546.0);
             }
         }
     }
-
     TEST_F(NDBufferTest, ReshapeVector2Dto1D) {
         auto buff = NDBuffer<int>({16, 4});
         buff.fill(0);
@@ -102,7 +161,6 @@ namespace optmath {
             }
         }
     }
-
     TEST_F(NDBufferTest, ElementAccessIncrementHeatmap3D) {
         auto sh1 = 5;
         auto sh2 = 3;
@@ -129,7 +187,6 @@ namespace optmath {
             }
         }
     }
-
     TEST_F(NDBufferTest, ElementAccessIncrementHeatmap4D) {
         auto sh1 = 16;
         auto sh2 = 9;
@@ -182,7 +239,6 @@ namespace optmath {
             }
         }
     }
-
     TEST_F(NDBufferTest, ExtendedElementAccess) {
         auto buffer = NDBuffer<int64_t>({4, 3, 5});
 
@@ -204,7 +260,6 @@ namespace optmath {
             }
         }
     }
-
     TEST_F(NDBufferTest, CommonIterateBuffer) {
         auto buff = NDBuffer<int>({2, 2});
 
@@ -220,7 +275,6 @@ namespace optmath {
             j++;
         }
     }
-
     TEST_F(NDBufferTest, IterateAndSetValues) {
         auto buff = NDBuffer<int>({2, 2});
 

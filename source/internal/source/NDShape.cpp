@@ -91,6 +91,8 @@ namespace optmath {
 
         while (beginShape != endShape) {
             assert(beginIndex != endIndex);
+            // avoid out of bounds indexing
+            assert(*beginIndex < *beginShape);
             position += (*beginIndex) * multiplier;
 
             multiplier *= *beginShape;

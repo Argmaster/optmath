@@ -29,6 +29,7 @@ namespace optmath {
     NDBUFFER_METHOD()
     NDBuffer(const NDBUFFER_T& other)
         : nd_shape(other.nd_shape) {
+        assert(other.nd_buffer != nullptr);
 
         auto size       = other.buffer_size();
         this->nd_buffer = std::make_unique<NDBUFFER_VAL_T[]>(size);
@@ -48,6 +49,8 @@ namespace optmath {
      */
     NDBUFFER_METHOD(NDBUFFER_T&) operator=(const NDBuffer& other) {
         if (this != &other) {
+            assert(other.nd_buffer != nullptr);
+
             this->nd_shape  = other.shape();
             auto size       = other.buffer_size();
             this->nd_buffer = std::make_unique<NDBUFFER_VAL_T[]>(size);
@@ -70,6 +73,7 @@ namespace optmath {
     NDBuffer(NDBUFFER_T&& other)
         : nd_buffer(std::move(other.nd_buffer)),
           nd_shape(std::move(other.nd_shape)) {
+        assert(other.nd_buffer == nullptr);
         assert(this->nd_buffer != nullptr);
     };
     /**
@@ -79,10 +83,12 @@ namespace optmath {
      * @return NDBuffer&
      */
     NDBUFFER_METHOD(NDBUFFER_T&) operator=(NDBUFFER_T&& other) {
-        assert(this->nd_buffer != nullptr);
+        assert(other.nd_buffer != nullptr);
         if (this != &other) {
             this->nd_buffer = std::move(other.nd_buffer);
             this->nd_shape  = std::move(other.nd_shape);
+            assert(other.nd_buffer == nullptr);
+            assert(this->nd_buffer != nullptr);
         }
         return *this;
     }

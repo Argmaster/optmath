@@ -61,7 +61,7 @@ namespace optmath {
      * @param __i index of dimension
      * @return index_t& indexer
      */
-    index_t& NDIndex::operator[](std::size_t __i) {
+    index_t NDIndex::operator[](std::size_t __i) {
         return nd_value[__i];
         ;
     }
