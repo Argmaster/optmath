@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import List
 
 import click
+
 from optmath import __version__
 from optmath.common.logconfig import configure_logger
 

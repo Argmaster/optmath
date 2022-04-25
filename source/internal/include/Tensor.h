@@ -16,6 +16,7 @@ namespace optmath {
 
         using NDBuffer<TENSOR_VAL_T>::shape;
         using NDBuffer<TENSOR_VAL_T>::operator[];
+        using NDBuffer<TENSOR_VAL_T>::operator==;
     };
 
 #define EXTERN_TENSOR(typename) extern template class Tensor<typename>;

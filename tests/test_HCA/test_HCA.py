@@ -173,7 +173,6 @@ def test_HCA_complex_pumpkin_data():
     hierarchy.dendrogram(z, leaf_rotation=90.0, leaf_font_size=8.0)
     z = cluster.Z()
     hierarchy.dendrogram(z, leaf_rotation=90.0, leaf_font_size=8.0)
-    plt.show()
 
 
 def test_HCA_complex_pumpkin_data_complete_euclidean():

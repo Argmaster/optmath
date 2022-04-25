@@ -286,4 +286,22 @@ namespace optmath {
             ASSERT_EQ(i, 932);
         }
     }
+    TEST_F(NDBufferTest, BufferEqualityOp) {
+        auto first  = NDBuffer<int>({2, 2});
+        auto second = NDBuffer<int>({2, 2});
+
+        auto j = 0;
+        for (auto& i : first) {
+            i = j;
+            j++;
+        }
+
+        j = 0;
+        for (auto& i : second) {
+            i = j;
+            j++;
+        }
+
+        ASSERT_EQ(first, second);
+    }
 } // namespace optmath

@@ -3,6 +3,7 @@ from datetime import datetime
 from types import SimpleNamespace
 
 import pytest
+
 from optmath.common.decorators import (
     DeprecatedError,
     deprecated,

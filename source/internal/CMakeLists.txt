@@ -9,7 +9,7 @@ set( CMAKE_CXX_EXTENSIONS OFF )
 #                   Add TBB (Intel Threaded Building Blocks)                   #
 # ---------------------------------------------------------------------------- #
 
-find_package(TBB REQUIRED)
+# find_package(TBB REQUIRED)
 
 # -------------------------------------------------------------------------- #
 #                        create optmath library binary                       #
@@ -17,12 +17,13 @@ find_package(TBB REQUIRED)
 # find library sources
 file( GLOB_RECURSE OPTMATH_SOURCE "source/*.c*" )
 add_library( optmath STATIC ${OPTMATH_SOURCE} )
+set_property( TARGET optmath PROPERTY POSITION_INDEPENDENT_CODE ON )
 
 target_include_directories(
     optmath
     PRIVATE "include" "templates"
     )
-set( OPTMATH_EXT_LIBS TBB::tbb )
+set( OPTMATH_EXT_LIBS )
 target_link_libraries( optmath ${OPTMATH_EXT_LIBS} )
 # ---------------------------------------------------------------------------- #
 #                        create test  suite for optmath                        #

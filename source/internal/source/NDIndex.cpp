@@ -2,11 +2,30 @@
 
 namespace optmath {
     /**
+     * @brief Set index in nth dimension.
+     *
+     * @param __i index of dimension
+     * @param __v new value to set
+     */
+    void NDIndex::_set(index_t __i, index_t __v) {
+        nd_value[__i] = __v;
+    }
+    /**
      * @brief Construct a new NDIndex::NDIndex object
      *
      * @param shape_ shape initializer to store
      */
     NDIndex::NDIndex(const std::initializer_list<index_t>& shape_)
+        : nd_value(shape_) {
+        assert(std::all_of(shape_.begin(), shape_.end(),
+                           [](index_t i) { return i >= 0; }));
+    }
+    /**
+     * @brief Construct a new NDIndex::NDIndex object
+     *
+     * @param shape_ shape initializer to store
+     */
+    NDIndex::NDIndex(const std::vector<index_t>& shape_)
         : nd_value(shape_) {
         assert(std::all_of(shape_.begin(), shape_.end(),
                            [](index_t i) { return i >= 0; }));
@@ -61,16 +80,24 @@ namespace optmath {
      * @param __i index of dimension
      * @return index_t& indexer
      */
-    index_t NDIndex::operator[](std::size_t __i) {
+    index_t NDIndex::operator[](index_t __i) {
         return nd_value[__i];
-        ;
+    }
+    /**
+     * @brief Acquire index in nth dimension.
+     *
+     * @param __i index of dimension
+     * @return index_t& indexer
+     */
+    index_t NDIndex::get(index_t __i) {
+        return nd_value[__i];
     }
     /**
      * @brief Acquire number of dimensions.
      *
-     * @return std::size_t
+     * @return index_t
      */
-    std::size_t NDIndex::size() const {
+    index_t NDIndex::size() const {
         return nd_value.size();
     }
     /**

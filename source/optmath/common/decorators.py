@@ -6,8 +6,9 @@ from datetime import datetime
 from types import SimpleNamespace
 from typing import Any, Dict, Optional, Type
 
-import optmath
 from packaging.version import Version
+
+import optmath
 
 
 def statefull(**self_kwargs: Any):

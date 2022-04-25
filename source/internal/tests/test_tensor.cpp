@@ -6,12 +6,27 @@ namespace optmath {
 
     class TensorTest : public ::testing::Test {};
 
-    TEST_F(TensorTest, FromNDShapedCreation) {
-        auto tensor = Tensor<int64_t>({32, 32});
-        ASSERT_EQ(tensor.shape(), NDShape({32, 32}));
+    TEST_F(TensorTest, TensorCreation1D) {
+        auto tensor = Tensor<int64_t>({32});
+        ASSERT_EQ(tensor.shape(), NDShape({32}));
     }
-
-    TEST_F(TensorTest, ElementAccess) {
+    TEST_F(TensorTest, TensorCreation2D) {
+        auto tensor = Tensor<int64_t>({32, 54});
+        ASSERT_EQ(tensor.shape(), NDShape({32, 54}));
+    }
+    TEST_F(TensorTest, TensorCreation3D) {
+        auto tensor = Tensor<int64_t>({32, 54, 5});
+        ASSERT_EQ(tensor.shape(), NDShape({32, 54, 5}));
+    }
+    TEST_F(TensorTest, TensorCreation4D) {
+        auto tensor = Tensor<int64_t>({9, 3, 5, 7});
+        ASSERT_EQ(tensor.shape(), NDShape({9, 3, 5, 7}));
+    }
+    TEST_F(TensorTest, TensorCreation5D) {
+        auto tensor = Tensor<int64_t>({9, 3, 5, 7, 2});
+        ASSERT_EQ(tensor.shape(), NDShape({9, 3, 5, 7, 2}));
+    }
+    TEST_F(TensorTest, ElementAccess3D) {
         auto tensor = Tensor<int64_t>({4, 3, 5});
 
         for (index_t i = 0; i < 4; i++) {

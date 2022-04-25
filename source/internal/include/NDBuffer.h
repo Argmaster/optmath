@@ -27,7 +27,7 @@ namespace optmath {
         NDBuffer& operator=(NDBuffer&& other);
 
         const NDShape& shape() const;
-        std::size_t    buffer_size() const;
+        index_t        buffer_size() const;
         void           reshape(const NDShape& new_shape);
         void           fill(const NDBUFFER_VAL_T& value);
 
@@ -39,8 +39,9 @@ namespace optmath {
         const NDBUFFER_VAL_T* cbegin() const;
         const NDBUFFER_VAL_T* cend() const;
 
-        NDBUFFER_VAL_T& operator[](const NDIndex& index);
-        bool            operator==(const NDBuffer& other);
+        NDBUFFER_VAL_T&       operator[](const NDIndex& index);
+        const NDBUFFER_VAL_T& operator[](const NDIndex& index) const;
+        bool                  operator==(const NDBuffer& other) const;
 
         friend std::ostream&
         operator<<(std::ostream& out, const NDBuffer<NDBUFFER_VAL_T>& other) {

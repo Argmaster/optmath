@@ -109,18 +109,28 @@ INTERNAL_LIB_DIR = Path("./build/source/internal/")
 PYX_SOURCE_BASE_DIR = Path("source/optmath/_internal/")
 PYX_SOURCES = PYX_SOURCE_BASE_DIR.rglob("*.pyx")
 
+
+def module_path(source: Path) -> str:
+    relative_path = str(source.relative_to(PYX_SOURCE_BASE_DIR))
+    return relative_path.rstrip(".pyx").replace("/", ".").replace("\\", ".")
+
+
 MODULES: Any = cythonize(
-    Extension(
-        "optmath._internal.interface",
-        sources=PYX_SOURCES,
-        include_dirs=[
-            "source/internal/include/",
-            "source/internal/templates/",
-        ],
-        library_dirs=[str(INTERNAL_LIB_DIR)],
-        libraries=["optmath"],
-        language="c++",
-    )
+    [
+        Extension(
+            f"optmath._internal.{module_path(source)}",
+            sources=[str(source)],
+            include_dirs=[
+                "source/internal/include/",
+                "source/internal/templates/",
+            ],
+            library_dirs=[str(INTERNAL_LIB_DIR)],
+            libraries=["optmath"],
+            language="c++",
+        )
+        for source in PYX_SOURCES
+    ],
+    compiler_directives={"language_level": "3"},
 )
 PACKAGE_DATA = {}
 
