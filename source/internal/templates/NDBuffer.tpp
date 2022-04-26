@@ -22,6 +22,13 @@ namespace optmath {
         assert(this->nd_buffer != nullptr);
     }
     /**
+     * @brief Construct a new NDBuffer object without initialization.
+     *
+     * @param shape_ shape of buffer to create.
+     */
+    NDBUFFER_METHOD()
+    NDBuffer() {}
+    /**
      * @brief Construct a new NDBuffer object
      *
      * @param other buffer to copy

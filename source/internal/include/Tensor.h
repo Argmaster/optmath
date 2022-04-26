@@ -10,29 +10,50 @@
 namespace optmath {
 
     TENSOR_TEMPLATE
-    class Tensor : private NDBuffer<TENSOR_VAL_T> {
+    class Tensor {
+      private:
+        NDBuffer<TENSOR_VAL_T> nd_buffer;
+
       public:
         Tensor(const NDShape& shape_);
+        Tensor();
 
-        using NDBuffer<TENSOR_VAL_T>::shape;
-        using NDBuffer<TENSOR_VAL_T>::operator[];
-        using NDBuffer<TENSOR_VAL_T>::operator==;
+        const NDShape& shape() const;
+        std::ostream&  to_stream(std::ostream& stream) const;
+
+      public:
+        TENSOR_VAL_T* begin();
+        TENSOR_VAL_T* end();
+
+        const TENSOR_VAL_T* cbegin() const;
+        const TENSOR_VAL_T* cend() const;
+
+        TENSOR_VAL_T& operator[](const NDIndex& index);
+        bool          operator==(const Tensor& other) const;
+
+        friend std::ostream& operator<<(std::ostream&               out,
+                                        const Tensor<TENSOR_VAL_T>& other) {
+            other.nd_buffer.to_stream(out);
+            return out;
+        }
     };
 
-#define EXTERN_TENSOR(typename) extern template class Tensor<typename>;
+#define EXTERN_TENSOR(typename, alias)                                        \
+    extern template class Tensor<typename>;                                   \
+    using alias = Tensor<typename>;
 
-    EXTERN_TENSOR(int8_t);
-    EXTERN_TENSOR(int16_t);
-    EXTERN_TENSOR(int32_t);
-    EXTERN_TENSOR(int64_t);
+    EXTERN_TENSOR(int8_t, TensorInt8);
+    EXTERN_TENSOR(int16_t, TensorInt16);
+    EXTERN_TENSOR(int32_t, TensorInt32);
+    EXTERN_TENSOR(int64_t, TensorInt64);
 
-    EXTERN_TENSOR(uint8_t);
-    EXTERN_TENSOR(uint16_t);
-    EXTERN_TENSOR(uint32_t);
-    EXTERN_TENSOR(uint64_t);
+    EXTERN_TENSOR(uint8_t, TensorUInt8);
+    EXTERN_TENSOR(uint16_t, TensorUInt16);
+    EXTERN_TENSOR(uint32_t, TensorUInt32);
+    EXTERN_TENSOR(uint64_t, TensorUInt64);
 
-    EXTERN_TENSOR(float);
-    EXTERN_TENSOR(double);
+    EXTERN_TENSOR(float, TensorFloat32);
+    EXTERN_TENSOR(double, TensorFloat64);
 
 #undef EXTERN_TENSOR
 

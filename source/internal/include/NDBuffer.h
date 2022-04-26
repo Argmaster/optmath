@@ -19,6 +19,7 @@ namespace optmath {
 
       public:
         NDBuffer(const NDShape& shape_);
+        NDBuffer();
         // copy
         NDBuffer(const NDBuffer& other);
         NDBuffer& operator=(const NDBuffer& other);
@@ -50,20 +51,22 @@ namespace optmath {
         }
     };
 
-#define EXTERN_NDBUFFER(typename) extern template class NDBuffer<typename>;
+#define EXTERN_NDBUFFER(typename, alias)                                      \
+    extern template class NDBuffer<typename>;                                 \
+    using alias = NDBuffer<typename>;
 
-    EXTERN_NDBUFFER(int8_t);
-    EXTERN_NDBUFFER(int16_t);
-    EXTERN_NDBUFFER(int32_t);
-    EXTERN_NDBUFFER(int64_t);
+    EXTERN_NDBUFFER(int8_t, NDBufferInt8);
+    EXTERN_NDBUFFER(int16_t, NDBufferInt16);
+    EXTERN_NDBUFFER(int32_t, NDBufferInt32);
+    EXTERN_NDBUFFER(int64_t, NDBufferInt64);
 
-    EXTERN_NDBUFFER(uint8_t);
-    EXTERN_NDBUFFER(uint16_t);
-    EXTERN_NDBUFFER(uint32_t);
-    EXTERN_NDBUFFER(uint64_t);
+    EXTERN_NDBUFFER(uint8_t, NDBufferUInt8);
+    EXTERN_NDBUFFER(uint16_t, NDBufferUInt16);
+    EXTERN_NDBUFFER(uint32_t, NDBufferUInt32);
+    EXTERN_NDBUFFER(uint64_t, NDBufferUInt64);
 
-    EXTERN_NDBUFFER(float);
-    EXTERN_NDBUFFER(double);
+    EXTERN_NDBUFFER(float, NDBufferFloat32);
+    EXTERN_NDBUFFER(double, NDBufferFloat64);
 
 #undef EXTERN_NDBUFFER
 

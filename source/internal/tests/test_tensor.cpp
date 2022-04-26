@@ -47,4 +47,17 @@ namespace optmath {
             }
         }
     }
+    TEST_F(TensorTest, Stringify) {
+        auto first = TensorInt32({3, 2});
+
+        auto j = 0;
+        for (auto& i : first) {
+            i = j;
+            j++;
+        }
+        std::stringstream ss;
+        ss << first;
+        auto str = ss.str();
+        ASSERT_STREQ("[0, 1, 2, 3, 4, 5]", str.c_str());
+    }
 } // namespace optmath
