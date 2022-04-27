@@ -7,7 +7,7 @@ from .distance_selector import (
     Ward,
 )
 from .HCA import HCA, HCAStep
-from .record import RecordBase
+from .record import RecordBase, autoscale, to_numpy_array
 
 __all__ = [
     "Euclidean",
@@ -21,4 +21,6 @@ __all__ = [
     "Cluster",
     "RecordBase",
     "HCAStep",
+    "autoscale",
+    "to_numpy_array",
 ]

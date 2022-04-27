@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import re
+import sys
 from glob import glob
 from os.path import basename, splitext
 from pathlib import Path
@@ -6,6 +8,13 @@ from typing import Any, List, Union
 
 from Cython.Build import cythonize
 from setuptools import Extension, find_packages, setup
+
+try:
+    sys.argv.remove("--exclude-c")
+except ValueError:
+    EXCLUDE_C: bool = False
+else:
+    EXCLUDE_C: bool = True
 
 REPOSITORY_ROOT_DIR = Path(__file__).parent
 PACKAGE_NAME = "optmath"
@@ -107,16 +116,19 @@ PYTHON_REQUIREMENTS = ">=3.7"
 
 INTERNAL_LIB_DIR = Path("./build/source/internal/")
 
-MODULES: Any = cythonize(
-    Extension(
-        "optmath._internal.interface",
-        sources=["source/optmath/_internal/interface.pyx"],
-        include_dirs=["./source/internal/include/"],
-        library_dirs=[str(INTERNAL_LIB_DIR)],
-        libraries=["optmath"],
-        language="c++",
+if EXCLUDE_C is False:
+    MODULES: Any = cythonize(
+        Extension(
+            "optmath._internal.interface",
+            sources=["source/optmath/_internal/interface.pyx"],
+            include_dirs=["./source/internal/include/"],
+            library_dirs=[str(INTERNAL_LIB_DIR)],
+            libraries=["optmath"],
+            language="c++",
+        )
     )
-)
+else:
+    MODULES: Any = []
 PACKAGE_DATA = {}
 
 
@@ -150,7 +162,7 @@ def run_setup_script():
 
 
 if __name__ == "__main__":
-    if not INTERNAL_LIB_DIR.exists():
+    if EXCLUDE_C is False and not INTERNAL_LIB_DIR.exists():
         ERROR_MESSAGE = (
             "\n\n\n>>>>>>>>>\nFailed to find precompiled binaries for internal C/C++ extensions.\n"
             'Build interface for internal C/C++ extensions first. Use "tox -e cmake"\n>>>>>>>>>\n\n\n'
