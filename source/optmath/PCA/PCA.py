@@ -1,5 +1,6 @@
-from dataclasses import dataclass, field
-from typing import Tuple
+from dataclasses import dataclass
+from functools import cached_property
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,91 +9,152 @@ from numpy.typing import NDArray
 from .. import RecordBase, to_numpy_array
 
 
-@dataclass
-class PCA:
-
-    autoscaled_data: Tuple[RecordBase]
-    np_data: NDArray[np.float64] = field(init=False)
-    correlation_matrix: NDArray[np.float64] = field(init=False)
-    sorted_eigenval_vector_pairs: Tuple[float, NDArray[np.float64]] = field(
-        init=False
+def PCA(autoscaled_data: Tuple[RecordBase]):
+    nd_data = to_numpy_array(autoscaled_data)
+    correlation_matrix = (nd_data.T @ nd_data) / (nd_data.shape[0])
+    eigenvalue = np.linalg.eig(correlation_matrix)
+    sorted_eigenval_vector_pairs = sorted(
+        zip(*eigenvalue), key=lambda e: e[0], reverse=True
+    )
+    return PCAResutView(
+        autoscaled_data,
+        nd_data,
+        sorted_eigenval_vector_pairs,
+        correlation_matrix,
     )
 
-    def __post_init__(self):
-        self.np_data = to_numpy_array(self.autoscaled_data)
-        self.correlation_matrix = (self.np_data.T @ self.np_data) / (
-            self.np_data.shape[0]
-        )
 
-    def execute(self):
-        eigenvalue = np.linalg.eig(self.correlation_matrix)
-        self.sorted_eigenval_vector_pairs = sorted(
-            zip(*eigenvalue), key=lambda e: e[0], reverse=True
-        )
+@dataclass
+class PCAResutView:
 
-    @property
+    autoscaled_data: Tuple[RecordBase]
+    nd_data: NDArray[np.float64]
+    eigenvalue_vector_pairs: NDArray[np.float64]
+    correlation_matrix: NDArray[np.float64]
+
+    @cached_property
     def lambdas(self):
-        return [l for l, _ in self.sorted_eigenval_vector_pairs]
+        return [l for l, _ in self.eigenvalue_vector_pairs]
+
+    @cached_property
+    def vectors(self):
+        return [v for _, v in self.eigenvalue_vector_pairs]
+
+    @cached_property
+    def prct_lamdas(self):
+        return [v / self.column_number for v in self.lambdas]
+
+    @cached_property
+    def cumulative_prct_lambdas(self):
+        return np.cumsum(self.prct_lamdas)
+
+    @cached_property
+    def row_number(self):
+        return self.nd_data.shape[0]
+
+    @cached_property
+    def column_number(self):
+        return self.nd_data.shape[1]
+
+    @cached_property
+    def lambdas_number(self):
+        return len(self.lambdas)
+
+    @cached_property
+    def records_class_name(self):
+        assert len(self.autoscaled_data) >= 1, "PCAResultView is empty."
+        return self.autoscaled_data[0].class_name()
+
+    def _common_plt(self, x: List[float], lambdas: List[float]):
+        plt.plot(x, lambdas)
+        plt.scatter(x, lambdas)
+        plt.title(
+            f"Scree plot for PCA on {self.row_number} {self.records_class_name} objects"
+        )
+        plt.xlabel("Principal components")
+        plt.grid(True)
 
     def scree_plot(self):
-        x = np.arange(1, len(self.all_eigenvalue_vector_pairs()) + 1)
-        plt.plot(x, self.lambdas)
-        plt.scatter(x, self.lambdas)
-        plt.title(
-            f"Scree Plot for PCA on {len(self.autoscaled_data)} {self.autoscaled_data[0].class_name()} objects"
-        )
+        x = np.arange(self.lambdas_number) + 1
+        self._common_plt(x, self.lambdas)
         plt.ylabel("λ (eigenvalue)")
-        plt.xlabel("Principal components")
         plt.xticks(x, [f"PC{i}" for i in x])
-        plt.grid(True)
 
     def percent_scree_plot(self):
-        x = np.arange(1, len(self.all_eigenvalue_vector_pairs()) + 1)
-        m = len(self.autoscaled_data[0].numeric())
-        prct_lambdas = [v / m for v in self.lambdas]
-        label = "% of variance explained"
-        plt.plot(x, prct_lambdas)
-        plt.scatter(x, prct_lambdas)
-        plt.title(
-            f"Scree Plot for PCA on {len(self.autoscaled_data)} {self.autoscaled_data[0].class_name()} objects"
-        )
-        plt.ylabel(label)
-        y = np.linspace(
-            min(prct_lambdas), max(prct_lambdas), len(prct_lambdas)
-        )
+        x = np.arange(self.lambdas_number) + 1
+        prct_lambdas = self.prct_lamdas
+        self._common_plt(x, prct_lambdas)
+        plt.ylabel("% of variance explained")
+        y = np.linspace(0, 1.0, 11)
         plt.yticks(y, [f"{f*100:.1f}%" for f in y])
-        plt.xlabel("Principal components")
         plt.xticks(x, [f"PC{i}" for i in x])
-        plt.grid(True)
 
     def cumulative_percent_scree_plot(self):
-        x = np.arange(0, len(self.all_eigenvalue_vector_pairs()) + 1)
-        m = len(self.autoscaled_data[0].numeric())
-        prct_lambdas = [0.0]
-        total = 0
-        for v in self.lambdas:
-            total += v / m
-            prct_lambdas.append(total)
-        label = "Cumulative % of variance explained"
+        x = np.arange(self.lambdas_number + 1)
+        # cumulative sum... exactly what we want
+        lambdas = np.concatenate(([0.0], self.cumulative_prct_lambdas))
 
-        plt.plot(x, prct_lambdas)
-        plt.scatter(x, prct_lambdas)
-        plt.title(
-            f"Scree Plot for PCA on {len(self.autoscaled_data)} {self.autoscaled_data[0].class_name()} objects"
-        )
-        plt.ylabel(label)
-        y = np.linspace(
-            min(prct_lambdas), max(prct_lambdas), len(prct_lambdas)
-        )
+        self._common_plt(x, lambdas)
+        plt.ylabel("Cumulative % of variance explained")
+        y = np.linspace(0, 1.0, 11)
         plt.yticks(y, [f"{f*100:.1f}%" for f in y])
-        plt.xlabel("Principal components")
         plt.xticks(x, [""] + [f"PC{i}" for i in x[1:]])
-        plt.grid(True)
 
-    def all_eigenvalue_vector_pairs(self):
-        return self.sorted_eigenval_vector_pairs
+    def subview(
+        self, eigenvalue_vector_pairs: List[Tuple[float, NDArray[np.float64]]]
+    ) -> "PCAResutView":
+        return PCAResutView(
+            self.autoscaled_data,
+            self.nd_data,
+            eigenvalue_vector_pairs,
+            self.correlation_matrix,
+        )
 
     def from_kaiser_criteria(self, treshold: float = 0.95):
-        return filter(
-            lambda o: o[0] > treshold, self.all_eigenvalue_vector_pairs()
+        return self.subview(
+            [(e, v) for e, v in self.eigenvalue_vector_pairs if e > treshold]
         )
+
+    def from_total_variance_explained(self, minimal_prct: float = 0.70):
+        lambdas = []
+        for cumulated, ob in zip(
+            self.cumulative_prct_lambdas, self.eigenvalue_vector_pairs
+        ):
+            if cumulated > minimal_prct:
+                lambdas.append(ob)
+                break
+            else:
+                lambdas.append(ob)
+        return self.subview(
+            lambdas,
+        )
+
+    def from_first_top(self, number: float = 2):
+        return self.subview(
+            self.eigenvalue_vector_pairs[:number],
+        )
+
+    @cached_property
+    def loads_matrix(self):
+        return np.stack(self.vectors)
+
+    @cached_property
+    def transformed_matrix(self):
+        return (self.nd_data @ self.loads_matrix.T).T
+
+    def principal_component_grid(self, point_size: int = 6, color: str = "b"):
+        fig, axes = plt.subplots(self.lambdas_number, self.lambdas_number - 1)
+        i = 0
+        for i, pci in enumerate(self.transformed_matrix):
+            j = 0
+            for k, pcj in enumerate(self.transformed_matrix):
+                if k != i:
+                    ax = axes[i][j]
+                    ax: plt.Axes
+                    ax.scatter(pci, pcj, s=point_size, color=color)
+                    print(i, j)
+                    ax.set_xlabel(f"PC{k}")
+                    ax.set_ylabel(f"PC{i}")
+                    j += 1
+
+        return fig, axes
