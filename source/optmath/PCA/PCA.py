@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-from functools import cached_property
-from typing import List, Tuple
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +23,7 @@ def PCA(autoscaled_data: Tuple[RecordBase]):
     )
 
 
-@dataclass
+@dataclass(frozen=True, order=True, unsafe_hash=True)
 class PCAResutView:
 
     autoscaled_data: Tuple[RecordBase]
@@ -32,40 +31,40 @@ class PCAResutView:
     eigenvalue_vector_pairs: NDArray[np.float64]
     correlation_matrix: NDArray[np.float64]
 
-    @cached_property
+    @property
     def lambdas(self):
         return [l for l, _ in self.eigenvalue_vector_pairs]
 
-    @cached_property
+    @property
     def vectors(self):
         return [v for _, v in self.eigenvalue_vector_pairs]
 
-    @cached_property
+    @property
     def prct_lamdas(self):
         return [v / self.column_number for v in self.lambdas]
 
-    @cached_property
+    @property
     def cumulative_prct_lambdas(self):
         return np.cumsum(self.prct_lamdas)
 
-    @cached_property
-    def row_number(self):
+    @property
+    def row_number(self) -> int:
         return self.nd_data.shape[0]
 
-    @cached_property
-    def column_number(self):
+    @property
+    def column_number(self) -> int:
         return self.nd_data.shape[1]
 
-    @cached_property
-    def lambdas_number(self):
+    @property
+    def lambdas_number(self) -> int:
         return len(self.lambdas)
 
-    @cached_property
+    @property
     def records_class_name(self):
         assert len(self.autoscaled_data) >= 1, "PCAResultView is empty."
         return self.autoscaled_data[0].class_name()
 
-    def _common_plt(self, x: List[float], lambdas: List[float]):
+    def _common_plt(self, x: Tuple[float], lambdas: Tuple[float]):
         plt.plot(x, lambdas)
         plt.scatter(x, lambdas)
         plt.title(
@@ -101,7 +100,7 @@ class PCAResutView:
         plt.xticks(x, [""] + [f"PC{i}" for i in x[1:]])
 
     def subview(
-        self, eigenvalue_vector_pairs: List[Tuple[float, NDArray[np.float64]]]
+        self, eigenvalue_vector_pairs: Tuple[Tuple[float, NDArray[np.float64]]]
     ) -> "PCAResutView":
         return PCAResutView(
             self.autoscaled_data,
@@ -134,11 +133,11 @@ class PCAResutView:
             self.eigenvalue_vector_pairs[:number],
         )
 
-    @cached_property
+    @property
     def loads_matrix(self):
         return np.stack(self.vectors)
 
-    @cached_property
+    @property
     def transformed_matrix(self):
         return (self.nd_data @ self.loads_matrix.T).T
 

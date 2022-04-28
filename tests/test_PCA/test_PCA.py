@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pandas
 import pytest
-from matplotlib import pyplot as plt
 
 from optmath import RecordBase, autoscale
 from optmath.PCA import PCA, PCAResutView
@@ -45,6 +44,7 @@ class TestPCAResultView:
     ):
         view = pca_seeds_view.from_kaiser_criteria(0.95)
         view.scree_plot()
+        ()
 
     def test_from_kaiser_criteria_percent_scree_plot(
         self, pca_seeds_view: PCAResutView
@@ -71,4 +71,3 @@ class TestPCAResultView:
         fig, _ = view.principal_component_grid()
         fig.set_size_inches(16, 16)
         fig.set_dpi(100)
-        plt.show()
