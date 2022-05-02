@@ -12,7 +12,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  build:
+  codebase_change_test_suite:
     runs-on: windows-2022
     timeout-minutes: 30
 
@@ -59,4 +59,4 @@ jobs:
       run: python -m pip install tox
 
     - name: Run C++ and Python test suite with tox
-      run: tox
+      run: tox -vv

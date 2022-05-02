@@ -1,5 +1,6 @@
 import shutil
 import subprocess as sbp
+from contextlib import suppress
 from os import chdir
 from pathlib import Path
 
@@ -36,7 +37,9 @@ def build_cmake_cli(*args, **kwargs):
 
 
 def build_cmake(
-    skip: bool = False, clean: bool = True, is_release: bool = True
+    skip: bool = False,
+    clean: bool = True,
+    is_release: bool = True,
 ):
     """Compile C/C++ extension using cmake and ninja."""
     if skip:
@@ -52,7 +55,10 @@ def build_cmake(
         return 0
 
 
-def _build_extension(clean: bool, is_release: bool):
+def _build_extension(
+    clean: bool,
+    is_release: bool,
+):
     if clean:
         shutil.rmtree(BUILD_DIR, ignore_errors=True)
     BUILD_DIR.mkdir(0o777, True, True)
@@ -62,6 +68,7 @@ def _build_extension(clean: bool, is_release: bool):
 
 
 def _run_cmake_generate(is_release: bool):
+    use_clang = _is_clang_available()
     process = sbp.Popen(
         [
             "cmake",
@@ -69,12 +76,28 @@ def _run_cmake_generate(is_release: bool):
             "-G",
             "Ninja",
             f"-DCMAKE_BUILD_TYPE={'Release' if is_release else 'Debug'}",
+            *(
+                [
+                    "-DCMAKE_C_COMPILER=clang",
+                    "-DCMAKE_CXX_COMPILER=clang++",
+                ]
+                if use_clang
+                else []
+            ),
         ],
     )
     process.wait()
     assert (
         process.returncode == 0
     ), f"CMake failed with return code {process.returncode}"
+
+
+def _is_clang_available() -> bool:
+    with suppress(Exception):
+        process = sbp.Popen(["clang", "--version"])
+        process.wait()
+        return True
+    return False
 
 
 def _run_ninja():
