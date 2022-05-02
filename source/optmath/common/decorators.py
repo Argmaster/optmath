@@ -4,10 +4,11 @@ import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from types import SimpleNamespace
-from typing import Any, Dict, Optional, Type
+from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union
+
+from packaging.version import Version
 
 import optmath
-from packaging.version import Version
 
 
 def statefull(**self_kwargs: Any):
@@ -107,6 +108,10 @@ class Bomb:
         )
 
 
+ReturnT = TypeVar("ReturnT")
+FunctionT = Callable[..., ReturnT]
+
+
 @dataclass
 class deprecated:  # noqa: N801
     """Mark callable deprecated.
@@ -144,7 +149,7 @@ class deprecated:  # noqa: N801
     date_bomb: Optional[datetime] = None
     version_bomb: Optional[str] = None
 
-    def __call__(self, function: ...) -> ...:
+    def __call__(self, function: FunctionT) -> Union[FunctionT, Bomb]:
         """Decorate function by replacing with wrapper."""
         should_bomb_trigger = (
             self.date_bomb is not None and datetime.now() > self.date_bomb
@@ -162,7 +167,7 @@ class deprecated:  # noqa: N801
                 "change your code so it won't break after update."
             )
 
-            def function_wrapper(*args: Any, **kwargs: Any):
+            def function_wrapper(*args: Any, **kwargs: Any) -> Any:
                 warnings.warn(
                     self.warning_type(message),
                     category=self.warning_type,

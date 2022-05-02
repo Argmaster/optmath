@@ -1,7 +1,7 @@
 exclude: '^(\.tox|\.env|dist|\.vscode)(/|$)'
 repos:
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.9.3
+    rev: 5.10.1
     hooks:
       - id: isort
 
@@ -53,5 +53,5 @@ repos:
         args: ["--fix=lf"]
       - id: no-commit-to-branch
         args: [--branch, master, --branch, master]
-      - id: requirements-txt-fixer
+      # - id: requirements-txt-fixer
       - id: trailing-whitespace
