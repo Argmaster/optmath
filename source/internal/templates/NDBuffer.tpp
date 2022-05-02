@@ -182,8 +182,8 @@ namespace optmath {
             return true;
         if (this->nd_shape != other.nd_shape)
             return false;
-        return std::equal(std::execution::par, this->cbegin(), this->cend(),
-                          other.cbegin(), other.cend());
+        return std::equal(this->cbegin(), this->cend(), other.cbegin(),
+                          other.cend());
     }
     /**
      * @brief C++ std::out << NDBuffer(); compatibility.

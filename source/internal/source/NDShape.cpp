@@ -13,7 +13,7 @@ namespace optmath {
         // calculates and caches minimal buffer size required for
         // nd buffer with this shape
         nd_buffer_size = std::reduce(
-            std::execution::par, this->cbegin(), this->cend(), 1,
+            this->cbegin(), this->cend(), 1,
             [](shape_t first, shape_t second) { return first * second; });
     }
     /**
