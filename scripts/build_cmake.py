@@ -1,8 +1,8 @@
 import shutil
 import subprocess as sbp
-from contextlib import suppress
 from os import chdir
 from pathlib import Path
+from typing import Tuple
 
 import click
 
@@ -16,7 +16,7 @@ PYTHON_PACKAGE_DIR = REPO_ROOT_DIR / "source" / "optmath"
 NO_NINJA_FOUND = -0xFF
 
 
-@click.command()
+@click.command(context_settings={"ignore_unknown_options": True})
 @click.option(
     "--clean/--no-clean",
     default=True,
@@ -32,6 +32,7 @@ NO_NINJA_FOUND = -0xFF
 )
 @click.option("--release", "is_release", flag_value=True, default=True)
 @click.option("--debug", "is_release", flag_value=False)
+@click.argument("cmake_args", nargs=-1, type=click.UNPROCESSED)
 def build_cmake_cli(*args, **kwargs):
     return build_cmake(*args, **kwargs)
 
@@ -40,6 +41,7 @@ def build_cmake(
     skip: bool = False,
     clean: bool = True,
     is_release: bool = True,
+    cmake_args: Tuple[str, ...] = (),
 ):
     """Compile C/C++ extension using cmake and ninja."""
     if skip:
@@ -47,7 +49,7 @@ def build_cmake(
         return 0
 
     try:
-        _build_extension(clean, is_release)
+        _build_extension(clean, is_release, cmake_args)
 
     except AssertionError as e:
         return e.args[0]
@@ -58,17 +60,20 @@ def build_cmake(
 def _build_extension(
     clean: bool,
     is_release: bool,
+    cmake_args: Tuple[str, ...],
 ):
     if clean:
         shutil.rmtree(BUILD_DIR, ignore_errors=True)
     BUILD_DIR.mkdir(0o777, True, True)
     chdir(BUILD_DIR)
-    _run_cmake_generate(is_release)
+    _run_cmake_generate(is_release, cmake_args)
     _run_ninja()
 
 
-def _run_cmake_generate(is_release: bool):
-    use_clang = _is_clang_available()
+def _run_cmake_generate(
+    is_release: bool,
+    cmake_args: Tuple[str, ...],
+):
     process = sbp.Popen(
         [
             "cmake",
@@ -76,28 +81,13 @@ def _run_cmake_generate(is_release: bool):
             "-G",
             "Ninja",
             f"-DCMAKE_BUILD_TYPE={'Release' if is_release else 'Debug'}",
-            *(
-                [
-                    "-DCMAKE_C_COMPILER=clang",
-                    "-DCMAKE_CXX_COMPILER=clang++",
-                ]
-                if use_clang
-                else []
-            ),
+            *cmake_args,
         ],
     )
     process.wait()
     assert (
         process.returncode == 0
     ), f"CMake failed with return code {process.returncode}"
-
-
-def _is_clang_available() -> bool:
-    with suppress(Exception):
-        process = sbp.Popen(["clang", "--version"])
-        process.wait()
-        return True
-    return False
 
 
 def _run_ninja():
