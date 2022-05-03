@@ -107,7 +107,6 @@ KEYWORDS = [
 ]
 EXTRAS_REQUIRE = {
     "dev": fetch_requirements(REPOSITORY_ROOT_DIR / "requirements-dev.txt"),
-    "test": fetch_requirements(REPOSITORY_ROOT_DIR / "requirements-test.txt"),
 }
 ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
