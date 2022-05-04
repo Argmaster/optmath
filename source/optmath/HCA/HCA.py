@@ -3,6 +3,7 @@ from typing import List, Optional
 
 import numpy as np
 from numpy.typing import NDArray
+
 from optmath.HCA.cluster import Cluster
 
 from .distance_selector import DistanceSelectorBase

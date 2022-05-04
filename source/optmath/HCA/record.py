@@ -28,7 +28,7 @@ class RecordBase:
         )
 
     @classmethod
-    def new(cls: Type[T], data: Iterable[Iterable[Any]]) -> Tuple[T]:
+    def new(cls: Type[T], data: Iterable[Iterable[Any]]) -> Tuple[T, ...]:
         return tuple(
             cls(index, *(e for e in row)) for index, row in enumerate(data)
         )

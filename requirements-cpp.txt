@@ -1,0 +1,5 @@
+# C++ building related things
+cmake==3.22.4
+ninja==1.10.2.3
+# Cython compilation
+cython==3.0.0a10

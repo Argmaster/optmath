@@ -1,6 +1,6 @@
-from .PCA import PCA, PCAResutView
+from .PCA import PCA, PCAResutsView
 
 __all__ = [
     "PCA",
-    "PCAResutView",
+    "PCAResutsView",
 ]

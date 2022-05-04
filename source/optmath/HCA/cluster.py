@@ -21,10 +21,12 @@ class Cluster:
 
     @property
     def left(self) -> "Cluster":
+        assert isinstance(self.ob_list[0], Cluster)
         return self.ob_list[0]
 
     @property
     def right(self) -> "Cluster":
+        assert isinstance(self.ob_list[1], Cluster)
         return self.ob_list[1]
 
     def __getitem__(self, index: int):
@@ -41,7 +43,7 @@ class Cluster:
 
     def Z(self) -> NDArray[np.float64]:
         offset = len(self)
-        z_matrix = [None] * (self.ID - offset + 1)
+        z_matrix = [(0, 0, 0.0, 0)] * (self.ID - offset + 1)
         return np.array(
             self._z_matrix(
                 z_matrix,

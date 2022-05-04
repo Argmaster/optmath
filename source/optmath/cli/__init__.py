@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import List
 
 import click
+
 from optmath import __version__
 from optmath.common.logconfig import configure_logger
 
@@ -43,7 +44,7 @@ def optmath(debug: bool, verbose: bool):
     configure_logger(debug, verbose)
 
 
-def auto_load_commands_from_cli_folder():
+def auto_load_commands_from_cli_folder() -> None:
     # automatically add all commands defined in CLI dir
     for file in DIR.glob("*.py"):
         if not file.name.startswith("_"):
