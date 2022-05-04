@@ -46,7 +46,6 @@ class TestPCAResultView:
     ):
         view = pca_seeds_view.from_kaiser_criteria(0.95)
         view.scree_plot()
-        ()
 
     def test_from_kaiser_criteria_percent_scree_plot(
         self, pca_seeds_view: PCAResutsView
@@ -66,10 +65,39 @@ class TestPCAResultView:
         view = pca_seeds_view.from_total_variance_explained(0.7)
         view.cumulative_percent_scree_plot()
 
-    def test_from_first_top_cumulative_percent_scree_plot(
+    def test_principal_component_grid_four_components(
+        self, pca_seeds_view: PCAResutsView
+    ):
+        view = pca_seeds_view.from_first_top(4)
+        fig, _ = view.principal_component_grid()
+        fig.set_dpi(100)
+
+    def test_principal_component_grid_three_components(
         self, pca_seeds_view: PCAResutsView
     ):
         view = pca_seeds_view.from_first_top(3)
         fig, _ = view.principal_component_grid()
-        fig.set_size_inches(16, 16)
         fig.set_dpi(100)
+
+    def test_principal_component_grid_two_components(
+        self, pca_seeds_view: PCAResutsView
+    ):
+        view = pca_seeds_view.from_first_top(2)
+        fig, _ = view.principal_component_grid()
+        fig.set_dpi(100)
+
+    def test_principal_component_loads_grid(
+        self, pca_seeds_view: PCAResutsView
+    ):
+        view = pca_seeds_view.from_first_top(3)
+        fig, _ = view.loads_grid()
+        fig.set_size_inches(5, 10)
+        fig.set_dpi(80)
+
+    def test_principal_component_single_pc(
+        self, pca_seeds_view: PCAResutsView
+    ):
+        view = pca_seeds_view.nth_view(1)
+        fig, _ = view.loads_grid()
+        fig.set_size_inches(5, 10)
+        fig.set_dpi(80)

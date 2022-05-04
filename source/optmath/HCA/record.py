@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass
 from inspect import isclass
 from numbers import Number
-from typing import Any, Iterable, Tuple, Type, TypeVar
+from typing import Any, Iterable, List, Tuple, Type, TypeVar
 
 import numpy as np
 from numpy.typing import NDArray
@@ -39,6 +39,9 @@ class RecordBase:
 
     def __len__(self):
         return 1
+
+    def columns(self) -> List[str]:
+        return [k for k, _ in self.__dataclass_fields__.items()]
 
 
 def autoscale(data: NDArray[np.float64]) -> NDArray[np.float64]:
