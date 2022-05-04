@@ -9,16 +9,16 @@ from numpy.typing import NDArray
 
 from .. import RecordBase, to_numpy_array
 
+TableOfFloatAndNDArray = Tuple[Tuple[float, NDArray[np.float64]], ...]
 
-def PCA(autoscaled_data: Tuple[RecordBase]):
+
+def PCA(autoscaled_data: Tuple[RecordBase]) -> "PCAResutsView":
     nd_data = to_numpy_array(autoscaled_data)
     correlation_matrix = (nd_data.T @ nd_data) / (nd_data.shape[0])
 
     eigenvalues, vectors = np.linalg.eig(correlation_matrix)
 
-    sorted_eigenvalue_vector_pairs: Tuple[
-        Tuple[float, NDArray[np.float64]]
-    ] = tuple(
+    sorted_eigenvalue_vector_pairs: TableOfFloatAndNDArray = tuple(
         sorted(
             zip(eigenvalues, vectors),
             key=lambda e: e[0],
@@ -39,7 +39,7 @@ class PCAResutsView:
 
     autoscaled_data: Tuple[RecordBase]
     nd_data: NDArray[np.float64]
-    eigenvalue_vector_pairs: Tuple[Tuple[float, NDArray[np.float64]]]
+    eigenvalue_vector_pairs: TableOfFloatAndNDArray
     correlation_matrix: NDArray[np.float64]
 
     @property
@@ -75,7 +75,7 @@ class PCAResutsView:
         assert len(self.autoscaled_data) >= 1, "PCAResultView is empty."
         return self.autoscaled_data[0].class_name()
 
-    def _common_plt(self, x: List[float], lambdas: Tuple[float, ...]):
+    def _common_plt(self, x: List[float], lambdas: Tuple[float, ...]) -> None:
         plt.plot(x, lambdas)
         plt.scatter(x, lambdas)
         plt.title(
@@ -85,13 +85,13 @@ class PCAResutsView:
         plt.xlabel("Principal components")
         plt.grid(True)
 
-    def scree_plot(self):
+    def scree_plot(self) -> None:
         x = np.arange(self.lambdas_number) + 1
         self._common_plt(x, self.eigenvalues)
         plt.ylabel("λ (eigenvalue)")
         plt.xticks(x, [f"PC{i}" for i in x])
 
-    def percent_scree_plot(self):
+    def percent_scree_plot(self) -> None:
         x = np.arange(self.lambdas_number) + 1
         percent_lambdas = self.percent_eigenvalues
         self._common_plt(x, percent_lambdas)
@@ -100,7 +100,7 @@ class PCAResutsView:
         plt.yticks(y, [f"{f*100:.1f}%" for f in y])
         plt.xticks(x, [f"PC{i}" for i in x])
 
-    def cumulative_percent_scree_plot(self):
+    def cumulative_percent_scree_plot(self) -> None:
         x = np.arange(self.lambdas_number + 1)
         lambdas = np.concatenate(([0.0], self.cumulative_percent_lambdas))
         self._common_plt(x, lambdas)
@@ -110,7 +110,8 @@ class PCAResutsView:
         plt.xticks(x, [""] + [f"PC{i}" for i in x[1:]])
 
     def subview(
-        self, eigenvalue_vector_pairs: Tuple[Tuple[float, NDArray[np.float64]]]
+        self,
+        eigenvalue_vector_pairs: TableOfFloatAndNDArray,
     ) -> "PCAResutsView":
         return PCAResutsView(
             self.autoscaled_data,
@@ -119,14 +120,16 @@ class PCAResutsView:
             self.correlation_matrix,
         )
 
-    def from_kaiser_criteria(self, treshold: float = 0.95):
+    def from_kaiser_criteria(self, treshold: float = 0.95) -> "PCAResutsView":
         return self.subview(
             tuple(
                 (e, v) for e, v in self.eigenvalue_vector_pairs if e > treshold
             )
         )
 
-    def from_total_variance_explained(self, minimal_percent: float = 0.70):
+    def from_total_variance_explained(
+        self, minimal_percent: float = 0.70
+    ) -> "PCAResutsView":
         lambdas = []
         for cumulated, ob in zip(
             self.cumulative_percent_lambdas, self.eigenvalue_vector_pairs
@@ -151,11 +154,11 @@ class PCAResutsView:
         )
 
     @property
-    def loads_matrix(self):
+    def loads_matrix(self) -> NDArray[np.float64]:
         return np.stack(self.vectors)
 
     @property
-    def transformed_matrix(self):
+    def transformed_matrix(self) -> NDArray[np.float64]:
         return (self.nd_data @ self.loads_matrix.T).T
 
     def principal_component_grid(  # noqa CCR001

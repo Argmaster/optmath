@@ -34,10 +34,10 @@ class RecordBase:
         )
 
     @classmethod
-    def class_name(cls):
+    def class_name(cls) -> str:
         return " ".join(_CAMEL_CASE_REGEX.findall(cls.__qualname__)).lower()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return 1
 
     def columns(self) -> List[str]:
