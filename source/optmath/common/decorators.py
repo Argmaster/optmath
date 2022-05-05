@@ -9,8 +9,8 @@ from typing import (
     Callable,
     ClassVar,
     Dict,
+    Generic,
     Optional,
-    Protocol,
     Type,
     TypeVar,
     Union,
@@ -63,7 +63,7 @@ def statefull(**self_kwargs: Any) -> Callable[[FunctionT], FunctionT]:
 DataclassT = TypeVar("DataclassT", covariant=True)
 
 
-class DataclassTProtcol(Protocol[DataclassT]):
+class DataclassTProtcol(Generic[DataclassT]):
     __dataclass_fields__: ClassVar[Dict[str, Any]]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
