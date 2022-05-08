@@ -10,29 +10,24 @@ from Cython.Build import cythonize
 from setuptools import Extension, find_packages, setup
 
 try:
+    # allows for excluding C++ extensions from distribution build.
     sys.argv.remove("--exclude-c")
 except ValueError:
     EXCLUDE_C: bool = False
 else:
     EXCLUDE_C: bool = True
 
+
 REPOSITORY_ROOT_DIR = Path(__file__).parent
 PACKAGE_NAME = "optmath"
 SOURCE_DIR = REPOSITORY_ROOT_DIR / "source" / PACKAGE_NAME
 
+# Regular expression is used to extract version from optmath/__init__.py file
 VERSION_REGEX = re.compile(r'''__version__.*?=.*?"(\d+\.\d+\.\d+.*?)"''')
 
 
-def fetch_long_description():
-    """Acquire long description."""
-    return (
-        f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'README.md')}\n"
-        f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'CHANGELOG.md')}"
-    )
-
-
 def fetch_utf8_content(file_path: Union[str, Path]) -> str:
-    """Acquire utf-8 encoded content from file."""
+    """Acquire utf-8 encoded content from file given by file_path."""
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
@@ -55,7 +50,7 @@ def fetch_requirements(file_path: Union[str, Path]) -> List[str]:
 
 
 def fetch_package_python_modules(glob_pattern: Union[str, Path]) -> List[str]:
-    """Fetch list of modules in this package."""
+    """Fetch list of names of modules in package selected with glob pattern."""
     return [splitext(basename(path))[0] for path in glob(str(glob_pattern))]
 
 
@@ -74,9 +69,7 @@ SHORT_DESCRIPTION = "C accelerated Python math library"
 LONG_DESCRIPTION = fetch_utf8_content("README.md")
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
 INSTALL_REQUIRES = fetch_requirements(REPOSITORY_ROOT_DIR / "requirements.txt")
-EXTRAS_REQUIRE_DEV = fetch_requirements(
-    REPOSITORY_ROOT_DIR / "requirements-dev.txt"
-)
+
 AUTHOR = "optmath team"
 AUTHOR_EMAIL = "argmaster.world@gmail.com"
 URL = "https://github.com/Argmaster/optmath"
@@ -102,7 +95,9 @@ CLASSIFIERS = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Utilities",
 ]
-PROJECT_URLS = {}
+PROJECT_URLS = {
+    "GitHub": "https://github.com/Argmaster/optmath",
+}
 KEYWORDS = [
     "python-3",
     "python-3.7",
@@ -110,7 +105,9 @@ KEYWORDS = [
     "python-3.9",
     "python-3.10",
 ]
-EXTRAS_REQUIRE = {"dev": EXTRAS_REQUIRE_DEV}
+EXTRAS_REQUIRE = {
+    "dev": fetch_requirements(REPOSITORY_ROOT_DIR / "requirements-dev.txt"),
+}
 ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 

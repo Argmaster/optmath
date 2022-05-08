@@ -6,19 +6,51 @@ as it's main workflow model. Simplified visualization can be seen on graph
 below:
 
 ```mermaid
-graph LR
-  A(master) --> B((branch));
-  B -->|master| Z((merge));
-  B --> C([commits]);
-  C --> E((Pull Request));
-  E --> G([test, fix, discuss]);
-  G --> Z;
-  Z --> X(master);
+    %%{init: { 'theme': 'forest' , 'themeVariables': {
+              'git0': '#4db85f',
+              'git1': '#49b391',
+              'git2': '#59a7ff',
+              'git3': '#d93261',
+              'git4': '#00ffff',
+              'git5': '#ffff00',
+              'git6': '#ff00ff',
+              'git7': '#00ffff'
+       } } }%%
+    gitGraph
+        commit tag:"0.0.0"
+
+        branch feature
+        checkout feature
+
+        branch private
+        checkout private
+
+        commit
+        commit
+
+        checkout feature
+        merge private
+
+        branch private2
+        checkout private2
+
+        commit
+        commit
+
+        checkout feature
+        merge private2
+
+        commit tag:"1.0.0"
+
+        checkout main
+        merge feature
 ```
 
 ## Clone repository
 
-!!! info "You can skip this step if you already have a clone"
+!!! Hint
+
+    You can skip this step if you already have a clone
 
 ```
 git clone https://github.com/Argmaster/optmath.git
@@ -34,7 +66,9 @@ git checkout main
 
 ## Pull changes from origin
 
-!!! info "You can skip this step if you just cloned the repository"
+!!! Hint
+
+    You can skip this step if you just cloned the repository
 
 ```
 git pull --ff
@@ -43,8 +77,7 @@ git pull --ff
 ## Create feature branch
 
 Create new branch for our feature called (replace with whatever you want)
-`feature_name`. `feature/` prefix is not required but is recommended to
-distinguish features from fixes and other types of branches in git history.
+`feature_name`. `feature/` prefix is required because of convention.
 
 [Learn about branches](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging){:target="\_blank"}
 
@@ -74,6 +107,11 @@ have a set of tests to verify its operation.
 1. ### Formatting & Quality checks
 
     Run code quality checks with tox to quickly fix most obvious issues in your code.
+
+    ```
+    tox -e check
+    ```
+
 
     ```
     tox -e check

@@ -2,5 +2,5 @@ import click
 
 
 @click.command()
-def command():
+def command() -> None:
     pass

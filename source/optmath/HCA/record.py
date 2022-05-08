@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass
 from inspect import isclass
 from numbers import Number
-from typing import Any, Iterable, Tuple, Type, TypeVar
+from typing import Any, Iterable, List, Tuple, Type, TypeVar
 
 import numpy as np
 from numpy.typing import NDArray
@@ -28,17 +28,20 @@ class RecordBase:
         )
 
     @classmethod
-    def new(cls: Type[T], data: Iterable[Iterable[Any]]) -> Tuple[T]:
+    def new(cls: Type[T], data: Iterable[Iterable[Any]]) -> Tuple[T, ...]:
         return tuple(
             cls(index, *(e for e in row)) for index, row in enumerate(data)
         )
 
     @classmethod
-    def class_name(cls):
+    def class_name(cls) -> str:
         return " ".join(_CAMEL_CASE_REGEX.findall(cls.__qualname__)).lower()
 
-    def __len__(self):
+    def __len__(self) -> int:
         return 1
+
+    def columns(self) -> List[str]:
+        return [k for k, _ in self.__dataclass_fields__.items()]
 
 
 def autoscale(data: NDArray[np.float64]) -> NDArray[np.float64]:
