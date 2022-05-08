@@ -16,7 +16,10 @@ LOG_FILE_PATH = str(
 )
 
 
-def configure_logger(is_debug: bool = False, is_verbose: bool = False):
+def configure_logger(
+    is_debug: bool = False,
+    is_verbose: bool = False,
+) -> None:
     if is_debug:
         log_level = logging.DEBUG
     elif is_verbose:
@@ -37,7 +40,7 @@ def configure_logger(is_debug: bool = False, is_verbose: bool = False):
     )
 
     class MarkupStripFormatter(logging.Formatter):
-        def format(self, *args: Any, **kwargs: Any):  # noqa: A003
+        def format(self, *args: Any, **kwargs: Any) -> str:  # noqa: A003
             s = super().format(*args, **kwargs)
             # render strings with rich
             seg_list = Text.from_markup(s).render(Console())

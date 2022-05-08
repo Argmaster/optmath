@@ -3,7 +3,7 @@
 
 import importlib.util
 from pathlib import Path
-from typing import List
+from typing import Any, List
 
 import click
 
@@ -13,12 +13,12 @@ from optmath.common.logconfig import configure_logger
 DIR = Path(__file__).parent
 
 
-def cli(args: List[str]):
+def cli(args: List[str]) -> Any:
     """Optmath CLI interface API endpoint."""
     return optmath(args)
 
 
-@click.group
+@click.group()
 @click.version_option(
     __version__,
     "--version",
@@ -39,12 +39,12 @@ def cli(args: List[str]):
     is_flag=True,
     help="Enable verbose logging, do not implies debug mode.",
 )
-def optmath(debug: bool, verbose: bool):
+def optmath(debug: bool, verbose: bool) -> None:
     """optmath entry point description."""
     configure_logger(debug, verbose)
 
 
-def auto_load_commands_from_cli_folder():
+def auto_load_commands_from_cli_folder() -> None:
     # automatically add all commands defined in CLI dir
     for file in DIR.glob("*.py"):
         if not file.name.startswith("_"):

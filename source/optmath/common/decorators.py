@@ -4,14 +4,27 @@ import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from types import SimpleNamespace
-from typing import Any, Dict, Optional, Type
+from typing import (
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    Generic,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 from packaging.version import Version
 
 import optmath
 
+FunctionT = TypeVar("FunctionT", bound=Callable[..., Any])
 
-def statefull(**self_kwargs: Any):
+
+def statefull(**self_kwargs: Any) -> Callable[[FunctionT], FunctionT]:
     """Make function statefull.
 
     Statefull function will receive same namespace object
@@ -29,8 +42,8 @@ def statefull(**self_kwargs: Any):
     even when no args & kwargs are bound: @statefull()
     """
 
-    def descriptor(function: Any):
-        def wrapper(*args: Any, **kwargs: Any):
+    def descriptor(function: FunctionT) -> FunctionT:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             return self.__function__(
                 self,
                 *args,
@@ -42,12 +55,24 @@ def statefull(**self_kwargs: Any):
         self.__wrapper__ = wrapper
         self.__self_kwargs__ = self_kwargs
 
-        return wrapper
+        return cast(FunctionT, wrapper)
 
     return descriptor
 
 
-def ignore_excess_kwargs(cls: Any):
+DataclassT = TypeVar("DataclassT", covariant=True)
+
+
+class DataclassTProtcol(Generic[DataclassT]):
+    __dataclass_fields__: ClassVar[Dict[str, Any]]
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        ...
+
+
+def ignore_excess_kwargs(
+    cls: Type[DataclassTProtcol],
+) -> Type[DataclassTProtcol]:
     """Make dataclass ignore excess keyword arguments. It will trim positional
     arguments too, but won't take into account the keyword arguments count.
 
@@ -75,7 +100,7 @@ def ignore_excess_kwargs(cls: Any):
 
     __old_init__ = cls.__init__
 
-    def wrapper_init(self: Any, *args: Any, **kwargs: Any):
+    def wrapper_init(self: Any, *args: Any, **kwargs: Any) -> Any:
         fields: Dict[str, type] = cls.__dataclass_fields__
         max_args = len(fields)
         selected_kwargs = {
@@ -88,7 +113,7 @@ def ignore_excess_kwargs(cls: Any):
             **selected_kwargs,
         )
 
-    cls.__init__ = wrapper_init
+    cls.__init__ = wrapper_init  # type: ignore
     return cls
 
 
@@ -145,7 +170,7 @@ class deprecated:  # noqa: N801
     date_bomb: Optional[datetime] = None
     version_bomb: Optional[str] = None
 
-    def __call__(self, function: ...) -> ...:
+    def __call__(self, function: FunctionT) -> Union[FunctionT, Bomb]:
         """Decorate function by replacing with wrapper."""
         should_bomb_trigger = (
             self.date_bomb is not None and datetime.now() > self.date_bomb
@@ -163,7 +188,7 @@ class deprecated:  # noqa: N801
                 "change your code so it won't break after update."
             )
 
-            def function_wrapper(*args: Any, **kwargs: Any):
+            def function_wrapper(*args: Any, **kwargs: Any) -> Any:
                 warnings.warn(
                     self.warning_type(message),
                     category=self.warning_type,
@@ -171,4 +196,4 @@ class deprecated:  # noqa: N801
                 )
                 return function(*args, **kwargs)
 
-            return function_wrapper
+            return cast(FunctionT, function_wrapper)

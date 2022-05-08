@@ -937,3 +937,4 @@ FodyWeavers.xsd
 .jupyter/
 coverage/
 build/
+typechecking/

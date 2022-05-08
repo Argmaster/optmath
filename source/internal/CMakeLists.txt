@@ -5,12 +5,6 @@ SET( CMAKE_CXX_STANDARD 17 )
 SET( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
 
-# ---------------------------------------------------------------------------- #
-#                   Add TBB (Intel Threaded Building Blocks)                   #
-# ---------------------------------------------------------------------------- #
-
-# find_package(TBB REQUIRED)
-
 # -------------------------------------------------------------------------- #
 #                        create optmath library binary                       #
 # -------------------------------------------------------------------------- #

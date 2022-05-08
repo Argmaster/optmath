@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, field
+from typing import List, Optional, Tuple
 
 import numpy as np
 from numpy.typing import NDArray
@@ -45,33 +45,37 @@ class HCAStep:
             new_distance_matrix,
         )
 
-    def _indexes_to_reduce(self):
+    def _indexes_to_reduce(self) -> Tuple[Tuple[int, int], float]:
         min_value = np.inf
-        index_pair = []
+        index_pair = None
         for i, row in enumerate(self.distance_matrix):
             for j in range(i):
                 if row[j] < min_value:
                     index_pair = (i, j)
                     min_value = row[j]
+        assert index_pair is not None
         return index_pair, min_value
 
-    def _new_distance_matrix(self, to_reduce, new_distance_vector):
+    def _new_distance_matrix(
+        self,
+        to_reduce: Tuple[int, int],
+        new_distance_vector: NDArray[np.float64],
+    ) -> NDArray[np.float64]:
         # remove reduced rows and columns
         new_distance_matrix = np.delete(
             np.delete(self.distance_matrix, to_reduce, 0), to_reduce, 1
         )
-        if new_distance_vector:
-            # add distances for new cluster at the end
-            new_distance_matrix = np.vstack(
-                (new_distance_matrix, new_distance_vector)
+        # add distances for new cluster at the end
+        new_distance_matrix = np.vstack(
+            (new_distance_matrix, new_distance_vector)
+        )
+        # add distances for new cluster at the end
+        new_distance_matrix = np.hstack(
+            (
+                new_distance_matrix,
+                np.append(new_distance_vector, 0.0).reshape(-1, 1),
             )
-            # add distances for new cluster at the end
-            new_distance_matrix = np.hstack(
-                (
-                    new_distance_matrix,
-                    np.reshape(new_distance_vector + [0.0], (-1, 1)),
-                )
-            )
+        )
 
         return new_distance_matrix
 
@@ -85,8 +89,9 @@ class HCA:
     data: List[Cluster]
     distance_selector: DistanceSelectorBase
     initial_distance_matrix: Optional[NDArray[np.float64]] = None
+    step: HCAStep = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.initial_distance_matrix is None:
             self.initial_distance_matrix = np.array(
                 [
@@ -108,10 +113,10 @@ class HCA:
         self.step = old_step.reduce()
         return old_step
 
-    def __iter__(self):
+    def __iter__(self) -> "HCA":
         return self
 
-    def __next__(self):
+    def __next__(self) -> HCAStep:
         if len(self.step.data) == 1:
             raise StopIteration
         else:

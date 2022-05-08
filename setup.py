@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import re
+import sys
 from glob import glob
 from os.path import basename, splitext
 from pathlib import Path
@@ -7,23 +9,25 @@ from typing import Any, List, Union
 from Cython.Build import cythonize
 from setuptools import Extension, find_packages, setup
 
+try:
+    # allows for excluding C++ extensions from distribution build.
+    sys.argv.remove("--exclude-c")
+except ValueError:
+    EXCLUDE_C: bool = False
+else:
+    EXCLUDE_C: bool = True
+
+
 REPOSITORY_ROOT_DIR = Path(__file__).parent
 PACKAGE_NAME = "optmath"
 SOURCE_DIR = REPOSITORY_ROOT_DIR / "source" / PACKAGE_NAME
 
+# Regular expression is used to extract version from optmath/__init__.py file
 VERSION_REGEX = re.compile(r'''__version__.*?=.*?"(\d+\.\d+\.\d+.*?)"''')
 
 
-def fetch_long_description():
-    """Acquire long description."""
-    return (
-        f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'README.md')}\n"
-        f"{fetch_utf8_content(REPOSITORY_ROOT_DIR / 'CHANGELOG.md')}"
-    )
-
-
 def fetch_utf8_content(file_path: Union[str, Path]) -> str:
-    """Acquire utf-8 encoded content from file."""
+    """Acquire utf-8 encoded content from file given by file_path."""
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
@@ -46,7 +50,7 @@ def fetch_requirements(file_path: Union[str, Path]) -> List[str]:
 
 
 def fetch_package_python_modules(glob_pattern: Union[str, Path]) -> List[str]:
-    """Fetch list of modules in this package."""
+    """Fetch list of names of modules in package selected with glob pattern."""
     return [splitext(basename(path))[0] for path in glob(str(glob_pattern))]
 
 
@@ -65,9 +69,7 @@ SHORT_DESCRIPTION = "C accelerated Python math library"
 LONG_DESCRIPTION = fetch_utf8_content("README.md")
 LONG_DESCRIPTION_CONTENT_TYPE = "text/markdown"
 INSTALL_REQUIRES = fetch_requirements(REPOSITORY_ROOT_DIR / "requirements.txt")
-EXTRAS_REQUIRE_DEV = fetch_requirements(
-    REPOSITORY_ROOT_DIR / "requirements-dev.txt"
-)
+
 AUTHOR = "optmath team"
 AUTHOR_EMAIL = "argmaster.world@gmail.com"
 URL = "https://github.com/Argmaster/optmath"
@@ -93,7 +95,9 @@ CLASSIFIERS = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Utilities",
 ]
-PROJECT_URLS = {}
+PROJECT_URLS = {
+    "GitHub": "https://github.com/Argmaster/optmath",
+}
 KEYWORDS = [
     "python-3",
     "python-3.7",
@@ -101,7 +105,9 @@ KEYWORDS = [
     "python-3.9",
     "python-3.10",
 ]
-EXTRAS_REQUIRE = {"dev": EXTRAS_REQUIRE_DEV}
+EXTRAS_REQUIRE = {
+    "dev": fetch_requirements(REPOSITORY_ROOT_DIR / "requirements-dev.txt"),
+}
 ENTRY_POINTS = {"console_scripts": ["optmath=optmath.__main__:main"]}
 PYTHON_REQUIREMENTS = ">=3.7"
 
@@ -115,23 +121,26 @@ def module_path(source: Path) -> str:
     return relative_path.rstrip(".pyx").replace("/", ".").replace("\\", ".")
 
 
-MODULES: Any = cythonize(
-    [
-        Extension(
-            f"optmath._internal.{module_path(source)}",
-            sources=[str(source)],
-            include_dirs=[
-                "source/internal/include/",
-                "source/internal/templates/",
-            ],
-            library_dirs=[str(INTERNAL_LIB_DIR)],
-            libraries=["optmath"],
-            language="c++",
-        )
-        for source in PYX_SOURCES
-    ],
-    compiler_directives={"language_level": "3"},
-)
+if EXCLUDE_C is False:
+    MODULES: Any = cythonize(
+        [
+            Extension(
+                f"optmath._internal.{module_path(source)}",
+                sources=[str(source)],
+                include_dirs=[
+                    "source/internal/include/",
+                    "source/internal/templates/",
+                ],
+                library_dirs=[str(INTERNAL_LIB_DIR)],
+                libraries=["optmath"],
+                language="c++",
+            )
+            for source in PYX_SOURCES
+        ],
+        compiler_directives={"language_level": "3"},
+    )
+else:
+    MODULES: Any = []
 PACKAGE_DATA = {}
 
 
@@ -165,7 +174,7 @@ def run_setup_script():
 
 
 if __name__ == "__main__":
-    if not INTERNAL_LIB_DIR.exists():
+    if EXCLUDE_C is False and not INTERNAL_LIB_DIR.exists():
         ERROR_MESSAGE = (
             "\n\n\n>>>>>>>>>\nFailed to find precompiled binaries for internal C/C++ extensions.\n"
             'Build interface for internal C/C++ extensions first. Use "tox -e cmake"\n>>>>>>>>>\n\n\n'

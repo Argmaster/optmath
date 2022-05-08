@@ -34,30 +34,19 @@ management and test command line tool you can use for:
 
 ## Our perspective
 
-Every complex Python project requires plenty of tools to develop properly
-including tests, quality checks, documentation and all complex build steps. It
-is inevitable that all those things will be sooner or later automated with some
-scripts.
+Every complex Python project requires multiple tools for development and deployment.
+Those are mostly related to test suite running, checking quality of code, developing and
+building documentation and building distribution packages.
+Usually those are tedious tasks and they are at the top of the lists of tasks to automate.
 
-**And here comes tox**
+**Here comes tox**
 
-`tox` can be used as a replacement for any kind of `bash`/`batch`/`make`
-scripts. Instead of dynamic and error prone scripts, tox uses static ini file
-for configuration. Whenever there is need for dynamic content, you can use
-multi-platform Python script and invoke it with `tox`.
-
-Using `tox` has a long list of advantages:
-
--   built-in isolation of testing environments via Python virtual environments
--   quick and intuitive command line interface
--   built-in Python version awareness
--   flexibility of environment configuration and creation
--   great integration with any set of Python tools
--   utility scripts are guaranteed to be multi-platform
--   utility scripts gain access to PyPI's huge set of extensions
--   ...
-
-With above said, it was obvious decision to choose `tox` for automation.
+`tox` can be used as a reliable replacement for manually written scripts.
+It's designed to run predefined series of command in automatically
+generated Python virtual environment. It was designed for Python ecosystem
+and is widely used along Python projects. It is compatible with other
+Python tools out of the box. All the configuration is contained in `tox.ini`
+file and is completely static.
 
 ---
 
@@ -72,9 +61,14 @@ tox -e envname
 
 Where `envname` is replaced 1:1 with name of any environments listed below.
 
+!!! Info
+
+    You can also use `tox` command without any arguments to run checks for all
+    supported python versions. Be aware that it is really time consuming.
+
 ---
 
-## Environments list
+## List of all configured environments
 
 Simplicity of creating `tox` managed environments allows us to create highly
 specialized environments with minimal boilerplate.
@@ -85,23 +79,23 @@ Stands for development environment (important when using IDE like Visual Studio
 Code or PyCharm). When selecting interpreter for your IDE, `devenv` is a right
 one to pick.
 
-```shell
-tox -e devenv
-```
-
 This environment is meant to contain all tools important for continuos
 development including linters, formatters, building tools, packaging tools and
 everything else listed in `requirements-dev.txt` It is really heavy and
 expensive to create because of complexity of installation. Every call
 of `tox -e devenv` will completely recreate the environment.
 
-!!! Danger "Running tox -e devenv completely reinstalls environment - it's time consuming."
+!!! Danger
+
+    Running tox -e devenv completely reinstalls environment - it's time consuming.
 
 It is designed in such way many due to the fact that during development
 there is no need to recreate it until something brakes, and then it's
 handy to simplify reinstallation how much possible.
 
-!!! Success "Running this environment will install pre-commit."
+!!! Hint
+
+    Running this environment will install pre-commit.
 
 To select Python from `devenv` as interpreter in Visual Studio Code, use
 `Ctrl + Shift + P` and type `Python: Select Interpreter`, then hit `Enter`,
@@ -112,22 +106,40 @@ This environment is rather bullet proof in comparison to other non-utility
 environments (mainly test runners). It should just install on demand, and
 every failure should be considered and fixed permanently.
 
+List of included dependencies:
+
+`requirement.txt`
+
+```ini
+{% include 'requirements.txt' %}
+```
+
+`requirement-test.txt`
+
+```ini
+{% include 'requirements-test.txt' %}
+```
+
+`requirement-dev.txt`
+
+```ini
+{% include 'requirements-dev.txt' %}
+```
+
 ---
 
 ### `check`
 
 Runs formatters and code quality checkers over your workspace.
 
-```shell
-tox -e check
-```
-
 This environment is lightweight compared to devenv because it installs
 dependencies once and completely skips installing a package from this
 repository as it does not need it. The operations performed by this
 environment are performed in place.
 
-!!! Success "This environment is lightweight, running tox -e check often is fine."
+!!! Info
+
+    This environment is lightweight, running tox -e check often is fine.
 
 Similarly to devenv it is bullet proof
 in comparison to other non-utility environments (mainly test runners). It
@@ -136,9 +148,11 @@ fixed permanently.
 
 ---
 
-### `pyXX`
+### `pyXY`
 
-!!! Warning "pyXX - test runner envs - they require special care and you are responsible for their well being."
+!!! Warning
+
+    pyXY - test runner envs - they require special care and you are responsible for their well being.
 
 Executes full
 [test suite](https://en.wikipedia.org/wiki/Test_suite#:~:text=In%20software%20development%2C%20a%20test,some%20specified%20set%20of%20behaviours.){:target="\_blank"}
@@ -149,40 +163,36 @@ available ones are:
 -   py38
 -   py39
 -   py310
--   pypy37
--   pypy38
 
-```shell
-tox -e py37
-```
+!!! Warning
 
-!!! Warning "Running `tox -e py37` should be preceded with `tox -e cmake` to build lastest version of C/C++ internals."
+    Running `tox -e py37` should be preceded with `tox -e cmake` to build lastest version of C/C++ internals.
 
-List of dependencies for release package is contained in `requirements.txt`
-file:
+List of included dependencies:
+
+`requirement.txt`
 
 ```ini
 {% include 'requirements.txt' %}
 ```
 
-minimal set of libraries required for packaging is installed too
+`requirement-test.txt`
 
 ```ini
-setuptools>=59.6.0
-cython==3.0.0a10
-pytest==6.2.4c_extension/#cc-extensions
-pytest-cov==3.0.0
+{% include 'requirements-test.txt' %}
 ```
+
+---
+
+### `mypy`
+
+Runs mypy over Python codebase to perform static type analysis.
 
 ---
 
 ### `cmake`
 
 Builds C/C++ extension library with cmake and ninja.
-
-```shell
-tox -e cmake
-```
 
 This environment automates process of building C/C++ extension library
 associated with this package. It is expected that all C/C++ code will be
@@ -207,10 +217,6 @@ It can accept additional arguments:
 Builds C/C++ extension library with `tox -e cmake` then runs C++ test suite with CTest.
 Environment name comes from library used for test suite - Google Test
 
-```shell
-tox -e googletest
-```
-
 ---
 
 ### `docs`
@@ -218,33 +224,19 @@ tox -e googletest
 Builds documentation with mkdocs, all generated files are saved to `site/`
 folder.
 
-```shell
-tox -e docs
-```
-
 ---
 
 ### `build-all`
 
 Builds package distribution
 [wheels](https://realpython.com/python-wheels/#what-is-a-python-wheel){:target="\_blank"}
-for corresponding Python version.
+for corresponding Python version or all versions.
 
 -   build-all
 -   build-py37
 -   build-py38
 -   build-py39
 -   build-py310
--   build-pypy37
--   build-pypy38
-
-```shell
-tox -e build-all
-```
-
-```shell
-tox -e build-py37
-```
 
 Environments with **build** prefix are responsible for building release
 packages for corresponding python versions (`build-py37` builds for Python 3.7
@@ -265,13 +257,10 @@ py37
 py38
 py39
 py310
-pypy37
-pypy38
+mypy
 build-all
 build-py37
 build-py38
 build-py39
 build-py310
-build-pypy37
-build-pypy38
 ```

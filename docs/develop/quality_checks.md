@@ -33,7 +33,7 @@ around these tools:
 -   [flake8-alphabetize](https://pypi.org/project/flake8-alphabetize/){:target="\_blank"}
     \- checker for alphabetizing import and **all**.
 -   [flake8-broken-line](https://pypi.org/project/flake8-broken-line/){:target="\_blank"}
-    \- forbid backslashes (){:target="\_blank"} for line breaks.
+    \- forbid backslashes for line breaks.
 -   [flake8-bugbear](https://pypi.org/project/flake8-bugbear/){:target="\_blank"}
     \- finding likely bugs and design problems in your program.
 -   [flake8-builtins](https://pypi.org/project/flake8-builtins/){:target="\_blank"}
@@ -43,7 +43,7 @@ around these tools:
 -   [flake8-docstrings](https://pypi.org/project/flake8-docstrings/){:target="\_blank"}
     \- uses pydocstyle to check docstrings
 -   [flake8-eradicate](https://pypi.org/project/flake8-eradicate/){:target="\_blank"}
-    \- find commented out (or so called "dead"){:target="\_blank"} code.
+    \- find commented out (or so called "dead") code.
 -   [flake8-functions](https://pypi.org/project/flake8-functions/){:target="\_blank"}
     \- report on issues with functions.
 -   [flake8-functions-names](https://pypi.org/project/flake8-functions-names/){:target="\_blank"}

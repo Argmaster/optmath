@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, List, Tuple, Union
+from typing import Any, Iterator, List, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
@@ -8,12 +8,14 @@ from .record import RecordBase
 
 ZMatrixRowT = Tuple[int, int, float, int]
 
+ClusterOrRecord = Union["Cluster", RecordBase]
+
 
 @dataclass(frozen=True)
 class Cluster:
     ID: int
-    ob_list: Tuple[Union["Cluster", RecordBase], ...]
-    height: int = 0
+    ob_list: Tuple[ClusterOrRecord, ...]
+    height: float = 0.0
 
     @classmethod
     def new(cls, data: Tuple[Any]) -> List["Cluster"]:
@@ -21,16 +23,18 @@ class Cluster:
 
     @property
     def left(self) -> "Cluster":
+        assert isinstance(self.ob_list[0], Cluster)
         return self.ob_list[0]
 
     @property
     def right(self) -> "Cluster":
+        assert isinstance(self.ob_list[1], Cluster)
         return self.ob_list[1]
 
-    def __getitem__(self, index: int):
+    def __getitem__(self, index: int) -> ClusterOrRecord:
         return self.ob_list[index]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         return iter(self.ob_list)
 
     def __str__(self) -> str:
@@ -41,7 +45,7 @@ class Cluster:
 
     def Z(self) -> NDArray[np.float64]:
         offset = len(self)
-        z_matrix = [None] * (self.ID - offset + 1)
+        z_matrix = [(0, 0, 0.0, 0)] * (self.ID - offset + 1)
         return np.array(
             self._z_matrix(
                 z_matrix,
