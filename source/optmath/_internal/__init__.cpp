@@ -1476,8 +1476,11 @@ static const char __pyx_k_Index[] = "Index";
 static const char __pyx_k_Shape[] = "Shape";
 static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_import[] = "__import__";
+static const char __pyx_k_tensor[] = "tensor";
 static const char __pyx_k_indexer[] = "indexer";
 static const char __pyx_k_internal[] = "_internal";
+static const char __pyx_k_shape_of[] = "shape_of";
+static const char __pyx_k_TensorI32[] = "_TensorI32";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 #if !CYTHON_USE_MODULE_STATE
 static PyObject *__pyx_kp_u_;
@@ -1485,6 +1488,8 @@ static PyObject *__pyx_n_s_Index;
 static PyObject *__pyx_n_u_Index;
 static PyObject *__pyx_n_s_Shape;
 static PyObject *__pyx_n_u_Shape;
+static PyObject *__pyx_n_s_TensorI32;
+static PyObject *__pyx_n_u_TensorI32;
 static PyObject *__pyx_n_s__2;
 static PyObject *__pyx_n_s_all;
 static PyObject *__pyx_n_s_cline_in_traceback;
@@ -1494,6 +1499,9 @@ static PyObject *__pyx_n_u_internal;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_shape;
+static PyObject *__pyx_n_s_shape_of;
+static PyObject *__pyx_n_u_shape_of;
+static PyObject *__pyx_n_s_tensor;
 static PyObject *__pyx_n_s_test;
 #endif
 /* #### Code section: decls ### */
@@ -1522,6 +1530,8 @@ typedef struct {
   PyObject *__pyx_n_u_Index;
   PyObject *__pyx_n_s_Shape;
   PyObject *__pyx_n_u_Shape;
+  PyObject *__pyx_n_s_TensorI32;
+  PyObject *__pyx_n_u_TensorI32;
   PyObject *__pyx_n_s__2;
   PyObject *__pyx_n_s_all;
   PyObject *__pyx_n_s_cline_in_traceback;
@@ -1531,6 +1541,9 @@ typedef struct {
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_name;
   PyObject *__pyx_n_s_shape;
+  PyObject *__pyx_n_s_shape_of;
+  PyObject *__pyx_n_u_shape_of;
+  PyObject *__pyx_n_s_tensor;
   PyObject *__pyx_n_s_test;
 } __pyx_mstate;
 
@@ -1570,6 +1583,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_u_Index);
   Py_CLEAR(clear_module_state->__pyx_n_s_Shape);
   Py_CLEAR(clear_module_state->__pyx_n_u_Shape);
+  Py_CLEAR(clear_module_state->__pyx_n_s_TensorI32);
+  Py_CLEAR(clear_module_state->__pyx_n_u_TensorI32);
   Py_CLEAR(clear_module_state->__pyx_n_s__2);
   Py_CLEAR(clear_module_state->__pyx_n_s_all);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
@@ -1579,6 +1594,9 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
   Py_CLEAR(clear_module_state->__pyx_n_s_shape);
+  Py_CLEAR(clear_module_state->__pyx_n_s_shape_of);
+  Py_CLEAR(clear_module_state->__pyx_n_u_shape_of);
+  Py_CLEAR(clear_module_state->__pyx_n_s_tensor);
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
   return 0;
 }
@@ -1605,6 +1623,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_u_Index);
   Py_VISIT(traverse_module_state->__pyx_n_s_Shape);
   Py_VISIT(traverse_module_state->__pyx_n_u_Shape);
+  Py_VISIT(traverse_module_state->__pyx_n_s_TensorI32);
+  Py_VISIT(traverse_module_state->__pyx_n_u_TensorI32);
   Py_VISIT(traverse_module_state->__pyx_n_s__2);
   Py_VISIT(traverse_module_state->__pyx_n_s_all);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
@@ -1614,6 +1634,9 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
   Py_VISIT(traverse_module_state->__pyx_n_s_shape);
+  Py_VISIT(traverse_module_state->__pyx_n_s_shape_of);
+  Py_VISIT(traverse_module_state->__pyx_n_u_shape_of);
+  Py_VISIT(traverse_module_state->__pyx_n_s_tensor);
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
   return 0;
 }
@@ -1637,6 +1660,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_u_Index __pyx_mstate_global->__pyx_n_u_Index
 #define __pyx_n_s_Shape __pyx_mstate_global->__pyx_n_s_Shape
 #define __pyx_n_u_Shape __pyx_mstate_global->__pyx_n_u_Shape
+#define __pyx_n_s_TensorI32 __pyx_mstate_global->__pyx_n_s_TensorI32
+#define __pyx_n_u_TensorI32 __pyx_mstate_global->__pyx_n_u_TensorI32
 #define __pyx_n_s__2 __pyx_mstate_global->__pyx_n_s__2
 #define __pyx_n_s_all __pyx_mstate_global->__pyx_n_s_all
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
@@ -1646,6 +1671,9 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
 #define __pyx_n_s_shape __pyx_mstate_global->__pyx_n_s_shape
+#define __pyx_n_s_shape_of __pyx_mstate_global->__pyx_n_s_shape_of
+#define __pyx_n_u_shape_of __pyx_mstate_global->__pyx_n_u_shape_of
+#define __pyx_n_s_tensor __pyx_mstate_global->__pyx_n_s_tensor
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
 #endif
 /* #### Code section: module_code ### */
@@ -1671,6 +1699,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_Index, sizeof(__pyx_k_Index), 0, 1, 0, 1},
   {0, __pyx_k_Shape, sizeof(__pyx_k_Shape), 0, 0, 1, 1},
   {0, __pyx_k_Shape, sizeof(__pyx_k_Shape), 0, 1, 0, 1},
+  {0, __pyx_k_TensorI32, sizeof(__pyx_k_TensorI32), 0, 0, 1, 1},
+  {0, __pyx_k_TensorI32, sizeof(__pyx_k_TensorI32), 0, 1, 0, 1},
   {0, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 1},
   {0, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
   {0, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
@@ -1680,6 +1710,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {0, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {0, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
+  {0, __pyx_k_shape_of, sizeof(__pyx_k_shape_of), 0, 0, 1, 1},
+  {0, __pyx_k_shape_of, sizeof(__pyx_k_shape_of), 0, 1, 0, 1},
+  {0, __pyx_k_tensor, sizeof(__pyx_k_tensor), 0, 0, 1, 1},
   {0, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   #else
   {&__pyx_kp_u_, __pyx_k_, sizeof(__pyx_k_), 0, 1, 0, 0},
@@ -1687,6 +1720,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_Index, __pyx_k_Index, sizeof(__pyx_k_Index), 0, 1, 0, 1},
   {&__pyx_n_s_Shape, __pyx_k_Shape, sizeof(__pyx_k_Shape), 0, 0, 1, 1},
   {&__pyx_n_u_Shape, __pyx_k_Shape, sizeof(__pyx_k_Shape), 0, 1, 0, 1},
+  {&__pyx_n_s_TensorI32, __pyx_k_TensorI32, sizeof(__pyx_k_TensorI32), 0, 0, 1, 1},
+  {&__pyx_n_u_TensorI32, __pyx_k_TensorI32, sizeof(__pyx_k_TensorI32), 0, 1, 0, 1},
   {&__pyx_n_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 1},
   {&__pyx_n_s_all, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
@@ -1696,6 +1731,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
+  {&__pyx_n_s_shape_of, __pyx_k_shape_of, sizeof(__pyx_k_shape_of), 0, 0, 1, 1},
+  {&__pyx_n_u_shape_of, __pyx_k_shape_of, sizeof(__pyx_k_shape_of), 0, 1, 0, 1},
+  {&__pyx_n_s_tensor, __pyx_k_tensor, sizeof(__pyx_k_tensor), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   #endif
   {0, 0, 0, 0, 0, 0, 0}
@@ -1721,16 +1759,21 @@ static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_u_Index) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_Shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_u_Shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s__2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s_all) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_indexer) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_u_internal) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s_TensorI32) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_u_TensorI32) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s__2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_all) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_indexer) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_u_internal) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_shape_of) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_u_shape_of) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_tensor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   #endif
   #if !CYTHON_USE_MODULE_STATE
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
@@ -2101,7 +2144,7 @@ if (!__Pyx_RefNanny) {
  *
  * from .indexer import Index             # <<<<<<<<<<<<<<
  * from .shape import Shape
- *
+ * from .tensor import _TensorI32, shape_of
  */
   __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2121,8 +2164,8 @@ if (!__Pyx_RefNanny) {
  *
  * from .indexer import Index
  * from .shape import Shape             # <<<<<<<<<<<<<<
+ * from .tensor import _TensorI32, shape_of
  *
- * __all__ = [
  */
   __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -2138,33 +2181,67 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "optmath/_internal/__init__.pyx":8
+  /* "optmath/_internal/__init__.pyx":7
+ * from .indexer import Index
  * from .shape import Shape
+ * from .tensor import _TensorI32, shape_of             # <<<<<<<<<<<<<<
+ *
+ * __all__ = [
+ */
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_n_s_TensorI32);
+  __Pyx_GIVEREF(__pyx_n_s_TensorI32);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_TensorI32);
+  __Pyx_INCREF(__pyx_n_s_shape_of);
+  __Pyx_GIVEREF(__pyx_n_s_shape_of);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_shape_of);
+  __pyx_t_3 = __Pyx_Import(__pyx_n_s_tensor, __pyx_t_2, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_TensorI32); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_TensorI32, __pyx_t_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_shape_of); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_shape_of, __pyx_t_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "optmath/_internal/__init__.pyx":9
+ * from .tensor import _TensorI32, shape_of
  *
  * __all__ = [             # <<<<<<<<<<<<<<
  *     "Shape",
  *     "Index",
  */
-  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyList_New(4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_n_u_Shape);
   __Pyx_GIVEREF(__pyx_n_u_Shape);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_u_Shape);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_n_u_Shape);
   __Pyx_INCREF(__pyx_n_u_Index);
   __Pyx_GIVEREF(__pyx_n_u_Index);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_u_Index);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_n_u_Index);
+  __Pyx_INCREF(__pyx_n_u_TensorI32);
+  __Pyx_GIVEREF(__pyx_n_u_TensorI32);
+  PyList_SET_ITEM(__pyx_t_3, 2, __pyx_n_u_TensorI32);
+  __Pyx_INCREF(__pyx_n_u_shape_of);
+  __Pyx_GIVEREF(__pyx_n_u_shape_of);
+  PyList_SET_ITEM(__pyx_t_3, 3, __pyx_n_u_shape_of);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_3) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /* "optmath/_internal/__init__.pyx":1
  * # distutils: language = c++             # <<<<<<<<<<<<<<
  * # cython: language_level=3
  *
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /*--- Wrapped vars code ---*/
 

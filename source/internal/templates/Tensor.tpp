@@ -34,6 +34,18 @@ namespace optmath {
         return this->nd_buffer.shape();
     }
     /**
+     * @brief Set value at position.
+     */
+    TENSOR_METHOD(void) Set(const NDIndex& nd_indexer, TENSOR_VAL_T& new_value) {
+        this->nd_buffer[nd_indexer] = new_value;
+    }
+    /**
+     * @brief Get element from position.
+     */
+    TENSOR_METHOD(TENSOR_VAL_T&) Get(const NDIndex& nd_indexer) {
+        return this->nd_buffer[nd_indexer];
+    }
+    /**
      * @brief Return begin iterator for tensor.
      *
      * @return TENSOR_VAL_T*
@@ -72,7 +84,7 @@ namespace optmath {
      * @return T& in buffer element reference
      */
     TENSOR_METHOD(TENSOR_VAL_T&) operator[](const NDIndex& nd_indexer) {
-        return this->nd_buffer[nd_indexer];
+        return this->Get(nd_indexer);
     }
     /**
      * @brief Compare two Tensor instances.
@@ -112,5 +124,15 @@ namespace optmath {
         }
 
         return stream;
+    }
+    /**
+     * @brief String representation of tensor instance.
+     *
+     * @return std::string tensor representation
+     */
+    TENSOR_METHOD(std::string) to_string() const {
+        std::stringstream ss;
+        this->to_stream(ss);
+        return ss.str();
     }
 } // namespace optmath

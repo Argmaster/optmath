@@ -47,7 +47,7 @@ namespace optmath {
             }
         }
     }
-    TEST_F(TensorTest, Stringify) {
+    TEST_F(TensorTest, StringifyToStream) {
         auto first = TensorInt32({3, 2});
 
         auto j = 0;
@@ -59,5 +59,16 @@ namespace optmath {
         ss << first;
         auto str = ss.str();
         ASSERT_STREQ("[0, 1, 2, 3, 4, 5]", str.c_str());
+    }
+    TEST_F(TensorTest, StringifyToString) {
+        auto first = TensorInt32({3, 2});
+
+        auto j = 0;
+        for (auto& i : first) {
+            i = j;
+            j++;
+        }
+        auto s = first.to_string();
+        ASSERT_STREQ("[0, 1, 2, 3, 4, 5]", s.c_str());
     }
 } // namespace optmath

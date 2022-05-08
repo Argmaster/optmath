@@ -3,6 +3,9 @@
 #include "NDBuffer.h"
 #include "NDIndex.h"
 #include "NDShape.h"
+#include <string>
+#include <sstream>
+#include <iostream>
 
 #define TENSOR_VAL_T __val_T
 #define TENSOR_TEMPLATE template <typename TENSOR_VAL_T>
@@ -20,6 +23,10 @@ namespace optmath {
 
         const NDShape& shape() const;
         std::ostream&  to_stream(std::ostream& stream) const;
+        std::string  to_string() const;
+
+        void Set(const NDIndex& nd_indexer, TENSOR_VAL_T& new_value);
+        TENSOR_VAL_T& Get(const NDIndex& nd_indexer);
 
       public:
         TENSOR_VAL_T* begin();
