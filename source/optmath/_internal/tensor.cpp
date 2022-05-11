@@ -948,7 +948,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_7optmath_9_internal_6tensor__TensorI32;
 
-/* "optmath/_internal/tensor.pyx":25
+/* "optmath/_internal/tensor.pyx":27
  *
  *
  * cdef class _TensorI32:             # <<<<<<<<<<<<<<
@@ -1505,7 +1505,7 @@ static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_codeobj__4;
 /* Late includes */
 
-/* "optmath/_internal/tensor.pyx":12
+/* "optmath/_internal/tensor.pyx":14
  *
  *
  * def shape_of(             # <<<<<<<<<<<<<<
@@ -1529,7 +1529,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_1shape_of(PyObject *__pyx_
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_array,&__pyx_n_s_initial,0};
     PyObject* values[2] = {0,0};
 
-    /* "optmath/_internal/tensor.pyx":14
+    /* "optmath/_internal/tensor.pyx":16
  * def shape_of(
  *     array: List[Number] | Tuple[Number] | List[Any] | Tuple[Any],
  *     initial: Optional[List[int]] = None,             # <<<<<<<<<<<<<<
@@ -1561,7 +1561,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_1shape_of(PyObject *__pyx_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "shape_of") < 0)) __PYX_ERR(0, 12, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "shape_of") < 0)) __PYX_ERR(0, 14, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1577,7 +1577,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_1shape_of(PyObject *__pyx_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("shape_of", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 12, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("shape_of", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 14, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optmath._internal.tensor.shape_of", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1585,7 +1585,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_1shape_of(PyObject *__pyx_
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_7optmath_9_internal_6tensor_shape_of(__pyx_self, __pyx_v_array, __pyx_v_initial);
 
-  /* "optmath/_internal/tensor.pyx":12
+  /* "optmath/_internal/tensor.pyx":14
  *
  *
  * def shape_of(             # <<<<<<<<<<<<<<
@@ -1620,7 +1620,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
   __Pyx_RefNannySetupContext("shape_of", 0);
   __Pyx_INCREF(__pyx_v_initial);
 
-  /* "optmath/_internal/tensor.pyx":16
+  /* "optmath/_internal/tensor.pyx":18
  *     initial: Optional[List[int]] = None,
  * ) -> List[int]:
  *     if initial is None:             # <<<<<<<<<<<<<<
@@ -1631,19 +1631,19 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "optmath/_internal/tensor.pyx":17
+    /* "optmath/_internal/tensor.pyx":19
  * ) -> List[int]:
  *     if initial is None:
  *         initial = []             # <<<<<<<<<<<<<<
  *     initial.append(len(array))
  *     for sub in array:
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_initial, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "optmath/_internal/tensor.pyx":16
+    /* "optmath/_internal/tensor.pyx":18
  *     initial: Optional[List[int]] = None,
  * ) -> List[int]:
  *     if initial is None:             # <<<<<<<<<<<<<<
@@ -1652,20 +1652,20 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
  */
   }
 
-  /* "optmath/_internal/tensor.pyx":18
+  /* "optmath/_internal/tensor.pyx":20
  *     if initial is None:
  *         initial = []
  *     initial.append(len(array))             # <<<<<<<<<<<<<<
  *     for sub in array:
  *         if isinstance(sub, (list, tuple)):
  */
-  __pyx_t_4 = PyObject_Length(__pyx_v_array); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 18, __pyx_L1_error)
-  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_array); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_initial, __pyx_t_3); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_initial, __pyx_t_3); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optmath/_internal/tensor.pyx":19
+  /* "optmath/_internal/tensor.pyx":21
  *         initial = []
  *     initial.append(len(array))
  *     for sub in array:             # <<<<<<<<<<<<<<
@@ -1676,26 +1676,26 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
     __pyx_t_3 = __pyx_v_array; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 19, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 21, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_6)) {
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 21, __pyx_L1_error)
         #else
-        __pyx_t_7 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 21, __pyx_L1_error)
         #else
-        __pyx_t_7 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         #endif
       }
@@ -1705,7 +1705,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 19, __pyx_L1_error)
+          else __PYX_ERR(0, 21, __pyx_L1_error)
         }
         break;
       }
@@ -1714,7 +1714,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
     __Pyx_XDECREF_SET(__pyx_v_sub, __pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "optmath/_internal/tensor.pyx":20
+    /* "optmath/_internal/tensor.pyx":22
  *     initial.append(len(array))
  *     for sub in array:
  *         if isinstance(sub, (list, tuple)):             # <<<<<<<<<<<<<<
@@ -1735,14 +1735,14 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "optmath/_internal/tensor.pyx":21
+      /* "optmath/_internal/tensor.pyx":23
  *     for sub in array:
  *         if isinstance(sub, (list, tuple)):
  *             shape_of(sub, initial)             # <<<<<<<<<<<<<<
  *     return initial
  *
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_shape_of); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 21, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_shape_of); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 23, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __pyx_t_10 = NULL;
       __pyx_t_11 = 0;
@@ -1759,7 +1759,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_sub, __pyx_v_initial};
-        __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_7);
       } else
@@ -1767,13 +1767,13 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_sub, __pyx_v_initial};
-        __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_7);
       } else
       #endif
       {
-        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 21, __pyx_L1_error)
+        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         if (__pyx_t_10) {
           __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -1784,14 +1784,14 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
         __Pyx_INCREF(__pyx_v_initial);
         __Pyx_GIVEREF(__pyx_v_initial);
         PyTuple_SET_ITEM(__pyx_t_12, 1+__pyx_t_11, __pyx_v_initial);
-        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "optmath/_internal/tensor.pyx":20
+      /* "optmath/_internal/tensor.pyx":22
  *     initial.append(len(array))
  *     for sub in array:
  *         if isinstance(sub, (list, tuple)):             # <<<<<<<<<<<<<<
@@ -1800,7 +1800,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
  */
     }
 
-    /* "optmath/_internal/tensor.pyx":19
+    /* "optmath/_internal/tensor.pyx":21
  *         initial = []
  *     initial.append(len(array))
  *     for sub in array:             # <<<<<<<<<<<<<<
@@ -1810,7 +1810,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optmath/_internal/tensor.pyx":22
+  /* "optmath/_internal/tensor.pyx":24
  *         if isinstance(sub, (list, tuple)):
  *             shape_of(sub, initial)
  *     return initial             # <<<<<<<<<<<<<<
@@ -1822,7 +1822,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
   __pyx_r = __pyx_v_initial;
   goto __pyx_L0;
 
-  /* "optmath/_internal/tensor.pyx":12
+  /* "optmath/_internal/tensor.pyx":14
  *
  *
  * def shape_of(             # <<<<<<<<<<<<<<
@@ -1847,7 +1847,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_shape_of(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "optmath/_internal/tensor.pyx":28
+/* "optmath/_internal/tensor.pyx":30
  *     cdef CppTensorImpl[int] _c_tensor
  *
  *     def __cinit__(self, __init: List | Tuple, shape: Optional[List[int] | Tuple[int]] = None):             # <<<<<<<<<<<<<<
@@ -1894,7 +1894,7 @@ static int __pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_1__cinit__(PyObject
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 28, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(0, 30, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1910,7 +1910,7 @@ static int __pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_1__cinit__(PyObject
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 28, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 30, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optmath._internal.tensor._TensorI32.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1938,7 +1938,7 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "optmath/_internal/tensor.pyx":29
+  /* "optmath/_internal/tensor.pyx":31
  *
  *     def __cinit__(self, __init: List | Tuple, shape: Optional[List[int] | Tuple[int]] = None):
  *         if shape is None:             # <<<<<<<<<<<<<<
@@ -1949,14 +1949,14 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "optmath/_internal/tensor.pyx":30
+    /* "optmath/_internal/tensor.pyx":32
  *     def __cinit__(self, __init: List | Tuple, shape: Optional[List[int] | Tuple[int]] = None):
  *         if shape is None:
  *             dest_shape = shape_of(__init)             # <<<<<<<<<<<<<<
  *         else:
  *             dest_shape = shape
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_shape_of); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_shape_of); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -1970,13 +1970,13 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
     }
     __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_v___init) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v___init);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_dest_shape = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "optmath/_internal/tensor.pyx":29
+    /* "optmath/_internal/tensor.pyx":31
  *
  *     def __cinit__(self, __init: List | Tuple, shape: Optional[List[int] | Tuple[int]] = None):
  *         if shape is None:             # <<<<<<<<<<<<<<
@@ -1986,7 +1986,7 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
     goto __pyx_L3;
   }
 
-  /* "optmath/_internal/tensor.pyx":32
+  /* "optmath/_internal/tensor.pyx":34
  *             dest_shape = shape_of(__init)
  *         else:
  *             dest_shape = shape             # <<<<<<<<<<<<<<
@@ -1999,24 +1999,24 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
   }
   __pyx_L3:;
 
-  /* "optmath/_internal/tensor.pyx":33
+  /* "optmath/_internal/tensor.pyx":35
  *         else:
  *             dest_shape = shape
  *         self._c_tensor = Tensor[int](NDShape(dest_shape))             # <<<<<<<<<<<<<<
  *         self._initialize_c_tensor(__init)
  *
  */
-  __pyx_t_6 = __pyx_convert_vector_from_py_long(__pyx_v_dest_shape); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_6 = __pyx_convert_vector_from_py_long(__pyx_v_dest_shape); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
   __pyx_v_self->_c_tensor = optmath::Tensor<int> (optmath::NDShape(__pyx_t_6));
 
-  /* "optmath/_internal/tensor.pyx":34
+  /* "optmath/_internal/tensor.pyx":36
  *             dest_shape = shape
  *         self._c_tensor = Tensor[int](NDShape(dest_shape))
  *         self._initialize_c_tensor(__init)             # <<<<<<<<<<<<<<
  *
  *     def _initialize_c_tensor(
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_initialize_c_tensor); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_initialize_c_tensor); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -2030,12 +2030,12 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
   }
   __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_v___init) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v___init);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "optmath/_internal/tensor.pyx":28
+  /* "optmath/_internal/tensor.pyx":30
  *     cdef CppTensorImpl[int] _c_tensor
  *
  *     def __cinit__(self, __init: List | Tuple, shape: Optional[List[int] | Tuple[int]] = None):             # <<<<<<<<<<<<<<
@@ -2058,7 +2058,7 @@ static int __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32___cinit__(struct __
   return __pyx_r;
 }
 
-/* "optmath/_internal/tensor.pyx":36
+/* "optmath/_internal/tensor.pyx":38
  *         self._initialize_c_tensor(__init)
  *
  *     def _initialize_c_tensor(             # <<<<<<<<<<<<<<
@@ -2081,7 +2081,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_3_initialize_
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_initializer,&__pyx_n_s_index,0};
     PyObject* values[2] = {0,0};
 
-    /* "optmath/_internal/tensor.pyx":39
+    /* "optmath/_internal/tensor.pyx":41
  *         self,
  *         initializer: List | Tuple,
  *         index: Union[Tuple[()], Tuple[int, ...]] = (),             # <<<<<<<<<<<<<<
@@ -2113,7 +2113,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_3_initialize_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_initialize_c_tensor") < 0)) __PYX_ERR(0, 36, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_initialize_c_tensor") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2129,7 +2129,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_3_initialize_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_initialize_c_tensor", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 36, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_initialize_c_tensor", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optmath._internal.tensor._TensorI32._initialize_c_tensor", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2137,7 +2137,7 @@ static PyObject *__pyx_pw_7optmath_9_internal_6tensor_10_TensorI32_3_initialize_
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_c_tensor(((struct __pyx_obj_7optmath_9_internal_6tensor__TensorI32 *)__pyx_v_self), __pyx_v_initializer, __pyx_v_index);
 
-  /* "optmath/_internal/tensor.pyx":36
+  /* "optmath/_internal/tensor.pyx":38
  *         self._initialize_c_tensor(__init)
  *
  *     def _initialize_c_tensor(             # <<<<<<<<<<<<<<
@@ -2177,7 +2177,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_initialize_c_tensor", 0);
 
-  /* "optmath/_internal/tensor.pyx":41
+  /* "optmath/_internal/tensor.pyx":43
  *         index: Union[Tuple[()], Tuple[int, ...]] = (),
  *     ):
  *         for i, value in enumerate(initializer):             # <<<<<<<<<<<<<<
@@ -2190,26 +2190,26 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
     __pyx_t_2 = __pyx_v_initializer; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_initializer); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_initializer); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_4)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       }
@@ -2219,7 +2219,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 41, __pyx_L1_error)
+          else __PYX_ERR(0, 43, __pyx_L1_error)
         }
         break;
       }
@@ -2229,32 +2229,32 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
     __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "optmath/_internal/tensor.pyx":42
+    /* "optmath/_internal/tensor.pyx":44
  *     ):
  *         for i, value in enumerate(initializer):
  *             dest_index = (*index, i)             # <<<<<<<<<<<<<<
  *             if isinstance(value, (tuple, list)):
  *                 self._initialize_c_tensor(value, dest_index)
  */
-    __pyx_t_5 = PySequence_List(__pyx_v_index); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __pyx_t_5 = PySequence_List(__pyx_v_index); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (__Pyx_ListComp_Append(__pyx_t_5, __pyx_v_i) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+    if (__Pyx_ListComp_Append(__pyx_t_5, __pyx_v_i) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
     {
       PyObject *__pyx_temp = PyList_AsTuple(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_5);
-      __pyx_t_5 = __pyx_temp; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_5 = __pyx_temp; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
     }
     __Pyx_XDECREF_SET(__pyx_v_dest_index, ((PyObject*)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "optmath/_internal/tensor.pyx":43
+    /* "optmath/_internal/tensor.pyx":45
  *         for i, value in enumerate(initializer):
  *             dest_index = (*index, i)
  *             if isinstance(value, (tuple, list)):             # <<<<<<<<<<<<<<
@@ -2275,14 +2275,14 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
     __pyx_t_7 = (__pyx_t_6 != 0);
     if (__pyx_t_7) {
 
-      /* "optmath/_internal/tensor.pyx":44
+      /* "optmath/_internal/tensor.pyx":46
  *             dest_index = (*index, i)
  *             if isinstance(value, (tuple, list)):
  *                 self._initialize_c_tensor(value, dest_index)             # <<<<<<<<<<<<<<
  *             else:
  *                 if len(dest_index) < self._c_tensor.shape().size():
  */
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_initialize_c_tensor); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 44, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_initialize_c_tensor); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 46, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __pyx_t_10 = NULL;
       __pyx_t_11 = 0;
@@ -2299,7 +2299,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_value, __pyx_v_dest_index};
-        __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_5);
       } else
@@ -2307,13 +2307,13 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_value, __pyx_v_dest_index};
-        __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_GOTREF(__pyx_t_5);
       } else
       #endif
       {
-        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 44, __pyx_L1_error)
+        __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         if (__pyx_t_10) {
           __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -2324,14 +2324,14 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
         __Pyx_INCREF(__pyx_v_dest_index);
         __Pyx_GIVEREF(__pyx_v_dest_index);
         PyTuple_SET_ITEM(__pyx_t_12, 1+__pyx_t_11, __pyx_v_dest_index);
-        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_12, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "optmath/_internal/tensor.pyx":43
+      /* "optmath/_internal/tensor.pyx":45
  *         for i, value in enumerate(initializer):
  *             dest_index = (*index, i)
  *             if isinstance(value, (tuple, list)):             # <<<<<<<<<<<<<<
@@ -2341,7 +2341,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
       goto __pyx_L5;
     }
 
-    /* "optmath/_internal/tensor.pyx":46
+    /* "optmath/_internal/tensor.pyx":48
  *                 self._initialize_c_tensor(value, dest_index)
  *             else:
  *                 if len(dest_index) < self._c_tensor.shape().size():             # <<<<<<<<<<<<<<
@@ -2349,18 +2349,18 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
  *                         "Initializer has invalid shape of %d dimensions, required %d" % (
  */
     /*else*/ {
-      __pyx_t_13 = PyTuple_GET_SIZE(__pyx_v_dest_index); if (unlikely(__pyx_t_13 == ((Py_ssize_t)-1))) __PYX_ERR(0, 46, __pyx_L1_error)
+      __pyx_t_13 = PyTuple_GET_SIZE(__pyx_v_dest_index); if (unlikely(__pyx_t_13 == ((Py_ssize_t)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
       __pyx_t_7 = ((__pyx_t_13 < __pyx_v_self->_c_tensor.shape().size()) != 0);
       if (unlikely(__pyx_t_7)) {
 
-        /* "optmath/_internal/tensor.pyx":48
+        /* "optmath/_internal/tensor.pyx":50
  *                 if len(dest_index) < self._c_tensor.shape().size():
  *                     raise IndexError(
  *                         "Initializer has invalid shape of %d dimensions, required %d" % (             # <<<<<<<<<<<<<<
  *                             len(dest_index), self._c_tensor.shape().size())
  *                     )
  */
-        __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __pyx_t_13 = 0;
         __pyx_t_14 = 127;
@@ -2369,15 +2369,15 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
         __Pyx_GIVEREF(__pyx_kp_u_Initializer_has_invalid_shape_of);
         PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_Initializer_has_invalid_shape_of);
 
-        /* "optmath/_internal/tensor.pyx":49
+        /* "optmath/_internal/tensor.pyx":51
  *                     raise IndexError(
  *                         "Initializer has invalid shape of %d dimensions, required %d" % (
  *                             len(dest_index), self._c_tensor.shape().size())             # <<<<<<<<<<<<<<
  *                     )
  *                 self._c_tensor.Set(NDIndex(dest_index), value)
  */
-        __pyx_t_15 = PyTuple_GET_SIZE(__pyx_v_dest_index); if (unlikely(__pyx_t_15 == ((Py_ssize_t)-1))) __PYX_ERR(0, 49, __pyx_L1_error)
-        __pyx_t_9 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_15, 0, ' ', 'd'); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_15 = PyTuple_GET_SIZE(__pyx_v_dest_index); if (unlikely(__pyx_t_15 == ((Py_ssize_t)-1))) __PYX_ERR(0, 51, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_t_15, 0, ' ', 'd'); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 51, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
         __Pyx_GIVEREF(__pyx_t_9);
@@ -2387,39 +2387,39 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
         __pyx_t_13 += 22;
         __Pyx_GIVEREF(__pyx_kp_u_dimensions_required);
         PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u_dimensions_required);
-        __pyx_t_9 = __Pyx_PyUnicode_From_long(__pyx_v_self->_c_tensor.shape().size(), 0, ' ', 'd'); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyUnicode_From_long(__pyx_v_self->_c_tensor.shape().size(), 0, ' ', 'd'); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 51, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
         __Pyx_GIVEREF(__pyx_t_9);
         PyTuple_SET_ITEM(__pyx_t_5, 3, __pyx_t_9);
         __pyx_t_9 = 0;
 
-        /* "optmath/_internal/tensor.pyx":48
+        /* "optmath/_internal/tensor.pyx":50
  *                 if len(dest_index) < self._c_tensor.shape().size():
  *                     raise IndexError(
  *                         "Initializer has invalid shape of %d dimensions, required %d" % (             # <<<<<<<<<<<<<<
  *                             len(dest_index), self._c_tensor.shape().size())
  *                     )
  */
-        __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_5, 4, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_5, 4, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 50, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-        /* "optmath/_internal/tensor.pyx":47
+        /* "optmath/_internal/tensor.pyx":49
  *             else:
  *                 if len(dest_index) < self._c_tensor.shape().size():
  *                     raise IndexError(             # <<<<<<<<<<<<<<
  *                         "Initializer has invalid shape of %d dimensions, required %d" % (
  *                             len(dest_index), self._c_tensor.shape().size())
  */
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IndexError, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IndexError, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_Raise(__pyx_t_5, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __PYX_ERR(0, 47, __pyx_L1_error)
+        __PYX_ERR(0, 49, __pyx_L1_error)
 
-        /* "optmath/_internal/tensor.pyx":46
+        /* "optmath/_internal/tensor.pyx":48
  *                 self._initialize_c_tensor(value, dest_index)
  *             else:
  *                 if len(dest_index) < self._c_tensor.shape().size():             # <<<<<<<<<<<<<<
@@ -2428,20 +2428,20 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
  */
       }
 
-      /* "optmath/_internal/tensor.pyx":51
+      /* "optmath/_internal/tensor.pyx":53
  *                             len(dest_index), self._c_tensor.shape().size())
  *                     )
  *                 self._c_tensor.Set(NDIndex(dest_index), value)             # <<<<<<<<<<<<<<
  *
  *     def __str__(self) -> str:
  */
-      __pyx_t_16 = __pyx_convert_vector_from_py_long(__pyx_v_dest_index); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
-      __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
+      __pyx_t_16 = __pyx_convert_vector_from_py_long(__pyx_v_dest_index); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
       __pyx_v_self->_c_tensor.Set(optmath::NDIndex(__pyx_t_16), __pyx_t_11);
     }
     __pyx_L5:;
 
-    /* "optmath/_internal/tensor.pyx":41
+    /* "optmath/_internal/tensor.pyx":43
  *         index: Union[Tuple[()], Tuple[int, ...]] = (),
  *     ):
  *         for i, value in enumerate(initializer):             # <<<<<<<<<<<<<<
@@ -2452,7 +2452,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "optmath/_internal/tensor.pyx":36
+  /* "optmath/_internal/tensor.pyx":38
  *         self._initialize_c_tensor(__init)
  *
  *     def _initialize_c_tensor(             # <<<<<<<<<<<<<<
@@ -2481,7 +2481,7 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_2_initialize_
   return __pyx_r;
 }
 
-/* "optmath/_internal/tensor.pyx":53
+/* "optmath/_internal/tensor.pyx":55
  *                 self._c_tensor.Set(NDIndex(dest_index), value)
  *
  *     def __str__(self) -> str:             # <<<<<<<<<<<<<<
@@ -2510,19 +2510,19 @@ static PyObject *__pyx_pf_7optmath_9_internal_6tensor_10_TensorI32_4__str__(stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "optmath/_internal/tensor.pyx":54
+  /* "optmath/_internal/tensor.pyx":56
  *
  *     def __str__(self) -> str:
  *         return self._c_tensor.to_string().decode("utf-8")             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_self->_c_tensor.to_string(), 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_self->_c_tensor.to_string(), 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "optmath/_internal/tensor.pyx":53
+  /* "optmath/_internal/tensor.pyx":55
  *                 self._c_tensor.Set(NDIndex(dest_index), value)
  *
  *     def __str__(self) -> str:             # <<<<<<<<<<<<<<
@@ -3222,8 +3222,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 41, __pyx_L1_error)
-  __pyx_builtin_IndexError = __Pyx_GetBuiltinName(__pyx_n_s_IndexError); if (!__pyx_builtin_IndexError) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_builtin_IndexError = __Pyx_GetBuiltinName(__pyx_n_s_IndexError); if (!__pyx_builtin_IndexError) __PYX_ERR(0, 49, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -3253,17 +3253,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "optmath/_internal/tensor.pyx":12
+  /* "optmath/_internal/tensor.pyx":14
  *
  *
  * def shape_of(             # <<<<<<<<<<<<<<
  *     array: List[Number] | Tuple[Number] | List[Any] | Tuple[Any],
  *     initial: Optional[List[int]] = None,
  */
-  __pyx_tuple__3 = PyTuple_Pack(3, __pyx_n_s_array, __pyx_n_s_initial, __pyx_n_s_sub); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(3, __pyx_n_s_array, __pyx_n_s_initial, __pyx_n_s_sub); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_source_optmath__internal_tensor, __pyx_n_s_shape_of, 12, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_source_optmath__internal_tensor, __pyx_n_s_shape_of, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -3319,15 +3319,15 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_7optmath_9_internal_6tensor__TensorI32.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7optmath_9_internal_6tensor__TensorI32.tp_dictoffset && __pyx_type_7optmath_9_internal_6tensor__TensorI32.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_7optmath_9_internal_6tensor__TensorI32.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_TensorI32, (PyObject *)&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_TensorI32, (PyObject *)&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7optmath_9_internal_6tensor__TensorI32) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __pyx_ptype_7optmath_9_internal_6tensor__TensorI32 = &__pyx_type_7optmath_9_internal_6tensor__TensorI32;
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -3561,107 +3561,107 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "optmath/_internal/tensor.pyx":7
- * from .ndindex cimport NDIndex
- * from .tensor cimport Tensor as CppTensorImpl
- * from optmath._internal.shape import Shape             # <<<<<<<<<<<<<<
- * from typing import Optional, Any, Tuple, List, Union
- * from numbers import Number
- */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_Shape);
-  __Pyx_GIVEREF(__pyx_n_s_Shape);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Shape);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_optmath__internal_shape, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Shape, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
   /* "optmath/_internal/tensor.pyx":8
  * from .tensor cimport Tensor as CppTensorImpl
- * from optmath._internal.shape import Shape
- * from typing import Optional, Any, Tuple, List, Union             # <<<<<<<<<<<<<<
- * from numbers import Number
  *
- */
-  __pyx_t_2 = PyList_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s_Optional);
-  __Pyx_GIVEREF(__pyx_n_s_Optional);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_Optional);
-  __Pyx_INCREF(__pyx_n_s_Any);
-  __Pyx_GIVEREF(__pyx_n_s_Any);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_Any);
-  __Pyx_INCREF(__pyx_n_s_Tuple);
-  __Pyx_GIVEREF(__pyx_n_s_Tuple);
-  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_Tuple);
-  __Pyx_INCREF(__pyx_n_s_List);
-  __Pyx_GIVEREF(__pyx_n_s_List);
-  PyList_SET_ITEM(__pyx_t_2, 3, __pyx_n_s_List);
-  __Pyx_INCREF(__pyx_n_s_Union);
-  __Pyx_GIVEREF(__pyx_n_s_Union);
-  PyList_SET_ITEM(__pyx_t_2, 4, __pyx_n_s_Union);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Optional); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Optional, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Any); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Any, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Tuple); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Tuple, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_List); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_List, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Union); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Union, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "optmath/_internal/tensor.pyx":9
- * from optmath._internal.shape import Shape
- * from typing import Optional, Any, Tuple, List, Union
  * from numbers import Number             # <<<<<<<<<<<<<<
- *
+ * from typing import Any, List, Optional, Tuple, Union
  *
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_Number);
   __Pyx_GIVEREF(__pyx_n_s_Number);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Number);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_numbers, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_numbers, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Number); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Number); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Number, __pyx_t_1) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Number, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "optmath/_internal/tensor.pyx":12
+  /* "optmath/_internal/tensor.pyx":9
+ *
+ * from numbers import Number
+ * from typing import Any, List, Optional, Tuple, Union             # <<<<<<<<<<<<<<
+ *
+ * from optmath._internal.shape import Shape
+ */
+  __pyx_t_2 = PyList_New(5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_n_s_Any);
+  __Pyx_GIVEREF(__pyx_n_s_Any);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_Any);
+  __Pyx_INCREF(__pyx_n_s_List);
+  __Pyx_GIVEREF(__pyx_n_s_List);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_List);
+  __Pyx_INCREF(__pyx_n_s_Optional);
+  __Pyx_GIVEREF(__pyx_n_s_Optional);
+  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_Optional);
+  __Pyx_INCREF(__pyx_n_s_Tuple);
+  __Pyx_GIVEREF(__pyx_n_s_Tuple);
+  PyList_SET_ITEM(__pyx_t_2, 3, __pyx_n_s_Tuple);
+  __Pyx_INCREF(__pyx_n_s_Union);
+  __Pyx_GIVEREF(__pyx_n_s_Union);
+  PyList_SET_ITEM(__pyx_t_2, 4, __pyx_n_s_Union);
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_typing, __pyx_t_2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Any); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Any, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_List); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_List, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Optional); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Optional, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Tuple); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Tuple, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Union); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Union, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "optmath/_internal/tensor.pyx":11
+ * from typing import Any, List, Optional, Tuple, Union
+ *
+ * from optmath._internal.shape import Shape             # <<<<<<<<<<<<<<
+ *
+ *
+ */
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_n_s_Shape);
+  __Pyx_GIVEREF(__pyx_n_s_Shape);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_Shape);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_optmath__internal_shape, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_Shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Shape, __pyx_t_1) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "optmath/_internal/tensor.pyx":14
  *
  *
  * def shape_of(             # <<<<<<<<<<<<<<
  *     array: List[Number] | Tuple[Number] | List[Any] | Tuple[Any],
  *     initial: Optional[List[int]] = None,
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7optmath_9_internal_6tensor_1shape_of, NULL, __pyx_n_s_optmath__internal_tensor); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7optmath_9_internal_6tensor_1shape_of, NULL, __pyx_n_s_optmath__internal_tensor); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_shape_of, __pyx_t_2) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_shape_of, __pyx_t_2) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "optmath/_internal/tensor.pyx":1

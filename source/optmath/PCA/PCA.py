@@ -12,7 +12,7 @@ from .. import RecordBase, to_numpy_array
 TableOfFloatAndNDArray = Tuple[Tuple[float, NDArray[np.float64]], ...]
 
 
-def PCA(autoscaled_data: Tuple[RecordBase]) -> "PCAResutsView":
+def PCA(autoscaled_data: Tuple[RecordBase, ...]) -> "PCAResutsView":
     nd_data = to_numpy_array(autoscaled_data)
     correlation_matrix = (nd_data.T @ nd_data) / (nd_data.shape[0])
 
@@ -75,7 +75,9 @@ class PCAResutsView:
         assert len(self.autoscaled_data) >= 1, "PCAResultView is empty."
         return self.autoscaled_data[0].class_name()
 
-    def _common_plt(self, x: List[float], lambdas: Tuple[float, ...]) -> None:
+    def _common_plt_ops(
+        self, x: List[float], lambdas: Tuple[float, ...]
+    ) -> None:
         plt.plot(x, lambdas)
         plt.scatter(x, lambdas)
         plt.title(
@@ -85,31 +87,31 @@ class PCAResutsView:
         plt.xlabel("Principal components")
         plt.grid(True)
 
-    def scree_plot(self) -> None:
+    def show_scree_plot(self) -> None:
         x = np.arange(self.lambdas_number) + 1
-        self._common_plt(x, self.eigenvalues)
+        self._common_plt_ops(x, self.eigenvalues)
         plt.ylabel("λ (eigenvalue)")
         plt.xticks(x, [f"PC{i}" for i in x])
 
-    def percent_scree_plot(self) -> None:
+    def show_percent_scree_plot(self) -> None:
         x = np.arange(self.lambdas_number) + 1
         percent_lambdas = self.percent_eigenvalues
-        self._common_plt(x, percent_lambdas)
+        self._common_plt_ops(x, percent_lambdas)
         plt.ylabel("% of variance explained")
         y = np.linspace(0, 1.0, 11)
         plt.yticks(y, [f"{f*100:.1f}%" for f in y])
         plt.xticks(x, [f"PC{i}" for i in x])
 
-    def cumulative_percent_scree_plot(self) -> None:
+    def show_cumulative_percent_scree_plot(self) -> None:
         x = np.arange(self.lambdas_number + 1)
         lambdas = np.concatenate(([0.0], self.cumulative_percent_lambdas))
-        self._common_plt(x, lambdas)
+        self._common_plt_ops(x, lambdas)
         plt.ylabel("Cumulative % of variance explained")
         y = np.linspace(0, 1.0, 11)
         plt.yticks(y, [f"{f*100:.1f}%" for f in y])
         plt.xticks(x, [""] + [f"PC{i}" for i in x[1:]])
 
-    def subview(
+    def get_view(
         self,
         eigenvalue_vector_pairs: TableOfFloatAndNDArray,
     ) -> "PCAResutsView":
@@ -120,14 +122,16 @@ class PCAResutsView:
             self.correlation_matrix,
         )
 
-    def from_kaiser_criteria(self, treshold: float = 0.95) -> "PCAResutsView":
-        return self.subview(
+    def get_view_from_kaiser_criteria(
+        self, treshold: float = 0.95
+    ) -> "PCAResutsView":
+        return self.get_view(
             tuple(
                 (e, v) for e, v in self.eigenvalue_vector_pairs if e > treshold
             )
         )
 
-    def from_total_variance_explained(
+    def get_view_from_total_variance_explained(
         self, minimal_percent: float = 0.70
     ) -> "PCAResutsView":
         lambdas = []
@@ -139,17 +143,17 @@ class PCAResutsView:
                 break
             else:
                 lambdas.append(ob)
-        return self.subview(
+        return self.get_view(
             tuple(lambdas),
         )
 
-    def from_first_top(self, number: int = 2) -> "PCAResutsView":
-        return self.subview(
+    def get_view_from_first_top(self, number: int = 2) -> "PCAResutsView":
+        return self.get_view(
             self.eigenvalue_vector_pairs[:number],
         )
 
-    def nth_view(self, number: int = 0) -> "PCAResutsView":
-        return self.subview(
+    def get_nth_view(self, number: int = 0) -> "PCAResutsView":
+        return self.get_view(
             (self.eigenvalue_vector_pairs[number],),
         )
 
@@ -161,7 +165,7 @@ class PCAResutsView:
     def transformed_matrix(self) -> NDArray[np.float64]:
         return (self.nd_data @ self.loads_matrix.T).T
 
-    def principal_component_grid(  # noqa CCR001
+    def show_principal_component_grid(  # noqa CCR001
         self,
         point_size: int = 6,
         color: str = "b",
@@ -172,45 +176,32 @@ class PCAResutsView:
         ), "At least two components are required create plot."
 
         transformed = self.transformed_matrix
-        grid_size = len(transformed) // 2
-        fig, axes = plt.subplots(grid_size, grid_size + len(transformed) % 2)
+        grid_size = len(transformed)
+        fig, axes = plt.subplots(grid_size, grid_size)
 
         if len(transformed) == 2:
             axes = ((axes,),)
-        elif len(transformed) == 3:
-            axes = axes.reshape(1, 2)
 
-        length = len(transformed)
+        for (i, pci), ax_row in zip(enumerate(transformed), axes):
+            for (j, pcj), ax in zip(enumerate(transformed), ax_row):
 
-        row_i = 0
-        row_j = 0
-        for even in range(0, length, 2):
-            for odd in range(1, length, 2):
-
-                ax: plt.Axes = axes[row_i][row_j]  # type: ignore
                 ax.scatter(
-                    transformed[even],
-                    transformed[odd],
+                    pci,
+                    pcj,
                     s=point_size,
                     color=color,
                     alpha=0.5,
                 )
                 if grid:
                     ax.grid(linestyle="--")
-                ax.set_xlabel(f"PC{even + 1}")
-                ax.set_ylabel(f"PC{odd + 1}")
-
-                if row_i < grid_size - 1:
-                    row_i += 1
-                else:
-                    row_i = 0
-                    row_j += 1
+                ax.set_xlabel(f"PC{i + 1}")
+                ax.set_ylabel(f"PC{j + 1}")
 
         return fig, axes
 
-    def loads_grid(
-        self, grid: bool = True, limit_lines: float = 0.7
-    ) -> Tuple[Figure, Axes]:
+    def show_loads_grid(  # noqa: CCR001
+        self, grid: bool = True, limit: float = 0.7
+    ) -> Tuple[Figure, Tuple[Axes, ...]]:
         loads = self.loads_matrix
 
         x_values = np.arange(len(loads[0]))
@@ -225,22 +216,25 @@ class PCAResutsView:
 
         for i, (vector, ax) in enumerate(zip(loads, axes)):
 
-            if limit_lines is not None:
+            if limit is not None:
                 ax.fill_between(
                     x_values_ex,
-                    [limit_lines] * len(x_values_ex),
-                    [-limit_lines] * len(x_values_ex),
+                    [limit] * len(x_values_ex),
+                    [-limit] * len(x_values_ex),
                     color="#1574b340",
                 )
             if grid:
                 ax.grid(axis="y", linestyle="--")
-            ax.bar(x_values, vector)
+            bars = ax.bar(x_values, vector)
+            for patch, height in zip(bars, vector):
+                if abs(height) >= limit:
+                    patch.set_color("#32a852")
             ax.set_xlim([min(x_values_ex), max(x_values_ex)])
             ax.set_ylim([-1.0, 1.0])
             ax.set_title(f"PC{i + 1} loadings")
             ax.set_xlabel(f"PC{i + 1}")
             ax.set_ylabel("Eigenvalue")
-            columns = self.autoscaled_data[0].columns()
+            columns = self.autoscaled_data[0].columns_numeric()
             ax.set_xticks(x_values, columns[1:], rotation=45, ha="right")
 
         return fig, axes

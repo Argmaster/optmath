@@ -43,10 +43,22 @@ class RecordBase:
     def columns(self) -> List[str]:
         return [k for k, _ in self.__dataclass_fields__.items()]
 
+    def columns_numeric(self) -> List[str]:
+        return [
+            k
+            for k, v in self.__dataclass_fields__.items()
+            if issubclass(v.type, Number)
+        ]
+
 
 def autoscale(data: NDArray[np.float64]) -> NDArray[np.float64]:
     return np.array(
-        [(column - column.mean()) / column.std() for column in data.T]
+        [
+            ((column - column.mean()) / column.std())
+            if isinstance(column[0], Number)
+            else column
+            for column in data.T
+        ]
     ).T
 
 
