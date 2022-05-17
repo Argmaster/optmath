@@ -37,7 +37,7 @@ def PCA(autoscaled_data: Tuple[RecordBase, ...]) -> "PCAResutsView":
 @dataclass
 class PCAResutsView:
 
-    autoscaled_data: Tuple[RecordBase]
+    autoscaled_data: Tuple[RecordBase, ...]
     nd_data: NDArray[np.float64]
     eigenvalue_vector_pairs: TableOfFloatAndNDArray
     correlation_matrix: NDArray[np.float64]

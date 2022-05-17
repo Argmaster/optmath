@@ -4,6 +4,7 @@ isort>=5.10,<5.11
 clang-format>=14.0,<15.0
 cmake-format>=0.6,<0.7
 docformatter==1.4
+cmakelang==0.6.13
 # flake8 + plugins
 flake8==4.0.1
 flake8-alfred==1.1.1

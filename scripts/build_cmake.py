@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import shutil
 import subprocess as sbp
 from os import chdir

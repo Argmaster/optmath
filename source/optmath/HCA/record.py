@@ -62,7 +62,7 @@ def autoscale(data: NDArray[np.float64]) -> NDArray[np.float64]:
     ).T
 
 
-def to_numpy_array(data: Tuple[RecordBase]) -> NDArray[np.float64]:
+def to_numpy_array(data: Tuple[RecordBase, ...]) -> NDArray[np.float64]:
     return np.array(
         [d.numeric() for d in data],
         dtype=np.float64,
