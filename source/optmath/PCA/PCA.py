@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -170,6 +170,8 @@ class PCAResutsView:
         point_size: int = 6,
         color: str = "b",
         grid: bool = True,
+        fig: Optional[Figure] = None,
+        axes: Optional[Axes] = None,
     ) -> Tuple[Figure, Axes]:
         assert (
             self.lambdas_number > 1
@@ -177,12 +179,14 @@ class PCAResutsView:
 
         transformed = self.transformed_matrix
         grid_size = len(transformed)
-        fig, axes = plt.subplots(grid_size, grid_size)
+
+        if fig is None or axes is None:
+            fig, axes = plt.subplots(grid_size, grid_size)
 
         if len(transformed) == 2:
-            axes = ((axes,),)
+            axes = ((axes,),)  # type: ignore
 
-        for (i, pci), ax_row in zip(enumerate(transformed), axes):
+        for (i, pci), ax_row in zip(enumerate(transformed), axes):  # type: ignore
             for (j, pcj), ax in zip(enumerate(transformed), ax_row):
 
                 ax.scatter(
@@ -197,7 +201,7 @@ class PCAResutsView:
                 ax.set_xlabel(f"PC{i + 1}")
                 ax.set_ylabel(f"PC{j + 1}")
 
-        return fig, axes
+        return fig, axes  # type: ignore
 
     def show_loads_grid(  # noqa: CCR001
         self, grid: bool = True, limit: float = 0.7
@@ -215,7 +219,6 @@ class PCAResutsView:
         axes: Tuple[Axes, ...]
 
         for i, (vector, ax) in enumerate(zip(loads, axes)):
-
             if limit is not None:
                 ax.fill_between(
                     x_values_ex,
@@ -232,8 +235,8 @@ class PCAResutsView:
             ax.set_xlim([min(x_values_ex), max(x_values_ex)])
             ax.set_ylim([-1.0, 1.0])
             ax.set_title(f"PC{i + 1} loadings")
-            ax.set_xlabel(f"PC{i + 1}")
-            ax.set_ylabel("Eigenvalue")
+            ax.set_xlabel("Attributes")
+            ax.set_ylabel(f"Eigenvalue, limit={limit:.2f}")
             columns = self.autoscaled_data[0].columns_numeric()
             ax.set_xticks(x_values, columns[1:], rotation=45, ha="right")
 
