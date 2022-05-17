@@ -1,7 +1,8 @@
 # various code formatters
-black==22.3.0
-isort==5.10.1
-clang-format==14.0
+black>=22.3,<22.4
+isort>=5.10,<5.11
+clang-format>=14.0,<15.0
+cmake-format>=0.6,<0.7
 docformatter==1.4
 # flake8 + plugins
 flake8==4.0.1
