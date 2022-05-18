@@ -22,6 +22,13 @@ namespace optmath {
         assert(this->nd_buffer != nullptr);
     }
     /**
+     * @brief Construct a new NDBuffer object without initialization.
+     *
+     * @param shape_ shape of buffer to create.
+     */
+    NDBUFFER_METHOD()
+    NDBuffer() {}
+    /**
      * @brief Construct a new NDBuffer object
      *
      * @param other buffer to copy
@@ -29,6 +36,7 @@ namespace optmath {
     NDBUFFER_METHOD()
     NDBuffer(const NDBUFFER_T& other)
         : nd_shape(other.nd_shape) {
+        assert(other.nd_buffer != nullptr);
 
         auto size       = other.buffer_size();
         this->nd_buffer = std::make_unique<NDBUFFER_VAL_T[]>(size);
@@ -48,6 +56,8 @@ namespace optmath {
      */
     NDBUFFER_METHOD(NDBUFFER_T&) operator=(const NDBuffer& other) {
         if (this != &other) {
+            assert(other.nd_buffer != nullptr);
+
             this->nd_shape  = other.shape();
             auto size       = other.buffer_size();
             this->nd_buffer = std::make_unique<NDBUFFER_VAL_T[]>(size);
@@ -70,6 +80,7 @@ namespace optmath {
     NDBuffer(NDBUFFER_T&& other)
         : nd_buffer(std::move(other.nd_buffer)),
           nd_shape(std::move(other.nd_shape)) {
+        assert(other.nd_buffer == nullptr);
         assert(this->nd_buffer != nullptr);
     };
     /**
@@ -79,10 +90,12 @@ namespace optmath {
      * @return NDBuffer&
      */
     NDBUFFER_METHOD(NDBUFFER_T&) operator=(NDBUFFER_T&& other) {
-        assert(this->nd_buffer != nullptr);
+        assert(other.nd_buffer != nullptr);
         if (this != &other) {
             this->nd_buffer = std::move(other.nd_buffer);
             this->nd_shape  = std::move(other.nd_shape);
+            assert(other.nd_buffer == nullptr);
+            assert(this->nd_buffer != nullptr);
         }
         return *this;
     }
@@ -97,9 +110,9 @@ namespace optmath {
     /**
      * @brief Returns total (linear) in memory size of buffer.
      *
-     * @return std::size_t buffer size
+     * @return index_t buffer size
      */
-    NDBUFFER_METHOD(std::size_t) buffer_size() const {
+    NDBUFFER_METHOD(index_t) buffer_size() const {
         assert(this->nd_buffer != nullptr);
         return nd_shape.buffer_size();
     }
@@ -172,18 +185,33 @@ namespace optmath {
         return nd_buffer[index];
     }
     /**
+     * @brief Access single element from buffer.
+     *
+     * @param index n-dimensional index pointing to element
+     * @return T& in buffer element reference
+     */
+    NDBUFFER_METHOD(const NDBUFFER_VAL_T&)
+    operator[](const NDIndex& nd_indexer) const {
+        assert(this->nd_buffer != nullptr);
+        assert(nd_indexer.size() == nd_shape.size());
+        auto index = nd_shape.in_buffer_position(nd_indexer);
+        assert(index < this->buffer_size());
+        assert(index >= 0);
+        return nd_buffer[index];
+    }
+    /**
      * @brief Compare two NDBuffer instances.
      *
      * @param other
      * @return true for identical buffer or same buffer.
      */
-    NDBUFFER_METHOD(bool) operator==(const NDBuffer& other) {
+    NDBUFFER_METHOD(bool) operator==(const NDBuffer& other) const {
         if (this == &other)
             return true;
         if (this->nd_shape != other.nd_shape)
             return false;
-        return std::equal(std::execution::par, this->cbegin(), this->cend(),
-                          other.cbegin(), other.cend());
+        return std::equal(this->cbegin(), this->cend(), other.cbegin(),
+                          other.cend());
     }
     /**
      * @brief C++ std::out << NDBuffer(); compatibility.

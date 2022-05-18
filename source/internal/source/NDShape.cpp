@@ -2,6 +2,36 @@
 
 namespace optmath {
     /**
+     * @brief Set index in nth dimension.
+     *
+     * @param __i index of dimension
+     * @param __v new value to set
+     */
+    void NDShape::_set(index_t __i, index_t __v) {
+        NDIndex::_set(__i, __v);
+        this->_calculate_buffer_size();
+    }
+    /**
+     * @brief Pre-calculate buffer size required for this shape.
+     *
+     */
+    void NDShape::_calculate_buffer_size() {
+        nd_buffer_size = std::reduce(
+            this->cbegin(), this->cend(), 1,
+            [](shape_t first, shape_t second) { return first * second; });
+    }
+    /**
+     * @brief Construct a new NDShape object
+     *
+     * @param shape_ initial shape
+     */
+    NDShape::NDShape(const std::vector<shape_t>& shape_)
+        : NDIndex(shape_) {
+        assert(std::all_of(shape_.begin(), shape_.end(),
+                           [](index_t i) { return i > 0; }));
+        this->_calculate_buffer_size();
+    }
+    /**
      * @brief Construct a new NDShape object
      *
      * @param shape_ initial shape
@@ -13,7 +43,7 @@ namespace optmath {
         // calculates and caches minimal buffer size required for
         // nd buffer with this shape
         nd_buffer_size = std::reduce(
-            std::execution::par, this->cbegin(), this->cend(), 1,
+            this->cbegin(), this->cend(), 1,
             [](shape_t first, shape_t second) { return first * second; });
     }
     /**
@@ -66,18 +96,18 @@ namespace optmath {
     /**
      * @brief Get size of buffer required to contain tensor of this shape.
      *
-     * @return std::size_t linear size of buffer.
+     * @return index_t linear size of buffer.
      */
-    std::size_t NDShape::buffer_size() const {
+    index_t NDShape::buffer_size() const {
         return this->nd_buffer_size;
     }
     /**
      * @brief Calculates in buffer index of element pointed by NDIndex object.
      *
      * @param index Indexer object pointing to value in buffer.
-     * @return std::size_t linear in buffer position.
+     * @return index_t linear in buffer position.
      */
-    std::size_t NDShape::in_buffer_position(const NDIndex& index) const {
+    index_t NDShape::in_buffer_position(const NDIndex& index) const {
         // size inequality is UB
         assert(index.size() == this->size());
 
@@ -91,6 +121,8 @@ namespace optmath {
 
         while (beginShape != endShape) {
             assert(beginIndex != endIndex);
+            // avoid out of bounds indexing
+            assert(*beginIndex < *beginShape);
             position += (*beginIndex) * multiplier;
 
             multiplier *= *beginShape;

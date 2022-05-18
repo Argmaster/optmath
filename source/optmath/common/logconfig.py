@@ -16,7 +16,19 @@ LOG_FILE_PATH = str(
 )
 
 
-def configure_logger(is_debug: bool = False, is_verbose: bool = False):
+class MarkupStripFormatter(logging.Formatter):
+    def format(self, *args: Any, **kwargs: Any) -> str:  # noqa: A003
+        s = super().format(*args, **kwargs)
+        # render strings with rich
+        seg_list = Text.from_markup(s).render(Console())
+        # but use only text part to get rid of all formatting
+        return "".join(seg.text for seg in seg_list)
+
+
+def configure_logger(
+    is_debug: bool = False,
+    is_verbose: bool = False,
+) -> None:
     if is_debug:
         log_level = logging.DEBUG
     elif is_verbose:
@@ -35,14 +47,6 @@ def configure_logger(is_debug: bool = False, is_verbose: bool = False):
     file_handler = logging.FileHandler(
         LOG_FILE_PATH, mode="w", encoding="utf-8"
     )
-
-    class MarkupStripFormatter(logging.Formatter):
-        def format(self, *args: Any, **kwargs: Any):  # noqa: A003
-            s = super().format(*args, **kwargs)
-            # render strings with rich
-            seg_list = Text.from_markup(s).render(Console())
-            # but use only text part to get rid of all formatting
-            return "".join(seg.text for seg in seg_list)
 
     file_handler.setFormatter(
         MarkupStripFormatter(

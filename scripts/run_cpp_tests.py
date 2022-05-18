@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 import subprocess as sbp
 from pathlib import Path

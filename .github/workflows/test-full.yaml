@@ -1,0 +1,147 @@
+name: Test suite CI run
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+    branches:
+      - main
+      - feature/**
+  workflow_dispatch: {}
+
+jobs:
+  python_test_suite:
+    strategy:
+      matrix:
+        python_version: ["3.7", "3.8", "3.9", "3.10"]
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - tox_env: "37"
+            python_version: "3.7"
+          - tox_env: "38"
+            python_version: "3.8"
+          - tox_env: "39"
+            python_version: "3.9"
+          - tox_env: "310"
+            python_version: "3.10"
+      max-parallel: 4
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout optmath and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install Chocolately and LLVM
+      uses: crazy-max/ghaction-chocolatey@v1.7.0
+      with:
+        args: install llvm
+
+    - name: Set up Python interpreter
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+        architecture: "x64"
+        cache: pip
+
+    - name: Install tox
+      run: python -m pip install tox
+
+    - name: Build release binaries of C++ extension
+      run: tox -e cmake -vv -- --clean --release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+    - name: Set up Python interpreter
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python_version }}
+        architecture: "x64"
+        cache: pip
+
+    - name: Run Python test suite
+      run: tox -e py${{ matrix.tox_env }} -vv
+
+  cpp_tests_windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout optmath and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install Chocolately and LLVM
+      uses: crazy-max/ghaction-chocolatey@v1.7.0
+      with:
+        args: install llvm
+
+    - name: Set up Python interpreter
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+        architecture: "x64"
+        cache: pip
+
+    - name: Install tox
+      run: python -m pip install tox
+
+    - name: Run C++ test suite
+      run: tox -e googletest -vv -- -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+  cpp_tests_linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout optmath and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install LLVM
+      run: sudo apt install clang
+
+    - name: Set up Python interpreter
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+        architecture: "x64"
+        cache: pip
+
+    - name: Install tox
+      run: python -m pip install tox
+
+    - name: Run C++ test suite
+      run: tox -e googletest -vv -- -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+  mypy_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout optmath and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install LLVM
+      run: sudo apt install clang
+
+    - name: Set up Python interpreter
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.8"
+        architecture: "x64"
+        cache: pip
+
+    - name: Install tox
+      run: python -m pip install tox
+
+    - name: Run static typechecking on Python code
+      run: tox -e mypy -vv

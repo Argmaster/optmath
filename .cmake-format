@@ -1,0 +1,6 @@
+# https://cmake-format.readthedocs.io/en/latest/configuration.html
+format:
+  line_width: 79
+  tab_size: 4
+  use_tabchars: false
+  fractional_tab_policy: 'use-space'
