@@ -241,3 +241,6 @@ class PCAResutsView:
             ax.set_xticks(x_values, columns[1:], rotation=45, ha="right")
 
         return fig, axes
+
+    def get_post_transfrom(self):
+        return self.transformed_matrix.T
