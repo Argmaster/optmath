@@ -4,22 +4,10 @@ from io import BytesIO, StringIO
 from pathlib import Path
 from typing import Iterator, Tuple, Union
 
-from pydantic import BaseModel, validator
+from .sequence import SequenceLike
 
 
-class InvalidCharactersInSequence(ValueError):
-    pass
-
-
-class InvalidFastaFormat(ValueError):
-    pass
-
-
-class InconsistentUsageOfUT(ValueError):
-    pass
-
-
-class Fasta(BaseModel):
+class Fasta(SequenceLike):
     """Class encapsulating block of Fasta sequence data.
 
     >>> fasta = Fasta(title="Some Sequence", sequence="ATGACCGGGATACTGATAAAAAAAAGGGGGGGGGCGTACACATTAGATAAACGTATGAAGTACGTTAGACTCGGCGCCGCCG")
@@ -53,44 +41,6 @@ class Fasta(BaseModel):
     """
 
     title: str
-    sequence: str
-
-    class Config:
-        validate_all = True
-        validate_assignment = True
-
-    @validator("sequence")
-    @classmethod
-    def sequence_validator(cls, value: str):
-        value = value.upper()
-        re_match = re.match("^[ATUGC]*(.).*$", value)
-        if re_match is None:
-            raise InvalidCharactersInSequence(
-                "Sequence given is not a valid fasta data."
-            )
-        else:
-            (fail,) = re_match.groups()
-            if fail is not None and fail not in "ATUGC":
-                message = cls._get_sequence_error_message(value, fail)
-                raise InvalidFastaFormat(message)
-        if "U" in value and "T" in value:
-            raise InconsistentUsageOfUT(
-                "Inconsistent usage of U and T nucleotides in sequence. "
-                f"First U at {value.index('U')}, first T at {value.index('T')}"
-            )
-        return value
-
-    @classmethod
-    def _get_sequence_error_message(cls, value: str, fail: str):
-        i = value.index(fail)
-        left = max(i - 5, 0)
-        right = min(i + 5, len(value))
-        sub_sequence = value[left:right]
-        location_str = str(i)
-        return (
-            f"Invalid value '{fail}' at location {location_str}: '{sub_sequence}'\n"
-            f"{' '*34}~~~{'~'*(i - left + len(location_str) - 2)}^\n"
-        )
 
     @classmethod
     def load_from(
@@ -142,6 +92,22 @@ class Fasta(BaseModel):
     def __iter__(self) -> Iterator[str]:
         return iter(self.sequence)
 
+    def __repr__(self) -> str:
+        return f"{self:80UT}"
+
+    def format(self, __format_spec: str = "") -> str:  # noqa A003
+        return self.__format__(__format_spec)
+
+    def __format__(self, __format_spec: str) -> str:
+        line_with, is_upper, use_title = self._parse_format(__format_spec)
+        body = "\n".join(
+            self.iter_subsequences(line_with, line_with, is_upper)
+        )
+        if use_title is True:
+            return f"> {self.title}\n{body}"
+        else:
+            return body
+
     def _parse_format(self, __format_spec: str) -> Tuple[int, bool, bool]:
         line_with = 79
         is_upper = True
@@ -157,24 +123,6 @@ class Fasta(BaseModel):
             else:
                 raise ValueError(f"Invalid format string '{__format_spec}'")
         return line_with, is_upper, use_title
-
-    def __repr__(self) -> str:
-        return f"{self:80UT}"
-
-    def format(self, __format_spec: str = "") -> str:  # noqa A003
-        return self.__format__(__format_spec)
-
-    def __format__(self, __format_spec: str) -> str:
-        line_with, is_upper, use_title = self._parse_format(__format_spec)
-        sequence = self.sequence.upper() if is_upper else self.sequence.lower()
-        body = "\n".join(
-            sequence[i : i + line_with]
-            for i in range(0, len(sequence), line_with)
-        )
-        if use_title is True:
-            return f"> {self.title}\n{body}"
-        else:
-            return body
 
 
 if __name__ == "__main__":

@@ -183,9 +183,6 @@ class PCAResutsView:
         if fig is None or axes is None:
             fig, axes = plt.subplots(grid_size, grid_size)
 
-        if len(transformed) == 2:
-            axes = ((axes,),)  # type: ignore
-
         for (i, pci), ax_row in zip(enumerate(transformed), axes):  # type: ignore
             for (j, pcj), ax in zip(enumerate(transformed), ax_row):
 

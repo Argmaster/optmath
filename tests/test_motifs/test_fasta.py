@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from optmath.motifs.fasta import Fasta, InconsistentUsageOfUT
+from optmath.motifs.fasta import Fasta
 
 DIR = Path(__file__).parent
 
@@ -41,7 +41,7 @@ class TestFasta:
 sequence
   Invalid value '1' at location 22: 'TTGGC12345'
                                   ~~~~~~~~^
- (type=value_error.invalidfastaformat)"""
+ (type=value_error.invalidsequenceformat)"""
             )
 
     def test_load_from_file_by_string_path(self):
@@ -80,5 +80,5 @@ CTGGTGAGCAACGACAGATTCTTACGTGCATTAGCTCGCTTCCGGGGATCTAATAGCACGAAGCTTAAAAAAAAGGGGGG
         assert f"{fasta:82UT}" == seq
 
     def test_validate_ut(self):
-        with pytest.raises(InconsistentUsageOfUT):
+        with pytest.raises(ValidationError):
             Fasta(title="", sequence="UT")
