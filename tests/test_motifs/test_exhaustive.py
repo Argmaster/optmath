@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from optmath.motifs.distance import humming_distance
+from optmath.motifs.distance import hamming_distance
 from optmath.motifs.exhaustive import exhaustive, neighbors, print_mismatches
 from optmath.motifs.fasta import Fasta
 
@@ -45,7 +45,7 @@ def test_exhaustive_2(dna2: Fasta):
 def test_mismatches(sequence: str, distance: int, expected_size: int):
     seq = neighbors(sequence, distance)
     for sub_pattern in seq:
-        assert humming_distance(sub_pattern, sequence) <= distance
+        assert hamming_distance(sub_pattern, sequence) <= distance
     assert len(seq) == expected_size
 
 

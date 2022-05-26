@@ -3,7 +3,7 @@ from typing import Generator, Iterable, Tuple, TypeVar
 
 from pydantic import BaseModel, validator
 
-from optmath.motifs.distance import humming_distance
+from optmath.motifs.distance import hamming_distance
 
 
 class InvalidSequenceFormat(ValueError):
@@ -138,10 +138,18 @@ class SequenceLike(BaseModel):
         return self
 
     def contains(self, item: str, max_distance: int = 0) -> bool:
+        # ATTG -> len 4
+        # ATTGGGCCCATT
+        # ATTG
+        #  TTGG
+        #   | | -> 2
+        #  ATTG
+        #   TGGG
+        #    ...
         sub_sequences = self.iter_subsequences(len(item))
         if sub_sequences:
             return (
-                min(humming_distance(item, sub) for sub in sub_sequences)
+                min(hamming_distance(item, sub) for sub in sub_sequences)
                 <= max_distance
             )
         else:

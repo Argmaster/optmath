@@ -71,7 +71,7 @@ def find_motifs_for_k_mer(
     Parameters
     ----------
     max_distance : int
-        max humming distance for pattern to be considered
+        max hamming distance for pattern to be considered
         neighbour of k mer sequence.
     sectionized : Iterable[SequenceLike]
         sequence of all dna sections that have to contain

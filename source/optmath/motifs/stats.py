@@ -42,3 +42,36 @@ def score_sequences(motifs: Sequence[str]) -> SequenceStats:
 
 def _items_have_same_length(sequence: Sequence[Any], length: int) -> bool:
     return all(len(item) == length for item in sequence)
+
+
+_MAP = {
+    "A": 0,
+    0: "A",
+    "C": 1,
+    1: "C",
+    "G": 2,
+    2: "G",
+    "T": 3,
+    3: "T",
+}
+_BASE = 4
+
+
+def dna_to_int(value: str) -> int:
+    multiplier = 1
+    total = 0
+    for val in reversed(value):
+        total += _MAP[val] * multiplier
+        multiplier *= _BASE
+    return total
+
+
+def int_to_dna(value: int, size: int) -> str:
+    seq = []
+    while value:
+        reminder = value % _BASE
+        value //= _BASE
+        print(reminder, _MAP[reminder], value)
+        seq.append(_MAP[reminder])
+    seq.reverse()
+    return f'{"".join(seq):A>{size}}'
